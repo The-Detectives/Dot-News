@@ -5,6 +5,7 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
+const { getDataFromAPI } = require('./helpers/superAgentClient');
 
 /* ---------- Application Setups ---------- */
 
@@ -33,3 +34,24 @@ client
     });
   })
   .catch((e) => console.log(e));
+
+
+//Category Page
+app.get('/:category', (req,res) => {
+
+  let categoryName = req.params.category;
+  let category_API_KEY = process.env.CATEGORY_KEY;
+  let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
+
+  getDataFromAPI (categoryUrl)
+    .then(categoryData => {
+
+      let arr = categoryData.results.map((val) => {
+        return new Article({...val, section: categoryData.section });
+      });
+      res.send(arr);
+    })
+    .catch(error => {
+      res.send(error);
+    });
+});
