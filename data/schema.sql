@@ -18,10 +18,10 @@ CREATE TABLE category (
 CREATE TABLE article (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
-    cover_image VARCHAR(255),
-    abstraction TEXT,
+    image VARCHAR(255),
+    abstract TEXT,
     content TEXT,
-    published_at VARCHAR(255),
+    published_date VARCHAR(255),
     category_id INT,
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
