@@ -5,6 +5,10 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
+const { getDataFromAPI } = require('./helpers/superAgentClient');
+const { log } = require('console');
+const {Article}=require('./store');
+
 
 /* ---------- Application Setups ---------- */
 
@@ -24,6 +28,57 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/test', (req, res, next) => {
   return res.send('Hello There');
 });
+
+//Routes
+app.get('/', homeHandler);
+
+
+/* --------- Functions Handling routes --------- */
+
+function homeHandler(req, res, next){
+  let key=process.env.API_KEY;
+  let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
+  let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
+  let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
+  let healthURL=`https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+  getDataFromAPI(worldURL)
+    .then(worldData=>{
+      let worldArray=worldData.results.slice(0,5).map(item=>{
+        return new Article({...item, section: worldData.section });
+      });
+
+      getDataFromAPI(artsURL)
+        .then(artsData=>{
+          let artsArray=artsData.results.slice(0,5).map(item=>{
+            return new Article({...item, section: artsData.section });
+          });
+
+          getDataFromAPI(scienceURL)
+            .then(scienceData=>{
+              let scienceArray=scienceData.results.slice(0,5).map(item=>{
+                return new Article({...item, section: scienceData.section });
+              });
+
+              getDataFromAPI(healthURL)
+                .then(healthData=>{
+                  let healthArray=healthData.results.slice(0,5).map(item=>{
+                    return new Article({...item, section: healthData.section });
+                  });
+                  res.send({data1:worldArray, data2:artsArray, data3:scienceArray, data4:healthArray});
+                });
+
+            });
+        })
+        .catch((e) => next(e));
+    });
+}
+
+
+
+
+
+
+
 
 client
   .connect()
