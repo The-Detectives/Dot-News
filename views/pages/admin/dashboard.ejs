@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %> 
+    <div class="dashboard_sidebar">
+        <div class="sidebar_title">
+            Sections
+        </div>
+        <ul class="sidebar_links">
+            <li>Arts</li>
+            <li>Sport</li>
+            <li>Movies</li>
+            <li>Health</li>
+            <li>Weather</li>
+            <li>World</li>
+        </ul>
+    </div>
+    <% articles.forEach(article => { %> 
+        <div class="dashboard_main">
+            <div class="dashboard_card">
+                <img src="<%= article.image %>" alt="<%= article.title %>">
+                <div class="dashboard_card_info">
+                    <div class="title"><%= article.title %> </div>
+                    <div class="published_at"><%= article.published_date %></div>
+                </div>
+                <div class="dashboard_card_info_actions">
+                    <a href="/admin/article/<%= article.id %>">Edit</a>
+                    <form action="/admin/article/<%= article.id %>" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <% }) %> 
+<%- include('../../partials/footer') %> 
