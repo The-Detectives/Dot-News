@@ -35,11 +35,13 @@ app.get('/:category', categoryHandler);
 app.get('/article/:id', articleHandler);
 
 //Admin routes
-app.get('/admin/login', loginHandler);
+app.get('/admin/login', loginPageHandler);
 app.get('/admin/dashboard', adminDashboardHandler);
 app.get('/admin/article/new', adminNewArticleHandler);
 app.post('/admin/article/new', adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', adminDeleteArticleHandler);
+app.get('/admin/article/:id', adminShowArticleHandler);
+app.put('/admin/article/:id', adminUpdateArticleHandler);
 
 /* --------- Functions Handling routes --------- */
 
@@ -84,41 +86,6 @@ function homeHandler(req, res, next) {
   });
 }
 
-/* --------- Admin Handling routes --------- */
-
-function loginHandler(req, res, next) {
-  res.render('pages/admin/login');
-}
-
-function adminNewArticleHandler(req, res, next) {
-  let categorySqlQuery = 'SELECT * FROM category';
-
-  dbExcecute(categorySqlQuery)
-    .then(categories => {
-      res.render('pages/admin/article', { categories: categories });
-    })
-    .catch((e) => next(e));
-}
-
-function adminCreateNewArticleHandler(req, res, next) {
-  let articleData = req.body;
-
-  let sqlQuery = 'INSERT INTO article (title, image, content, published_date, category_id) VALUES ($1, $2, $3, $4, $5);';
-  let safeValues = [articleData.title, articleData.image, articleData.content, new Date(), articleData.category];
-
-  dbExcecute(sqlQuery, safeValues)
-    .then(res.redirect('/admin/dashboard'))
-    .catch(e => next(e));
-}
-
-function adminDeleteArticleHandler(req, res, next) {
-  let articleId = req.params.id;
-  let sqlQuery = 'DELETE FROM article WHERE id = $1;';
-  console.log('delte artcile')
-  dbExcecute(sqlQuery, [articleId])
-    .then(res.redirect('/admin/dashboard'))
-    .catch(e => next(e));
-}
 
 function aboutUsHandler(req,res){
   res.render('pages/aboutUs');
@@ -127,10 +94,11 @@ function aboutUsHandler(req,res){
 function articleHandler(req, res, next) { //article
   let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
   let safeValues1 = [req.params.id];
-  client.query(SQL1, safeValues1)
+
+  dbExcecute(SQL1, safeValues1)
     .then(result => {
-      let article = result.rows[0];
-      let category = result.rows[0].name;
+      let article = result[0];
+      let category = article.name;
       let CATEGORY_KEY = process.env.CATEGORY_KEY;
       let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${CATEGORY_KEY}`;
       getDataFromAPI(categoryUrl)
@@ -138,29 +106,8 @@ function articleHandler(req, res, next) { //article
           let arr = categoryData.results.slice(0, 6).map((val) => {
             return new Article({ ...val, section: categoryData.section });
           });
-          console.log(arr);
+          
           res.render('pages/article', {articleData: article, articleCategory: arr});
-        })
-        .catch((e) => next(e));
-    })
-    .catch((e) => next(e));
-}
-
-function adminDashboardHandler(req, res, next) {
-  let category_name = req.query.category ? [req.query.category] : [];
-
-  let sqlQuery = 'SELECT * FROM article;';
-  if (req.query.category) {
-    sqlQuery =
-      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
-  }
-
-  dbExcecute(sqlQuery, category_name)
-    .then((articles) => {
-      let categorySqlQuery = 'SELECT * FROM category';
-      dbExcecute(categorySqlQuery)
-        .then(categories => {
-          res.render('pages/admin/dashboard', { articles: articles, categories: categories });
         })
         .catch((e) => next(e));
     })
@@ -197,6 +144,95 @@ function categoryHandler(req, res, next) {
       res.send(error);
     });
 }
+
+
+/* --------- Admin Handling routes --------- */
+
+function loginPageHandler(req, res, next) {
+  res.render('pages/admin/login');
+}
+
+function adminDashboardHandler(req, res, next) {
+  let category_name = req.query.category ? [req.query.category] : [];
+
+  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC;';
+  if (req.query.category) {
+    sqlQuery =
+      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
+  }
+
+  dbExcecute(sqlQuery, category_name)
+    .then((articles) => {
+      let categorySqlQuery = 'SELECT * FROM category;';
+      dbExcecute(categorySqlQuery)
+        .then(categories => {
+          res.render('pages/admin/dashboard', { articles: articles, categories: categories });
+        })
+        .catch((e) => next(e));
+    })
+    .catch((e) => next(e));
+}
+
+function adminNewArticleHandler(req, res, next) {
+  let categorySqlQuery = 'SELECT * FROM category';
+
+  dbExcecute(categorySqlQuery)
+    .then(categories => {
+      res.render('pages/admin/article', { categories: categories, article: {} });
+    })
+    .catch((e) => next(e));
+}
+
+function adminCreateNewArticleHandler(req, res, next) {
+  let articleData = req.body;
+
+  let sqlQuery = 'INSERT INTO article (title, image, content, published_date, category_id) VALUES ($1, $2, $3, $4, $5);';
+  let safeValues = [articleData.title, articleData.image, articleData.content, new Date(), articleData.category];
+
+  dbExcecute(sqlQuery, safeValues)
+    .then(res.redirect('/admin/dashboard'))
+    .catch(e => next(e));
+}
+
+function adminDeleteArticleHandler(req, res, next) {
+  let articleId = req.params.id;
+  let sqlQuery = 'DELETE FROM article WHERE id = $1;';
+  console.log('delte artcile')
+  dbExcecute(sqlQuery, [articleId])
+    .then(res.redirect('/admin/dashboard'))
+    .catch(e => next(e));
+}
+
+function adminShowArticleHandler(req, res, next) {
+  let id = req.params.id;
+  let sqlQuery = 'SELECT * From article WHERE id = $1';;
+  
+  dbExcecute(sqlQuery, [id])
+    .then(data => {
+      let = article = data[0];
+      let categorySqlQuery = 'SELECT * FROM category;';
+
+      dbExcecute(categorySqlQuery)
+      .then(categories => {
+        res.render('pages/admin/article', { categories: categories, article: article });
+      })
+      .catch(e => next(e));
+    })
+    .catch(e => next(e));
+}
+
+function adminUpdateArticleHandler(req, res, next) {
+  let articleData = req.body;
+
+  let sqlQuery = 'UPDATE article SET title=$1, image=$2, content=$3, category_id=$4 WHERE id =$5';
+  let safeValues = [articleData.title, articleData.image, articleData.content, articleData.category, articleData.id];
+
+  dbExcecute(sqlQuery, safeValues)
+    .then(res.redirect('/admin/dashboard'))
+    .catch(e => next(e));
+}
+
+
 
 client
   .connect()
