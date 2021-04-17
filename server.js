@@ -39,6 +39,7 @@ app.get('/admin/login', loginHandler);
 app.get('/admin/dashboard', adminDashboardHandler);
 app.get('/admin/article/new', adminNewArticleHandler);
 app.post('/admin/article/new', adminCreateNewArticleHandler);
+app.delete('/admin/article/:id', adminDeleteArticleHandler);
 
 /* --------- Functions Handling routes --------- */
 
@@ -106,6 +107,15 @@ function adminCreateNewArticleHandler(req, res, next) {
   let safeValues = [articleData.title, articleData.image, articleData.content, new Date(), articleData.category];
 
   dbExcecute(sqlQuery, safeValues)
+    .then(res.redirect('/admin/dashboard'))
+    .catch(e => next(e));
+}
+
+function adminDeleteArticleHandler(req, res, next) {
+  let articleId = req.params.id;
+  let sqlQuery = 'DELETE FROM article WHERE id = $1;';
+  console.log('delte artcile')
+  dbExcecute(sqlQuery, [articleId])
     .then(res.redirect('/admin/dashboard'))
     .catch(e => next(e));
 }
