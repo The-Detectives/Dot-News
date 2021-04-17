@@ -59,41 +59,46 @@ function homeHandler(req, res, next) {
   let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
   let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
   
-  getDataFromAPI(worldURL).then((worldData) => {
-    let worldArray = worldData.results.slice(0, 5).map((item) => {
-      return new Article({ ...item, section: worldData.section });
-    });
+  getDataFromAPI(worldURL)
+    .then(worldData=>{
+      let worldArray=worldData.results.slice(0,5).map(item=>{
+        return new Article({...item, section: worldData.section });
+      });
 
-    getDataFromAPI(artsURL)
-      .then((artsData) => {
-        let artsArray = artsData.results.slice(0, 5).map((item) => {
-          return new Article({ ...item, section: artsData.section });
-        });
-
+      getDataFromAPI(artsURL)
+        .then(artsData=>{
+          let artsArray=artsData.results.slice(0,10).map(item=>{
+            return new Article({...item, section: artsData.section });
+          });
+        
         getDataFromAPI(scienceURL).then((scienceData) => {
           let scienceArray = scienceData.results.slice(0, 5).map((item) => {
             return new Article({ ...item, section: scienceData.section });
           });
 
-          getDataFromAPI(healthURL).then((healthData) => {
-            let healthArray = healthData.results.slice(0, 5).map((item) => {
-              return new Article({ ...item, section: healthData.section });
-            });
-            res.send({
-              data1: worldArray,
-              data2: artsArray,
-              data3: scienceArray,
-              data4: healthArray,
+              getDataFromAPI(healthURL)
+                .then(healthData=>{
+                  let healthArray=healthData.results.slice(0,5).map(item=>{
+                    return new Article({...item, section: healthData.section });
+                  });
+                
+                  let SQL='SELECT * FROM article;'
+                  dbExcecute(SQL)
+                  .then(data => {
+                    let ourNews = data.slice(0,10);
+                    res.render('index',{worldNews:worldArray, artsNews:artsArray, scienceNews:scienceArray, healthNews:healthArray, ourNews:ourNews}) 
+                  })
+                  .catch((e) => next(e));
+                })
+                  .catch((e) => next(e));
+              })
+              .catch((e) => next(e));
             })
-          })
-          .catch((e) => next(e));
+            .catch((e) => next(e));
         })
-        .catch((e) => next(e));
-      })
       .catch((e) => next(e));
-  })
-  .catch((e) => next(e));
 }
+
 
 // handling the about us page
 function aboutUsHandler(req, res, next){
