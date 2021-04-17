@@ -29,12 +29,13 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/aboutUs', aboutUsHandler);
 
 
 /* --------- Functions Handling routes --------- */
 
 function homeHandler(req, res, next){
-  let key=process.env.API_KEY;
+  let key=process.env.CATEGORY_KEY;
   let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
   let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
   let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
@@ -73,10 +74,10 @@ function homeHandler(req, res, next){
 
 
 
+function aboutUsHandler(req,res){
+  res.render('pages/aboutUs');
 
-
-
-
+}
 
 client
   .connect()
