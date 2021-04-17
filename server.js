@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
 const { getDataFromAPI } = require('./helpers/superAgentClient');
-const {Article}=require('./store');
+const { Article } = require('./store');
 
 /* ---------- Application Setups ---------- */
 
@@ -29,40 +29,41 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/:category', categoryHandler);
 
 
 /* --------- Functions Handling routes --------- */
 
-function homeHandler(req, res, next){
-  let key=process.env.API_KEY;
-  let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
-  let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
-  let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
-  let healthURL=`https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+function homeHandler(req, res, next) {
+  let key = process.env.API_KEY;
+  let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
+  let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
+  let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
+  let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
   getDataFromAPI(worldURL)
-    .then(worldData=>{
-      let worldArray=worldData.results.slice(0,5).map(item=>{
-        return new Article({...item, section: worldData.section });
+    .then(worldData => {
+      let worldArray = worldData.results.slice(0, 5).map(item => {
+        return new Article({ ...item, section: worldData.section });
       });
 
       getDataFromAPI(artsURL)
-        .then(artsData=>{
-          let artsArray=artsData.results.slice(0,5).map(item=>{
-            return new Article({...item, section: artsData.section });
+        .then(artsData => {
+          let artsArray = artsData.results.slice(0, 5).map(item => {
+            return new Article({ ...item, section: artsData.section });
           });
 
           getDataFromAPI(scienceURL)
-            .then(scienceData=>{
-              let scienceArray=scienceData.results.slice(0,5).map(item=>{
-                return new Article({...item, section: scienceData.section });
+            .then(scienceData => {
+              let scienceArray = scienceData.results.slice(0, 5).map(item => {
+                return new Article({ ...item, section: scienceData.section });
               });
 
               getDataFromAPI(healthURL)
-                .then(healthData=>{
-                  let healthArray=healthData.results.slice(0,5).map(item=>{
-                    return new Article({...item, section: healthData.section });
+                .then(healthData => {
+                  let healthArray = healthData.results.slice(0, 5).map(item => {
+                    return new Article({ ...item, section: healthData.section });
                   });
-                  res.send({data1:worldArray, data2:artsArray, data3:scienceArray, data4:healthArray});
+                  res.send({ data1: worldArray, data2: artsArray, data3: scienceArray, data4: healthArray });
                 });
 
             });
@@ -70,13 +71,6 @@ function homeHandler(req, res, next){
         .catch((e) => next(e));
     });
 }
-
-
-
-
-
-
-
 
 client
   .connect()
@@ -89,21 +83,31 @@ client
 
 
 //Category Page
-app.get('/:category', (req,res) => {
+function categoryHandler(req, res) {
 
   let categoryName = req.params.category;
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
-  getDataFromAPI (categoryUrl)
+  getDataFromAPI(categoryUrl)
     .then(categoryData => {
 
       let arr = categoryData.results.map((val) => {
-        return new Article({...val, section: categoryData.section });
+        return new Article({ ...val, section: categoryData.section });
       });
-      res.send(arr);
+
+      let sqlQuery = 'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1'
+      let safeValues = [categoryName]
+      client.query(sqlQuery, safeValues)
+        .then(data => {
+
+          let resultDb = data.rows;
+
+          res.render('pages/category', { categoryApi: arr, categoryDB: resultDb });
+
+        })
     })
     .catch(error => {
       res.send(error);
     });
-});
+}
