@@ -6,7 +6,7 @@ DELETE FROM article;
 INSERT INTO category (name) VALUES ('arts'), ('home'), ('science'), ('world');
 
 INSERT INTO article 
-(title, cover_image, abstraction, content, published_at, category_id)
+(title, image, abstract, content, published_date, category_id)
 VALUES
 ('The LTUC developers graduated from code 301', 'https://1.bp.blogspot.com/-BubVtFoFpw4/Xq4UgkmSK6I/AAAAAAAB3sg/UbLAG2eV3c4w-wByrPvpJPrGkkD6gKSTQCLcBGAsYHQ/s640/%25D9%2583%25D9%2584%25D9%258A%25D8%25A9%2B%25D9%2584%25D9%2588%25D9%2585%25D9%258A%25D9%2586%25D9%2588%25D8%25B3.png', 'Multiple mini career fairs will be arranged in the future to give a chance for all employers to meet ASAC graduates.', 'Al-Quds College in Jordan was established in 1980 and is part of Luminus Education Group. Al Quds College is a private community college offering vocational two year diploma programs in six areas.', '16*04-2021', 1),
 ('The LTUC developers graduated from code 301', 'https://1.bp.blogspot.com/-BubVtFoFpw4/Xq4UgkmSK6I/AAAAAAAB3sg/UbLAG2eV3c4w-wByrPvpJPrGkkD6gKSTQCLcBGAsYHQ/s640/%25D9%2583%25D9%2584%25D9%258A%25D8%25A9%2B%25D9%2584%25D9%2588%25D9%2585%25D9%258A%25D9%2586%25D9%2588%25D8%25B3.png', 'Multiple mini career fairs will be arranged in the future to give a chance for all employers to meet ASAC graduates.', 'Al-Quds College in Jordan was established in 1980 and is part of Luminus Education Group. Al Quds College is a private community college offering vocational two year diploma programs in six areas.', '16*04-2021', 2),

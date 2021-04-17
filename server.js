@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
 const { getDataFromAPI } = require('./helpers/superAgentClient');
+const { dbExcecute } = require('./helpers/pgClient');
 const {Article}=require('./store');
 
 /* ---------- Application Setups ---------- */
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
-app.use(express.static('./src/public'));
+app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
 /* --------- Application start the server --------- */
@@ -30,11 +31,15 @@ app.get('/test', (req, res, next) => {
 //Routes
 app.get('/', homeHandler);
 
+//Admin routes
+app.get('/admin/login', loginHandler);
+app.get('/admin/dashboard', adminDashboardHandler);
+
 
 /* --------- Functions Handling routes --------- */
 
 function homeHandler(req, res, next){
-  let key=process.env.API_KEY;
+  let key=process.env.CATEGORY_KEY;
   let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
   let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
   let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
@@ -72,8 +77,26 @@ function homeHandler(req, res, next){
 }
 
 
+/* --------- Admin Handling routes --------- */
 
+function loginHandler(req, res, next) {
+  res.render('pages/admin/login');
+}
 
+function adminDashboardHandler(req, res, next) {
+  let category_name = req.query.category ? [req.query.category] : [];
+
+  let sqlQuery = 'SELECT * FROM article;';
+  if(req.query.category){
+    sqlQuery = 'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
+  }
+
+  dbExcecute(sqlQuery, category_name)
+    .then(articles => {
+      res.render('pages/admin/dashboard', {articles: articles});
+    })
+    .catch(e => next(e));
+}
 
 
 
