@@ -30,6 +30,7 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/aboutUs', aboutUsHandler);
 app.get('/:category', categoryHandler);
 app.get('/article/:id', articleHandler);
 
@@ -86,6 +87,9 @@ function loginHandler(req, res, next) {
   res.render('pages/admin/login');
 }
 
+function aboutUsHandler(req,res){
+  res.render('pages/aboutUs');
+}
 
 function articleHandler(req, res, next) { //article
   let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
@@ -124,6 +128,7 @@ function adminDashboardHandler(req, res, next) {
     })
     .catch((e) => next(e));
 }
+
 
 //Category Page
 function categoryHandler(req, res, next) {
