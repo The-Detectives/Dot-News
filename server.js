@@ -30,6 +30,7 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/:category', categoryHandler);
 app.get('/article/:id', articleHandler);
 
 //Admin routes
@@ -40,6 +41,7 @@ app.get('/admin/dashboard', adminDashboardHandler);
 
 function homeHandler(req, res, next) {
   let key = process.env.CATEGORY_KEY;
+
   let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
   let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
   let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
@@ -124,24 +126,34 @@ function adminDashboardHandler(req, res, next) {
 }
 
 //Category Page
-app.get('/:category', (req, res) => {
+function categoryHandler(req, res, next) {
 
   let categoryName = req.params.category;
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
   getDataFromAPI(categoryUrl)
-    .then((categoryData) => {
+    .then(categoryData => {
+
       let arr = categoryData.results.map((val) => {
         return new Article({ ...val, section: categoryData.section });
       });
-      res.send(arr);
+
+      let sqlQuery = 'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1'
+      let safeValues = [categoryName]
+      client.query(sqlQuery, safeValues)
+        .then(data => {
+
+          let resultDb = data.rows;
+
+          res.render('pages/category', { categoryApi: arr, categoryDB: resultDb });
+
+        })
     })
     .catch((error) => {
       res.send(error);
     });
-});
-
+}
 
 client
   .connect()

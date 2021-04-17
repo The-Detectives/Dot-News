@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <% categoryDB.forEach(item=> {%>
+        <h2><%= item.title %></h2>
+        <p><%= item.category %></p>
+        <p><%= item.abstract %></p>
+        <p><%= item.published_date %></p>
+        <a href="<%= item.url %>"><img style="max-width:20%;" src="<%= item.image %>" /></a>
+    <% }) %>
+
+    <% categoryApi.forEach(item=> {%>
+        <h2><%= item.title %></h2>
+        <p><%= item.category %></p>
+        <p><%= item.abstract %></p>
+        <p><%= item.published_date %></p>
+        <a href="<%= item.url %>"><img style="max-width:20%;" src="<%= item.image %>" /></a>
+    <% }) %>
+
+</body>
+
+</html>
