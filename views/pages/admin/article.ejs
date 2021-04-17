@@ -1,8 +1,8 @@
 <%- include('./partials/header') %>
     <div class="admin_article_container">
-        <form action="<% if(article && article.content){ %>/admin/article/<%= article.id %> ?_method=put<% } %> " method="post">
+        <form action="<% if(article && article.id){ %>/admin/article/<%= article.id %>?_method=put<% } %>" method="post">
             <h1 class="admin_article_title">
-                Add/Edit Article
+                <% if(article.length > 0) { %>Edit<% } else { %> Add<% } %>  Article
             </h1>
             <input type="hidden" name="id" <% if(article && article.id){ %> value="<%= article.id %>" <% } %>>
             <div class="input_container">

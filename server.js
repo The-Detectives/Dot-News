@@ -21,7 +21,6 @@ app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
-/* --------- Application start the server --------- */
 
 //Test Page (Home)
 app.get('/test', (req, res, next) => {
@@ -43,8 +42,15 @@ app.delete('/admin/article/:id', adminDeleteArticleHandler);
 app.get('/admin/article/:id', adminShowArticleHandler);
 app.put('/admin/article/:id', adminUpdateArticleHandler);
 
+// error handler
+app.use(errorHandler);
+
+// Page not found handler
+app.get('*', notFoundPageHandler);
+
 /* --------- Functions Handling routes --------- */
 
+// handling the home page
 function homeHandler(req, res, next) {
   let key = process.env.CATEGORY_KEY;
 
@@ -78,19 +84,23 @@ function homeHandler(req, res, next) {
               data2: artsArray,
               data3: scienceArray,
               data4: healthArray,
-            });
-          });
-        });
+            })
+          })
+          .catch((e) => next(e));
+        })
+        .catch((e) => next(e));
       })
       .catch((e) => next(e));
-  });
+  })
+  .catch((e) => next(e));
 }
 
-
-function aboutUsHandler(req,res){
+// handling the about us page
+function aboutUsHandler(req, res, next){
   res.render('pages/aboutUs');
 }
 
+// handling the article page
 function articleHandler(req, res, next) { //article
   let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
   let safeValues1 = [req.params.id];
@@ -115,7 +125,7 @@ function articleHandler(req, res, next) { //article
 }
 
 
-//Category Page
+// handling the category Page
 function categoryHandler(req, res, next) {
 
   let categoryName = req.params.category;
@@ -131,14 +141,15 @@ function categoryHandler(req, res, next) {
 
       let sqlQuery = 'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1'
       let safeValues = [categoryName]
-      client.query(sqlQuery, safeValues)
+      dbExcecute(sqlQuery, safeValues)
         .then(data => {
 
-          let resultDb = data.rows;
+          let resultDb = data;
 
           res.render('pages/category', { categoryApi: arr, categoryDB: resultDb });
 
         })
+        .catch((e) => next(e));
     })
     .catch((error) => {
       res.send(error);
@@ -148,10 +159,13 @@ function categoryHandler(req, res, next) {
 
 /* --------- Admin Handling routes --------- */
 
+// handling the login form page
 function loginPageHandler(req, res, next) {
   res.render('pages/admin/login');
 }
 
+
+// handling the admin dashboard page
 function adminDashboardHandler(req, res, next) {
   let category_name = req.query.category ? [req.query.category] : [];
 
@@ -173,6 +187,8 @@ function adminDashboardHandler(req, res, next) {
     .catch((e) => next(e));
 }
 
+
+// handling the add new article page
 function adminNewArticleHandler(req, res, next) {
   let categorySqlQuery = 'SELECT * FROM category';
 
@@ -183,6 +199,7 @@ function adminNewArticleHandler(req, res, next) {
     .catch((e) => next(e));
 }
 
+// handling creating new article
 function adminCreateNewArticleHandler(req, res, next) {
   let articleData = req.body;
 
@@ -194,15 +211,17 @@ function adminCreateNewArticleHandler(req, res, next) {
     .catch(e => next(e));
 }
 
+// handling delete article 
 function adminDeleteArticleHandler(req, res, next) {
   let articleId = req.params.id;
   let sqlQuery = 'DELETE FROM article WHERE id = $1;';
-  console.log('delte artcile')
+
   dbExcecute(sqlQuery, [articleId])
     .then(res.redirect('/admin/dashboard'))
     .catch(e => next(e));
 }
 
+// handling showing article in edit page
 function adminShowArticleHandler(req, res, next) {
   let id = req.params.id;
   let sqlQuery = 'SELECT * From article WHERE id = $1';;
@@ -221,6 +240,7 @@ function adminShowArticleHandler(req, res, next) {
     .catch(e => next(e));
 }
 
+// handling update article
 function adminUpdateArticleHandler(req, res, next) {
   let articleData = req.body;
 
@@ -233,6 +253,23 @@ function adminUpdateArticleHandler(req, res, next) {
 }
 
 
+/* --------- Application errors handler --------- */
+
+function notFoundPageHandler(req, res, next) {
+  res.status(401).send('Page Not Found');
+}
+
+// error handler
+function errorHandler(error, req, res, next) {
+  if(error){
+    console.log(error);
+    res.send('Somthing Bad Happned');
+  } else {
+    next();
+  }
+}
+
+/* --------- Application start the server --------- */
 
 client
   .connect()
