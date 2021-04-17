@@ -7,7 +7,7 @@ const path = require('path');
 const { client } = require('./helpers/pgClient');
 const { getDataFromAPI } = require('./helpers/superAgentClient');
 const { dbExcecute } = require('./helpers/pgClient');
-const {Article}=require('./store');
+const { Article } = require('./store');
 
 /* ---------- Application Setups ---------- */
 
@@ -35,47 +35,46 @@ app.get('/', homeHandler);
 app.get('/admin/login', loginHandler);
 app.get('/admin/dashboard', adminDashboardHandler);
 
-
 /* --------- Functions Handling routes --------- */
 
-function homeHandler(req, res, next){
-  let key=process.env.CATEGORY_KEY;
-  let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
-  let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
-  let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
-  let healthURL=`https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
-  getDataFromAPI(worldURL)
-    .then(worldData=>{
-      let worldArray=worldData.results.slice(0,5).map(item=>{
-        return new Article({...item, section: worldData.section });
-      });
+function homeHandler(req, res, next) {
+  let key = process.env.CATEGORY_KEY;
+  let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
+  let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
+  let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
+  let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+  getDataFromAPI(worldURL).then((worldData) => {
+    let worldArray = worldData.results.slice(0, 5).map((item) => {
+      return new Article({ ...item, section: worldData.section });
+    });
 
-      getDataFromAPI(artsURL)
-        .then(artsData=>{
-          let artsArray=artsData.results.slice(0,5).map(item=>{
-            return new Article({...item, section: artsData.section });
+    getDataFromAPI(artsURL)
+      .then((artsData) => {
+        let artsArray = artsData.results.slice(0, 5).map((item) => {
+          return new Article({ ...item, section: artsData.section });
+        });
+
+        getDataFromAPI(scienceURL).then((scienceData) => {
+          let scienceArray = scienceData.results.slice(0, 5).map((item) => {
+            return new Article({ ...item, section: scienceData.section });
           });
 
-          getDataFromAPI(scienceURL)
-            .then(scienceData=>{
-              let scienceArray=scienceData.results.slice(0,5).map(item=>{
-                return new Article({...item, section: scienceData.section });
-              });
-
-              getDataFromAPI(healthURL)
-                .then(healthData=>{
-                  let healthArray=healthData.results.slice(0,5).map(item=>{
-                    return new Article({...item, section: healthData.section });
-                  });
-                  res.send({data1:worldArray, data2:artsArray, data3:scienceArray, data4:healthArray});
-                });
-
+          getDataFromAPI(healthURL).then((healthData) => {
+            let healthArray = healthData.results.slice(0, 5).map((item) => {
+              return new Article({ ...item, section: healthData.section });
             });
-        })
-        .catch((e) => next(e));
-    });
+            res.send({
+              data1: worldArray,
+              data2: artsArray,
+              data3: scienceArray,
+              data4: healthArray,
+            });
+          });
+        });
+      })
+      .catch((e) => next(e));
+  });
 }
-
 
 /* --------- Admin Handling routes --------- */
 
@@ -87,19 +86,35 @@ function adminDashboardHandler(req, res, next) {
   let category_name = req.query.category ? [req.query.category] : [];
 
   let sqlQuery = 'SELECT * FROM article;';
-  if(req.query.category){
-    sqlQuery = 'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
+  if (req.query.category) {
+    sqlQuery =
+      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
   }
 
   dbExcecute(sqlQuery, category_name)
-    .then(articles => {
-      res.render('pages/admin/dashboard', {articles: articles});
+    .then((articles) => {
+      res.render('pages/admin/dashboard', { articles: articles });
     })
-    .catch(e => next(e));
+    .catch((e) => next(e));
 }
 
+//Category Page
+app.get('/:category', (req, res) => {
+  let categoryName = req.params.category;
+  let category_API_KEY = process.env.CATEGORY_KEY;
+  let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
-
+  getDataFromAPI(categoryUrl)
+    .then((categoryData) => {
+      let arr = categoryData.results.map((val) => {
+        return new Article({ ...val, section: categoryData.section });
+      });
+      res.send(arr);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
 
 client
   .connect()
@@ -109,24 +124,3 @@ client
     });
   })
   .catch((e) => console.log(e));
-
-
-//Category Page
-app.get('/:category', (req,res) => {
-
-  let categoryName = req.params.category;
-  let category_API_KEY = process.env.CATEGORY_KEY;
-  let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
-
-  getDataFromAPI (categoryUrl)
-    .then(categoryData => {
-
-      let arr = categoryData.results.map((val) => {
-        return new Article({...val, section: categoryData.section });
-      });
-      res.send(arr);
-    })
-    .catch(error => {
-      res.send(error);
-    });
-});
