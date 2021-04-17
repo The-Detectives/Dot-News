@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
 const { getDataFromAPI } = require('./helpers/superAgentClient');
-const {Article}=require('./store');
+const { Article } = require('./store');
 
 /* ---------- Application Setups ---------- */
 
@@ -29,40 +29,41 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/article/:id', articleHandler);
 
 
 /* --------- Functions Handling routes --------- */
 
-function homeHandler(req, res, next){
-  let key=process.env.API_KEY;
-  let worldURL=`https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
-  let artsURL=`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
-  let scienceURL=`https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
-  let healthURL=`https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+function homeHandler(req, res, next) {
+  let key = process.env.API_KEY;
+  let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
+  let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
+  let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
+  let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
   getDataFromAPI(worldURL)
-    .then(worldData=>{
-      let worldArray=worldData.results.slice(0,5).map(item=>{
-        return new Article({...item, section: worldData.section });
+    .then(worldData => {
+      let worldArray = worldData.results.slice(0, 5).map(item => {
+        return new Article({ ...item, section: worldData.section });
       });
 
       getDataFromAPI(artsURL)
-        .then(artsData=>{
-          let artsArray=artsData.results.slice(0,5).map(item=>{
-            return new Article({...item, section: artsData.section });
+        .then(artsData => {
+          let artsArray = artsData.results.slice(0, 5).map(item => {
+            return new Article({ ...item, section: artsData.section });
           });
 
           getDataFromAPI(scienceURL)
-            .then(scienceData=>{
-              let scienceArray=scienceData.results.slice(0,5).map(item=>{
-                return new Article({...item, section: scienceData.section });
+            .then(scienceData => {
+              let scienceArray = scienceData.results.slice(0, 5).map(item => {
+                return new Article({ ...item, section: scienceData.section });
               });
 
               getDataFromAPI(healthURL)
-                .then(healthData=>{
-                  let healthArray=healthData.results.slice(0,5).map(item=>{
-                    return new Article({...item, section: healthData.section });
+                .then(healthData => {
+                  let healthArray = healthData.results.slice(0, 5).map(item => {
+                    return new Article({ ...item, section: healthData.section });
                   });
-                  res.send({data1:worldArray, data2:artsArray, data3:scienceArray, data4:healthArray});
+                  res.send({ data1: worldArray, data2: artsArray, data3: scienceArray, data4: healthArray });
                 });
 
             });
@@ -73,9 +74,54 @@ function homeHandler(req, res, next){
 
 
 
+app.set('view engine', 'ejs');
+app.use(express.static('./public'));
+function articleHandler(req, res, next) { //article
+  let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
+  let safeValues1 = [req.params.id];
+  client.query(SQL1, safeValues1)
+    .then(result => {
+      let article = result.rows[0];
+      let category = result.rows[0].name;
+      let CATEGORY_KEY = process.env.CATEGORY_KEY;
+      let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${CATEGORY_KEY}`;
+      getDataFromAPI(categoryUrl)
+        .then(categoryData => {
+          let arr = categoryData.results.slice(0, 6).map((val) => {
+            return new Article({ ...val, section: categoryData.section });
+          });
+          console.log(arr);
+          res.render('pages/article', {articleData: article, articleCategory: arr});
+        })
+        .catch((e) => next(e));
+    })
+    .catch((e) => next(e));
+}
 
 
 
+
+
+
+//Category Page
+app.get('/:category', (req, res) => {
+
+  let categoryName = req.params.category;
+  let category_API_KEY = process.env.CATEGORY_KEY;
+  let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
+
+  getDataFromAPI(categoryUrl)
+    .then(categoryData => {
+
+      let arr = categoryData.results.map((val) => {
+        return new Article({ ...val, section: categoryData.section });
+      });
+      res.send(arr);
+    })
+    .catch(error => {
+      res.send(error);
+    });
+});
 
 
 client
@@ -86,24 +132,3 @@ client
     });
   })
   .catch((e) => console.log(e));
-
-
-//Category Page
-app.get('/:category', (req,res) => {
-
-  let categoryName = req.params.category;
-  let category_API_KEY = process.env.CATEGORY_KEY;
-  let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
-
-  getDataFromAPI (categoryUrl)
-    .then(categoryData => {
-
-      let arr = categoryData.results.map((val) => {
-        return new Article({...val, section: categoryData.section });
-      });
-      res.send(arr);
-    })
-    .catch(error => {
-      res.send(error);
-    });
-});

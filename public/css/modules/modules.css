@@ -1,0 +1,43 @@
+
+/* START ARTICLE PAGE */
+
+.container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 40px
+}
+
+.p_article{
+    font-size: 30px;
+}
+
+.h2_article{
+    font-size: 40px;
+}
+
+.img_article{
+    width: 60%;
+    height: 7%;
+}
+
+.p1_article{
+    font-size: 20px;
+}
+
+.p3_article{
+   font-size: 20px;
+   float: right;
+}
+
+.img_articleCat{
+    width: 90%;
+    height: 2%;
+    margin: auto;
+
+}
+
+.p_articleCat{
+    text-align: center;
+}
+
+/* END ARTICLE PAGE */
