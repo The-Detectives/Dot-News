@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+    <link rel="stylesheet" href="../../../css/style.css">
+
+    <section class="container">
+        <div>
+            <br>
+            <p class="p_article">Category: <%= articleData.name %>
+            </p>
+            <br>
+            <h2 class="h2_article">
+                <%= articleData.title %>
+            </h2>
+            <br>
+            <img class="img_article" src="<%= articleData.image %>" alt="">
+            <br>
+            <p class="p1_article">
+                <%= articleData.abstract %>
+            </p>
+            <br>
+            <p class="p2_article">
+                <%= articleData.content %>
+            </p>
+            <br>
+            <p class="p3_article">
+                <%= articleData.published_date %>
+            </p>
+        </div>
+        <div>
+            <br>
+            <% articleCategory.forEach((articleCategory)=> { %>
+                <a href="<%= articleCategory.url %>"><img class="img_articleCat" src="<%= articleCategory.image %>"></a>
+                <br>
+                <p class="p_articleCat">
+                    <%= articleCategory.title%>
+                </p>
+                <% }); %>
+        </div>
+    </section>
+
+    <%- include('../partials/footer') %>
