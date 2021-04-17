@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 
 CREATE TABLE category (
-    id SERIAL PRIMARY KEY,
+    id ,
     name VARCHAR(200)
 );
 
@@ -25,3 +25,4 @@ CREATE TABLE article (
     category_id INT,
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
+

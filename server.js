@@ -30,6 +30,7 @@ app.get('/test', (req, res, next) => {
 
 //Routes
 app.get('/', homeHandler);
+app.get('/article/:id', articleHandler);
 
 //Admin routes
 app.get('/admin/login', loginHandler);
@@ -43,6 +44,7 @@ function homeHandler(req, res, next) {
   let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
   let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
   let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+  
   getDataFromAPI(worldURL).then((worldData) => {
     let worldArray = worldData.results.slice(0, 5).map((item) => {
       return new Article({ ...item, section: worldData.section });
@@ -82,6 +84,29 @@ function loginHandler(req, res, next) {
   res.render('pages/admin/login');
 }
 
+
+function articleHandler(req, res, next) { //article
+  let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
+  let safeValues1 = [req.params.id];
+  client.query(SQL1, safeValues1)
+    .then(result => {
+      let article = result.rows[0];
+      let category = result.rows[0].name;
+      let CATEGORY_KEY = process.env.CATEGORY_KEY;
+      let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${CATEGORY_KEY}`;
+      getDataFromAPI(categoryUrl)
+        .then(categoryData => {
+          let arr = categoryData.results.slice(0, 6).map((val) => {
+            return new Article({ ...val, section: categoryData.section });
+          });
+          console.log(arr);
+          res.render('pages/article', {articleData: article, articleCategory: arr});
+        })
+        .catch((e) => next(e));
+    })
+    .catch((e) => next(e));
+}
+
 function adminDashboardHandler(req, res, next) {
   let category_name = req.query.category ? [req.query.category] : [];
 
@@ -100,6 +125,7 @@ function adminDashboardHandler(req, res, next) {
 
 //Category Page
 app.get('/:category', (req, res) => {
+
   let categoryName = req.params.category;
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
@@ -115,6 +141,7 @@ app.get('/:category', (req, res) => {
       res.send(error);
     });
 });
+
 
 client
   .connect()
