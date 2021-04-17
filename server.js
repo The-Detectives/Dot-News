@@ -7,7 +7,7 @@ const path = require('path');
 const { client } = require('./helpers/pgClient');
 const { getDataFromAPI } = require('./helpers/superAgentClient');
 const {Article}=require('./store');
-
+const { dbExcecute } = require('./helpers/pgClient');
 /* ---------- Application Setups ---------- */
 
 const PORT = process.env.PORT || 3000;
@@ -47,7 +47,7 @@ function homeHandler(req, res, next){
 
       getDataFromAPI(artsURL)
         .then(artsData=>{
-          let artsArray=artsData.results.slice(0,5).map(item=>{
+          let artsArray=artsData.results.slice(0,10).map(item=>{
             return new Article({...item, section: artsData.section });
           });
 
@@ -62,7 +62,13 @@ function homeHandler(req, res, next){
                   let healthArray=healthData.results.slice(0,5).map(item=>{
                     return new Article({...item, section: healthData.section });
                   });
-                  res.send({data1:worldArray, data2:artsArray, data3:scienceArray, data4:healthArray});
+                  let SQL='SELECT * FROM article;'
+                  dbExcecute(SQL)
+                  .then(data => {
+                    let ourNews = data.slice(0,10);
+                    res.render('index',{worldNews:worldArray, artsNews:artsArray, scienceNews:scienceArray, healthNews:healthArray, ourNews:ourNews}) 
+                  })
+                  
                 });
 
             });
