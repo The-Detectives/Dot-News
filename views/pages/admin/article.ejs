@@ -1,0 +1,31 @@
+<%- include('./partials/header') %>
+    <div class="admin_article_container">
+        <form action="" method="post">
+            <h1 class="admin_article_title">
+                Add/Edit Article
+            </h1>
+            <div class="input_container">
+                <select name="category" id="category">
+                    <option>Choose Category</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat.id %> "><%= cat.name %> </option>
+                    <% }) %> 
+                </select>
+            </div>
+            <div class="input_container">
+                <input type="text" name="title" id="title" placeholder="Title of the article">
+            </div>
+            <div class="input_container">
+                <input type="text" name="image" id="image" placeholder="Cover image URL">
+            </div>
+            <div class="input_container">
+                <textarea name="content" id="editor" cols="30" rows="10">
+                    &lt;p&gt;This is some sample content.&lt;/p&gt;
+                </textarea>
+            </div>
+            <div class="input_container">
+                <input type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+<%- include('./partials/footer') %> 

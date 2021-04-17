@@ -37,6 +37,8 @@ app.get('/article/:id', articleHandler);
 //Admin routes
 app.get('/admin/login', loginHandler);
 app.get('/admin/dashboard', adminDashboardHandler);
+app.get('/admin/article/new', adminNewArticleHandler);
+app.post('/admin/article/new', adminCreateNewArticleHandler);
 
 /* --------- Functions Handling routes --------- */
 
@@ -87,6 +89,27 @@ function loginHandler(req, res, next) {
   res.render('pages/admin/login');
 }
 
+function adminNewArticleHandler(req, res, next) {
+  let categorySqlQuery = 'SELECT * FROM category';
+
+  dbExcecute(categorySqlQuery)
+    .then(categories => {
+      res.render('pages/admin/article', { categories: categories });
+    })
+    .catch((e) => next(e));
+}
+
+function adminCreateNewArticleHandler(req, res, next) {
+  let articleData = req.body;
+
+  let sqlQuery = 'INSERT INTO article (title, image, content, published_date, category_id) VALUES ($1, $2, $3, $4, $5);';
+  let safeValues = [articleData.title, articleData.image, articleData.content, new Date(), articleData.category];
+
+  dbExcecute(sqlQuery, safeValues)
+    .then(res.redirect('/admin/dashboard'))
+    .catch(e => next(e));
+}
+
 function aboutUsHandler(req,res){
   res.render('pages/aboutUs');
 }
@@ -124,7 +147,12 @@ function adminDashboardHandler(req, res, next) {
 
   dbExcecute(sqlQuery, category_name)
     .then((articles) => {
-      res.render('pages/admin/dashboard', { articles: articles });
+      let categorySqlQuery = 'SELECT * FROM category';
+      dbExcecute(categorySqlQuery)
+        .then(categories => {
+          res.render('pages/admin/dashboard', { articles: articles, categories: categories });
+        })
+        .catch((e) => next(e));
     })
     .catch((e) => next(e));
 }
