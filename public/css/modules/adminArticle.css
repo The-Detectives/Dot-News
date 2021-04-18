@@ -1,6 +1,6 @@
 
 
-form{
+.adminForm{
     border: 1px dotted #509292;
     margin: 1%;
     padding: 1%;
@@ -8,7 +8,7 @@ form{
     height: 700px;
 }
 
-form input, form select {
+.adminForm input, .adminForm select {
     width: 400px;
     margin: 10px 0;
     height: 50px;
@@ -19,7 +19,7 @@ form input, form select {
 .admin_article_title{
     font-size: 30px;
 }
-#category {
+#categoryAdminF {
     cursor: pointer;
 }
 .input_container1{
