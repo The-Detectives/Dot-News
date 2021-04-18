@@ -196,9 +196,11 @@ function loginPageHandler(req, res, next) {
     .then(auth => {
       if(auth){
         res.redirect('/admin/dashboard');
+      } else {
+        res.render('pages/admin/login');
       }
     })
-    res.render('pages/admin/login');
+    
 }
 
 // handling login
@@ -210,7 +212,6 @@ function loginHandler(req, res, next) {
   dbExcecute(getUserQuery, [userReq.username])
     .then((data) => {
       user = data[0];
-      console.log(user)
       if (!user) {
         res.redirect('/admin/login');
       }
@@ -364,6 +365,9 @@ function notFoundPageHandler(req, res, next) {
 function errorHandler(error, req, res, next) {
   if (error) {
     console.log(error);
+    if(error.message === 'Password do not match'){
+      res.redirect('/admin/login');
+    }
     res.send('Somthing Bad Happned');
   } else {
     next();
@@ -398,13 +402,16 @@ function createToken() {
 
 // function to check if the user is authenticated
 function authenticate(userReq) {
-  let token = userReq.session.user ? userReq.session.user.token : null
+  let token = userReq.session.user ? userReq.session.user.token : null;
   return findByToken(token).then((user) => {
     if (user && user.username == userReq.session.user.username) {
       return true;
     } else {
       return false;
     }
+  })
+  .catch((e) => {
+    throw new Error(e);
   });
 }
 
