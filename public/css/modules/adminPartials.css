@@ -7,14 +7,14 @@
     color: #D93491;
 }
 
-.admin_login_header, .admin_footer_container {
+.admin_header, .admin_footer {
     width: 100%;
     background-color: #00B5E5;
     color: white;
     height: 10vh;
     line-height: 10vh;
     text-align: center;
-    z-index: 101;
+    z-index: 1000;
 }
 
 .admin_header_container {
