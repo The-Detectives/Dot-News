@@ -1,0 +1,34 @@
+.admin_login_header a, .dashboard_sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.admin_login_header a:hover {
+    color: #D93491;
+}
+
+.admin_header, .admin_footer {
+    width: 100%;
+    background-color: #00B5E5;
+    color: white;
+    height: 10vh;
+    line-height: 10vh;
+    text-align: center;
+    z-index: 1000;
+}
+
+.admin_header_container {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.admin_navbar ul {
+    display: flex;
+}
+
+.admin_navbar ul li {
+    display: flex;
+    padding: 0 10px;
+}

@@ -26,3 +26,10 @@ CREATE TABLE article (
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
 
+CREATE TABLE contact (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200),
+    phone VARCHAR(200),
+    email VARCHAR(200),
+    message TEXT
+);
