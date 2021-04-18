@@ -1,30 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/header') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <div class="pageName">
+        <h1><%= categoryDB[0].name %></h1>
+    </div>
+    <section class="categoryContainer">
 
-<body>
-    <% categoryDB.forEach(item=> {%>
-        <h2><%= item.title %></h2>
-        <p><%= item.category %></p>
-        <p><%= item.abstract %></p>
-        <p><%= item.published_date %></p>
-        <a href="<%= item.url %>"><img style="max-width:20%;" src="<%= item.image %>" /></a>
-    <% }) %>
+        <% for(var i=0; i<4; i++) {%>
+            <div class="categoryItem <% if(i===0){ %>bigItem <% } %>">
 
-    <% categoryApi.forEach(item=> {%>
-        <h2><%= item.title %></h2>
-        <p><%= item.category %></p>
-        <p><%= item.abstract %></p>
-        <p><%= item.published_date %></p>
-        <a href="<%= item.url %>"><img style="max-width:20%;" src="<%= item.image %>" /></a>
-    <% }) %>
+                <a href="<%= categoryDB[i].url %>"><img src="<%= categoryDB[i].image %>" /></a>
+                
+                <h2>
+                    <%= categoryDB[i].title %>
+                </h2>
+                <p>
+                    <%= categoryDB[i].category %>
+                </p>
+                <p>
+                    <%= categoryDB[i].abstract %>
+                </p>
+                <p>
+                    <%= categoryDB[i].published_date %>
+                </p>
+            </div>
+            <% } %>
 
-</body>
+                <% for(var i=0; i<8; i++) {%>
+                    <div class="categoryItem <% if(i===3){ %>bigItem <% } %>">
 
-</html>
+                        <a href="<%= categoryApi[i].url %>"><img src="<%= categoryApi[i].image %>" /></a>
+
+                        <h2>
+                            <%= categoryApi[i].title %>
+                        </h2>
+                        <p>
+                            <%= categoryApi[i].category %>
+                        </p>
+                        <p>
+                            <%= categoryApi[i].abstract %>
+                        </p>
+                        <p>
+                            <%= categoryApi[i].published_date %>
+                        </p>
+                    </div>
+
+                    <% } %>
+    </section>
+
+    <%- include('../partials/footer') %>

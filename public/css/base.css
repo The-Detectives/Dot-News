@@ -1,19 +1,8 @@
+*{
+  box-sizing: border-box;
+}
+
 body {
   background-color: white;
 }
 
-header {
-  background-color: #00b5e5;
-  /* height: 10vh; */
-  line-height: 10vh;
-  text-align: center;
-  color: white;
-}
-
-footer {
-  background-color: #00b5e5;
-  /* height: 10vh; */
-  line-height: 10vh;
-  text-align: center;
-  color: white;
-}

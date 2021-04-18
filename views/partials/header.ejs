@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>News</title>
-</head>
-<body>
-    <header>The is the header</header>
-    <main>
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>News</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="topnav">
+      <a href="/"> <img src="http://via.placeholder.com/60x40" alt=""> </a>
+      <!-- <a href="/"> <img src="http://via.placeholder.com/60x40" alt=""> </a> -->
+      <a href="/">
+        <p> Home </p>
+      </a>
+      <a href="">
+        <p> About Us </p>
+      </a>
+      <div class="topnav-right">
+        <a href="">
+          <p> Login</p>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="secHeader" id="myHeader">
+        <% for(let i =0; i<8; i++){%>
+          <a href=""><p>home</p></a>
+      <%  } %>
+      </div>
+    </div>
+  </header>
+  <script>
+    window.onscroll = function() {myFunction()};
     
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+    
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+    </script>
+  <main>

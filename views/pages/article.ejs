@@ -1,41 +1,44 @@
 <%- include('../partials/header') %>
 
-    <link rel="stylesheet" href="../../../css/style.css">
+    <!-- <link rel="stylesheet" href="../../../css/modules/article.css"> -->
 
-    <section class="container">
+    <section class="articleContainer">
         <div>
             <br>
-            <p class="p_article">Category: <%= articleData.name %>
+
+            <p class="p_article">
+                Section: <%= articleData.name %> 
             </p>
+
             <br>
             <h2 class="h2_article">
                 <%= articleData.title %>
             </h2>
             <br>
-            <img class="img_article" src="<%= articleData.image %>" alt="">
             <br>
-            <p class="p1_article">
-                <%= articleData.abstract %>
-            </p>
             <br>
-            <p class="p2_article">
-                <%= articleData.content %>
-            </p>
+            <div class="p2_article">
+                <%- articleData.content %>
+            </div>
             <br>
             <p class="p3_article">
-                <%= articleData.published_date %>
+                Published date: <%= articleData.published_date %>
             </p>
+
+
         </div>
-        <div>
+        <div class="sideDiv">
             <br>
             <% articleCategory.forEach((articleCategory)=> { %>
-                <a href="<%= articleCategory.url %>"><img class="img_articleCat" src="<%= articleCategory.image %>"></a>
-                <br>
-                <p class="p_articleCat">
-                    <%= articleCategory.title%>
-                </p>
+                <div class="gallery">
+                    <a href="<%= articleCategory.url %>"><img class="img_articleCat" src="<%= articleCategory.image %>">
+                        <p class="p_articleCat">
+                            <%= articleCategory.title%>
+                        </p>
+                    </a>
+                </div>
                 <% }); %>
         </div>
     </section>
-
+    <link rel="stylesheet" href="../../../css/modules/article.css">
     <%- include('../partials/footer') %>
