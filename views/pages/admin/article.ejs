@@ -1,11 +1,12 @@
 <%- include('./partials/header') %>
+<link rel="stylesheet" href="../../../css/style.css">
     <div class="admin_article_container">
         <form action="<% if(article && article.id){ %>/admin/article/<%= article.id %>?_method=put<% } %>" method="post">
             <h1 class="admin_article_title">
-                <% if(article.length > 0) { %>Edit<% } else { %> Add<% } %>  Article
+                <% if(article.length > 0) { %>Edit<% } else { %> <% } %>  Add Article
             </h1>
             <input type="hidden" name="id" <% if(article && article.id){ %> value="<%= article.id %>" <% } %>>
-            <div class="input_container">
+            <div class="input_container1">
                 <select name="category" id="category">
                     <option>Choose Category</option>
                     <% categories.forEach(cat => { %>
@@ -13,15 +14,17 @@
                     <% }) %> 
                 </select>
             </div>
-            <div class="input_container">
-                <input type="text" name="title" id="title" placeholder="Title of the article" <% if(article && article.title){ %> value="<%= article.title %>" <% } %> >
+            <div class="input_container1">
+                <input class="title-img" type="text" name="title" id="title" placeholder="Title of the article" <% if(article && article.title){ %> value="<%= article.title %>" <% } %> >
             </div>
-            <div class="input_container">
-                <input type="text" name="image" id="image" placeholder="Cover image URL" <% if(article && article.image){ %> value="<%= article.image %>" <% } %> >
+            <div class="input_container1">
+                <input class="title-img" type="text" name="image" id="image" placeholder="Cover image URL" <% if(article && article.image){ %> value="<%= article.image %>" <% } %> >
             </div>
-            <div class="input_container">
+            <div class="input_container2">
                 <textarea name="content" id="editor" cols="30" rows="10">
-                    <% if(article && article.content){ %> <%= article.content %> <% } %>
+                   <div> <% if(article && article.content){ %> 
+                   <div class="inputDiv"><%= article.content %> </div> 
+                    <% } %></div>
                 </textarea>
             </div>
             <div class="input_container">

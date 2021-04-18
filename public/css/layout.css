@@ -214,3 +214,37 @@ line-height: 6.6vh;
 }
 
 /* END FOOTER */
+
+/* START SECOND HEADER */
+
+.secHeader {
+  padding: 10px 16px;
+  background-color: white;
+  border-bottom: 1px solid #000000;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 102px;
+}
+
+.secHeader a {
+  text-decoration: none;
+}
+.secHeader a p{
+  display: inline;
+  margin: 0 8%;
+
+  color: rgb(0, 0, 0);
+}
+
+.secHeader a p:hover {
+  color: rgb(81, 200, 255);
+}
+
+/* END SECOND HEADER */

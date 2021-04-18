@@ -1,7 +1,12 @@
 @import 'loginForm.css';
 @import 'categorypage.css';
 @import 'aboutUs.css';
+@import 'adminLogin.css';
 @import url('https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&display=swap');
+
+@import 'article.css';
+
 @import 'adminPartials.css';
 @import 'adminDashboard.css';
+
 
