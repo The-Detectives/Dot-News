@@ -43,7 +43,7 @@ app.get('/', homeHandler);
 app.get('/aboutUs', aboutUsHandler);
 app.get('/:category', categoryHandler);
 app.get('/article/:id', articleHandler);
-
+app.post('/aboutUs', contactHandler);
 //Admin routes
 app.get('/admin/login', loginPageHandler);
 app.post('/admin/login', loginHandler);
@@ -129,6 +129,16 @@ function aboutUsHandler(req, res, next) {
   res.render('pages/aboutUs');
 }
 
+// Handling contact form
+function  contactHandler(req, res, next){
+  console.log(req.body)
+  let contactData = req.body;
+  let sqlContact ='INSERT INTO contact (name, phone, email, message) VALUES ($1, $2, $3, $4);';
+  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message];
+  dbExcecute(sqlContact, safeValues1)
+  .then( res.redirect('/aboutUs'))
+  .catch((e) => next(e));
+}
 // handling the article page
 function articleHandler(req, res, next) {
   //article
@@ -368,7 +378,7 @@ function errorHandler(error, req, res, next) {
     if(error.message === 'Password do not match'){
       res.redirect('/admin/login');
     }
-    res.send('Somthing Bad Happned');
+    res.send('Something Bad Happened');
   } else {
     next();
   }
