@@ -1,52 +1,33 @@
 <%- include('../partials/header') %>
 
-    <link rel="stylesheet" href="../../../css/modules/article.css">
+    <!-- <link rel="stylesheet" href="../../../css/modules/article.css"> -->
 
     <section class="articleContainer">
         <div>
             <br>
-            <p class="p_article">Category: <%= articleData.name %>
+
+            <p class="p_article">
+                Section: <%= articleData.name %> 
             </p>
+
             <br>
             <h2 class="h2_article">
                 <%= articleData.title %>
             </h2>
             <br>
-            <img class="img_article" src="<%= articleData.image %>" alt="">
             <br>
-            <p class="p1_article">
-                <%= articleData.abstract %>
-            </p>
             <br>
-            <p class="p2_article">
-                <%= articleData.content %>
-            </p>
+            <div class="p2_article">
+                <%- articleData.content %>
+            </div>
             <br>
             <p class="p3_article">
-                <%= articleData.published_date %>
+                Published date: <%= articleData.published_date %>
             </p>
-
-            <form style="margin-top: 300px;" class="form-style-4" action="" method="post">
-                <label for="field1">
-                <span>Enter Your Name</span><input type="text" name="field1" required="true" />
-                </label>
-                <label for="field2">
-                <span>Email Address</span><input type="email" name="field2" required="true" />
-                </label>
-                <label for="field3">
-                <span>Short Subject</span><input type="text" name="field3" required="true" />
-                </label>
-                <label for="field4">
-                <span>Message to Us</span><textarea name="field4" onkeyup="adjust_textarea(this)" required="true"></textarea>
-                </label>
-                <label>
-                <span> </span><input type="submit" value="Send Letter" />
-                </label>
-                </form>
 
 
         </div>
-        <div>
+        <div class="sideDiv">
             <br>
             <% articleCategory.forEach((articleCategory)=> { %>
                 <div class="gallery">
@@ -60,5 +41,4 @@
         </div>
     </section>
     <link rel="stylesheet" href="../../../css/modules/article.css">
-        <script src="../../../js/article.js"></script>
     <%- include('../partials/footer') %>
