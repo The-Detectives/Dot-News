@@ -1,11 +1,9 @@
 <%- include('../partials/header') %>
 
     <div class="pageName">
-        <h1>category</h1>
+        <h1><%= categoryDB[0].name %></h1>
     </div>
     <section class="categoryContainer">
-
-
 
         <% for(var i=0; i<4; i++) {%>
             <div class="categoryItem <% if(i===0){ %>bigItem <% } %>">
