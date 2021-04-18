@@ -1,0 +1,78 @@
+
+
+form{
+    border: 1px dotted #509292;
+    margin: 1%;
+    padding: 1%;
+    /* background-color: lightslategrey; */
+    height: 700px;
+}
+
+form input, form select {
+    width: 400px;
+    margin: 10px 0;
+    height: 50px;
+    /* display: inline-block; */
+
+}
+
+.admin_article_title{
+    font-size: 30px;
+}
+#category {
+    cursor: pointer;
+}
+.input_container1{
+    display: inline;
+    margin: 0 0;
+    margin-right: 2%;
+}
+
+.input_container:hover{
+    border: none;
+}
+.inputDiv{
+    height: 400px;
+    /* overflow: scroll; */
+    overflow-y: hidden;
+    
+}
+
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: var(--ck-color-base-border);
+    height: 300px;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* .content .div {
+    height: 400px;
+
+} */
+
+.content .div:hover{
+    text-decoration: none;
+}
+
+.title-img{
+    display: inline-block;
+}
+
+.input_container input{
+    cursor: pointer;
+    float: right;
+    color: white;
+    background-color: #5dc0c0;
+    border:  none;
+    
+}
+
+.input_container input:hover{
+    background-color: #509292;
+
+}
+
+
+.ck-editor__main.ck-blurred{
+    min-width: 600px;
+}
