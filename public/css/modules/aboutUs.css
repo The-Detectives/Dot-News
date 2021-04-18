@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&display=swap');
+/* START ABOUT US PAGE */
+.container-aboutUs{
+    width: 100%;
+    height: 100%;
+    display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        background-color: grey;
+        height: 1500px;
+        /* flex: 1;
+        margin-bottom:800px ; */
+     
+    }
+    .sub-container{
+        width: 95%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: flex-start;
+      
+    } 
+    .cards-container{
+        width: 100%;
+        height: 60%;
+        background-color: #1a1a1a;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        align-content: center;
+    }
+    .contact{
+        width: 100%;
+        height: 40%;
+        background-color:#1a1a1a;
+    }
+    .img-section img{
+        height: 240px;
+        width: 240px;
+        border-radius: 50%;
+        margin-top:40px;
+    }
+    h3 .name{
+        font-family: 'Oswald', sans-serif;
+        color: white;
+        font-size: 30px;
+    }
+    h3 .job-title{
+        font-family: 'Roboto', sans-serif;
+        color: grey;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .img-section ul li i {
+        color:white;
+    
+        font-size: 30px;
+      }
+      .image-area{
+         margin-top:0px ;
+          width: 100%;
+          height: 100%;
+         
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          align-items: flex-start;
+          align-content: flex-start;
+      }
+      .img-section{
+          width: 40%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          align-items: center;
+          align-content: center;
+      }
+      .info{
+          line-height: 30px;
+          text-align: center;
+        
+      }
+    .info ul li {
+    
+        padding:0  20px;
+       
+    }
+    .info ul{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+       
+    }
+    
+    
+    .contact {
+      
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: center;
+    }
+    .btn {
+        padding: 8px 20px;
+        border-radius: 0;
+        overflow: hidden;
+    }
+    
+    .btn:hover {
+        background: transparent;
+        box-shadow: 0 0 20px 10px white;
+    }
+    
+    .btn:hover {
+        background: transparent;
+        box-shadow: 0 0 20px 10px white;
+    }
+  
+    .form-input-material input {
+        color: black;
+    }
+    .title{
+        font-family: 'Roboto', sans-serif;
+        font-size: 60px;
+        margin:70px 0 50px 70px;
+        text-transform: uppercase;
+        color: white;
+        font-weight: bold;
+    }
+    .contact-form {
+        margin-left: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 40px;
+        color: white;
+        background: rgba(66, 67, 80, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0.4px 0.4px rgba(165, 89, 89, 0.109), 0 1px 1px rgba(128, 128, 128, 0.155), 0 2.1px 2.1px rgba(128, 128, 128, 0.195), 0 4.4px 4.4px rgba(128, 128, 128, 0.241), 0 12px 12px rgba(128, 128, 128, 0.35);
+    }
+    .contact-form h1 {
+        margin: 0 0 24px 0;
+    }
+    .contact-form .form-input-material {
+        margin: 12px 0;
+    }
+    .contact-form .btn {
+        width: 100%;
+        margin: 18px 0 9px 0;
+    }
+    
+/* END ABOUT US PAGE  */
