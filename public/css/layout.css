@@ -1,4 +1,4 @@
-/* body {
+body {
   width: 100%;
   min-width: 410px;
   min-height: 100vh;
@@ -17,7 +17,7 @@ main {
 
 footer {
     width: 100%;
-} */
+}
 
 /* START HEADER */
 .topnav {
