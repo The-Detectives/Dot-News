@@ -1,0 +1,40 @@
+.loginMain{
+    display: flex;
+}
+
+.login_title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: x-large;
+    text-transform: capitalize;
+}
+
+.login_container {
+    border: 1px solid;
+    text-align: center;
+    width: 350px;
+    height: 275px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 60px;
+    margin-top: 15%;
+}
+
+.inputField {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 15px;
+    
+}
+
+.submitField {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-size: xx-large;
+    font-family: none;
+    margin-top: 10px;
+}
+
