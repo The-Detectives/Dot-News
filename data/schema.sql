@@ -4,15 +4,15 @@ DROP TABLE IF EXISTS category;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(200),
-    password VARCHAR(200),
+    username VARCHAR(200) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL,
     token TEXT
 );
 
 
 CREATE TABLE category (
-    id ,
-    name VARCHAR(200)
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL UNIQUE
 );
 
 CREATE TABLE article (
