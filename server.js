@@ -398,10 +398,8 @@ function createToken() {
 
 // function to check if the user is authenticated
 function authenticate(userReq) {
-  // if (!userReq.session || !userReq.session.user || !userReq.session.user.token) {
-  //   return false;
-  // }
-  return findByToken(userReq.session.user.token).then((user) => {
+  let token = userReq.session.user ? userReq.session.user.token : null
+  return findByToken(token).then((user) => {
     if (user && user.username == userReq.session.user.username) {
       return true;
     } else {
