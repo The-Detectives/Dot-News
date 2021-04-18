@@ -1,0 +1,52 @@
+
+.pageName {
+    text-align: center;
+    font-size: xxx-large;
+    margin: 20px 20px;
+    text-transform: capitalize;
+  }
+  
+  .categoryContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    grid-gap: 10px;
+    margin: auto;
+    padding: 25px;
+  }
+  
+  .categoryItem {
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    grid-row: span 1;
+    text-align: center;
+    background-color: #ccc;
+    font-size: large;
+  }
+  
+  .categoryItem img {
+    width: 40%;
+    max-height: 50%;
+  }
+  
+  .categoryItem h2 {
+    padding-top: 5px;
+  }
+  
+  .bigItem {
+    grid-row: span 2;
+    grid-column: span 2;
+    text-align: center;
+    background-color: gray;
+    font-size: xx-large;
+  }
+  
+  .bigItem img {
+    width: 60%;
+    max-height: 80%;
+  }
+  
+  .bigItem h2 {
+    padding-top: 20px;
+  }
