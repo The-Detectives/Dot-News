@@ -192,11 +192,13 @@ function categoryHandler(req, res, next) {
 
 // handling the login form page
 function loginPageHandler(req, res, next) {
-  if (authenticate(req)) {
-    res.redirect('/admin/dashboard');
-  } else {
+  authenticate(req)
+    .then(auth => {
+      if(auth){
+        res.redirect('/admin/dashboard');
+      }
+    })
     res.render('pages/admin/login');
-  }
 }
 
 // handling login
@@ -208,6 +210,7 @@ function loginHandler(req, res, next) {
   dbExcecute(getUserQuery, [userReq.username])
     .then((data) => {
       user = data[0];
+      console.log(user)
       if (!user) {
         res.redirect('/admin/login');
       }
@@ -232,8 +235,14 @@ function loginHandler(req, res, next) {
 
 // handling logout
 function logutHandler(req, res, next) {
-  req.session = null;
-  res.redirect('/admin/login');
+  let sqlQuery = 'UPDATE users SET token=NULL WHERE username=$1';
+
+  dbExcecute(sqlQuery, [req.session.user.username])
+    .then(() => {
+      req.session = null;
+      res.redirect('/admin/login');
+    })
+    .catch(e => next(e));
 }
 
 // handling the admin dashboard page
@@ -389,11 +398,11 @@ function createToken() {
 
 // function to check if the user is authenticated
 function authenticate(userReq) {
-  if (!userReq.session || !userReq.session.user) {
-    return false;
-  }
+  // if (!userReq.session || !userReq.session.user || !userReq.session.user.token) {
+  //   return false;
+  // }
   return findByToken(userReq.session.user.token).then((user) => {
-    if (user.username == userReq.session.user.username) {
+    if (user && user.username == userReq.session.user.username) {
       return true;
     } else {
       return false;
@@ -416,11 +425,14 @@ function findByToken(token) {
 // authentication middleware
 
 function isAuthenticated(req, res, next) {
-  if (authenticate(req)) {
-    next();
-  } else {
-    res.redirect('/admin/login');
-  }
+  authenticate(req)
+  .then(auth => {
+    if(!auth){
+      res.redirect('/admin/login');
+    } else {
+      next();
+    }
+  })
 }
 
 /* --------- Application start the server --------- */

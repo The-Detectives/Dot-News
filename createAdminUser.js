@@ -1,4 +1,8 @@
-const { dbExcecute } = require('./helpers/pgClient');
+/* import requirements */
+
+require('dotenv').config();
+const readline = require('readline');
+const { client } = require('./helpers/pgClient');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
@@ -15,8 +19,9 @@ const hashPassword = (password) => {
 const createUser = (user) => {
   let sqlQuery =
     'INSERT INTO users (username, password, token) VALUES ($1, $2, $3) RETURNING id, username, token;';
-  return dbExcecute(sqlQuery, [user.username, user.password, user.token])
-    .then((data) => data[0])
+  return client
+    .query(sqlQuery, [user.username, user.password, user.token])
+    .then((data) => data.rows[0])
     .catch((e) => console.log(e));
 };
 
@@ -32,7 +37,6 @@ function createToken() {
 
 // function to create admin user
 function createAdminUser(user) {
-  console.log('sdfdsd', process.env.NODE_ENV);
   hashPassword(user.password)
     .then((hashedPassword) => {
       delete user.password;
@@ -45,21 +49,38 @@ function createAdminUser(user) {
       console.log(user);
       console.info('User admin created successfully');
       console.info('You can login now.');
+      client.end();
     })
     .catch((e) => console.log(e));
 }
 
-let userData = process.argv.slice(2);
+client
+  .connect()
+  .then(() => {
+    /* Creating an instance of readline */
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
 
-if (userData.length < 2) {
-  console.error('You have to enter both, the username and the password.');
-  console.info('Try again please!');
-  return;
-}
+    /* Display the messages to the user */
+    rl.question('Enter the username: ', function (username) {
+      rl.question('Enter the password :', function (password) {
+        let user = {
+          username: username,
+          password: password,
+        };
 
-let user = {
-  username: userData[0],
-  password: userData[1],
-};
+        createAdminUser(user);
 
-createAdminUser(user);
+        rl.close();
+      });
+    });
+
+    rl.on('close', function () {
+      console.info('Exitting ...');
+      // client.end();
+      // process.exit(0);
+    });
+  })
+  .catch((e) => console.log(e));
