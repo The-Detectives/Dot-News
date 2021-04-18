@@ -11,10 +11,10 @@ header {
 }
 
 main {
-    width: 100%;
-    flex: 1;
+  width: 100%;
+  flex: 1;
 }
 
 footer {
-    width: 100%;
+  width: 100%;
 }
