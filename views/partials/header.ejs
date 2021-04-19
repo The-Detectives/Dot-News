@@ -28,11 +28,11 @@
     </div>
     <div>
       <div class="secHeader" id="myHeader">
-        <% for(let i=0; i<8; i++){%>
-          <a href="">
-            <p>home</p>
+        <% categories.forEach(cat=>{%>
+          <a href="/<%= cat.name  %>">
+            <p> <%= cat.name  %> </p>
           </a>
-          <% } %>
+          <% }) %>
       </div>
     </div>
   </header>

@@ -54,6 +54,7 @@ app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
 app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
 app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
+app.get ('/admin/messages', adminMassagesHandler)
 
 // error handler
 app.use(errorHandler);
@@ -105,13 +106,20 @@ function homeHandler(req, res, next) {
                   dbExcecute(SQL)
                     .then((data) => {
                       let ourNews = data.slice(0, 10);
-                      res.render('index', {
-                        worldNews: worldArray,
-                        artsNews: artsArray,
-                        scienceNews: scienceArray,
-                        healthNews: healthArray,
-                        ourNews: ourNews,
-                      });
+                      let categorySql = 'SELECT * FROM category;';
+                      dbExcecute(categorySql)
+                      .then(categories=>{
+                        res.render('index', {
+                          worldNews: worldArray,
+                          artsNews: artsArray,
+                          scienceNews: scienceArray,
+                          healthNews: healthArray,
+                          ourNews: ourNews,
+                          categories:categories,
+                        });
+
+                      })
+                    
                     })
                     .catch((e) => next(e));
                 })
@@ -126,15 +134,18 @@ function homeHandler(req, res, next) {
 
 // handling the about us page
 function aboutUsHandler(req, res, next) {
-  res.render('pages/aboutUs');
-}
+  let categorySql = 'SELECT * FROM category;';
+  dbExcecute(categorySql)
+  .then(categories=>{
+  res.render('pages/aboutUs', {categories:categories});
+
+})};
 
 // Handling contact form
 function  contactHandler(req, res, next){
-  console.log(req.body)
   let contactData = req.body;
-  let sqlContact ='INSERT INTO contact (name, phone, email, message) VALUES ($1, $2, $3, $4);';
-  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message];
+  let sqlContact ='INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
+  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
   .then( res.redirect('/aboutUs'))
   .catch((e) => next(e));
@@ -156,10 +167,15 @@ function articleHandler(req, res, next) {
           let arr = categoryData.results.slice(0, 6).map((val) => {
             return new Article({ ...val, section: categoryData.section });
           });
-
+          let categorySql = 'SELECT * FROM category;';
+          dbExcecute(categorySql)
+          .then(categories=>{
           res.render('pages/article', {
             articleData: article,
             articleCategory: arr,
+            categories:categories,
+          })
+      
           });
         })
         .catch((e) => next(e));
@@ -180,15 +196,19 @@ function categoryHandler(req, res, next) {
       });
 
       let sqlQuery =
-        'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1';
+        'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
       let safeValues = [categoryName];
       dbExcecute(sqlQuery, safeValues)
         .then((data) => {
           let resultDb = data;
-
+          let categorySql = 'SELECT * FROM category;';
+          dbExcecute(categorySql)
+          .then(categories=>{
           res.render('pages/category', {
             categoryApi: arr,
             categoryDB: resultDb,
+            categories:categories,
+          })
           });
         })
         .catch((e) => next(e));
@@ -365,11 +385,29 @@ function adminUpdateArticleHandler(req, res, next) {
     .catch((e) => next(e));
 }
 
+// handling contact message
+function adminMassagesHandler(req,res, next){
+  let contactSql = 'SELECT * FROM contact';
+
+  dbExcecute(contactSql)
+    .then((messages) => {
+      let categorySqlQuery = 'SELECT * FROM category;';
+      dbExcecute(categorySqlQuery)
+        .then((categories) => {
+          res.render('pages/admin/dashboardmessages',{messages:messages, categories: categories});
+        })
+        .catch(e => next(e));
+    })
+    .catch((e) => next(e));
+  
+}
 /* --------- Application errors handler --------- */
 
 function notFoundPageHandler(req, res, next) {
   res.status(401).send('Page Not Found');
 }
+
+
 
 // error handler
 function errorHandler(error, req, res, next) {
