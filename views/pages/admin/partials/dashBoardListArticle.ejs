@@ -1,0 +1,27 @@
+<div class="dashboard_header">
+  <a href="/admin/article/new">New Article</a>
+</div>
+<% articles.forEach(article=> { %>
+<div class="dashboard_card">
+  <div class="dashboard_card_left">
+    <img src="<%= article.image %>" alt="<%= article.title %>" />
+    <div class="dashboard_card_info">
+      <div class="card_title"><%= article.title %></div>
+      <div class="published_at">
+        <%= new Date(article.published_date).toDateString() %>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard_card_info_actions">
+    <a href="/admin/article/<%= article.id %>">
+      <button class="one" type="submit">Edit</button>
+    </a>
+    <form
+      action="/admin/article/<%= article.id %>?_method=delete"
+      method="post"
+    >
+      <button class="two" type="submit">Delete</button>
+    </form>
+  </div>
+</div>
+<% }) %>

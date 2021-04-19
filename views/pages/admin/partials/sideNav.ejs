@@ -1,0 +1,11 @@
+<div class="dashboard_sidebar">
+  <div class="sidebar_title">Sections</div>
+  <hr>
+  <ul class="sidebar_links">
+    <% categories.forEach(category=> { %>
+      <li><a href="/admin/dashboard?category=<%= category.name %>">
+          <%= category.name[0].toUpperCase() + category.name.slice(1); %>
+        </a></li>
+      <% }) %>
+  </ul>
+</div>

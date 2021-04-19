@@ -1,5 +1,3 @@
-
-
 let slideIndex = 1;
 showSlides(slideIndex);
 function plusSlides(n) {
@@ -23,3 +21,17 @@ function showSlides(n) {
   slides[slideIndex - 1].style.display = "block";
   dots[slideIndex - 1].className += " active";
 }
+
+/* second header */
+
+window.onscroll = function () { myFunction(); };
+
+var header = document.getElementById('myHeader');
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add('sticky');
+  } else {
+    header.classList.remove('sticky');
+  }
