@@ -1,55 +1,13 @@
 <%- include('./partials/header') %>
-<<<<<<< HEAD
-  <div class="admin_dashboard_container">
-    <div class="dashboard_sidebar">
-      <div class="sidebar_title">Sections</div>
-      <hr>
-      <ul class="sidebar_links">
 
-        <% categories.forEach(category=> { %>
-
-          <li><a href="/admin/dashboard?category=<%= category.name %>">
-              <%= category.name[0].toUpperCase() + category.name.slice(1); %>
-            </a></li>
-          <% }) %>
-
-      </ul>
-    </div>
-    <div class="dashboard_main">
-      <div class="dashboard_header">
-        <a href="/admin/article/new">New Article</a>
-      </div>
-      <% articles.forEach(article=> { %>
-        <div class="dashboard_card">
-          <div class="dashboard_card_left">
-            <img src="<%= article.image %>" alt="<%= article.title %>" />
-            <div class="dashboard_card_info">
-              <div class="card_title">
-                <%= article.title %>
-              </div>
-              <div class="published_at">
-                <%= new Date(article.published_date).toDateString() %>
-              </div>
-            </div>
-          </div>
-          <div class="dashboard_card_info_actions">
-            <a href="/admin/article/<%= article.id %>">
-              <button class="one" type="submit">Edit</button>
-            </a>
-            <form action="/admin/article/<%= article.id %>?_method=delete" method="post">
-              <button class="two" type="submit">Delete</button>
-            </form>
-          </div>
-        </div>
-        <% }) %>
-    </div>
-=======
 <div class="admin_dashboard_container">
 
  <%- include('./partials/sideNav') %> 
   <div class="dashboard_main">
+    <div class="dashboard_messages">
+      <%- messages() %>
+    </div>
     <%- include('./partials/dashBoardListArticle') %> 
 
->>>>>>> 5925f75c71494c3641b8a0787f9fbc397d896958
   </div>
   <%- include('./partials/footer') %>

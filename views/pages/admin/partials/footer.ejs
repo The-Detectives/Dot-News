@@ -10,9 +10,15 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
 <!-- <script src="/js/app.js"></script> -->
 <script>
+
+    /* Hide the logout link in navbar  */
     if(window.location.pathname === '/admin/login'){
         $('#logout_link').css({display: 'none'});
     }
+
+    /* Hide messages after 5 seconds */
+    $('.dashboard_messages').delay(3000).fadeOut(1000);
+
     /* Admin ckeditor config */
     ClassicEditor.create(document.querySelector('#editor'))
     .catch((error) => {

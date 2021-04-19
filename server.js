@@ -11,6 +11,8 @@ const { dbExcecute } = require('./helpers/pgClient');
 const { Article } = require('./store');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const connectFlash = require('connect-flash')();
+const expressMessages = require('express-messages');
 
 /* ---------- Application Setups ---------- */
 
@@ -19,6 +21,8 @@ const app = express();
 
 app.use(cors());
 app.use(methodOverride('_method'));
+app.use(connectFlash);
+app.use(messagesMiddleware);
 app.use(
   cookieSession({
     name: 'session',
@@ -243,6 +247,7 @@ function loginHandler(req, res, next) {
     .then((data) => {
       user = data[0];
       if (!user) {
+        req.flash("error", "Username or password not correct");
         res.redirect('/admin/login');
       }
       return checkPassword(userReq.password, user);
@@ -340,7 +345,10 @@ function adminDeleteArticleHandler(req, res, next) {
   let sqlQuery = 'DELETE FROM article WHERE id = $1;';
 
   dbExcecute(sqlQuery, [articleId])
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article Deleted successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -381,7 +389,10 @@ function adminUpdateArticleHandler(req, res, next) {
   ];
 
   dbExcecute(sqlQuery, safeValues)
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article updated successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -414,6 +425,7 @@ function errorHandler(error, req, res, next) {
   if (error) {
     console.log(error);
     if(error.message === 'Password do not match'){
+      req.flash("error", "Username or password not correct");
       res.redirect('/admin/login');
     }
     res.send('Something Bad Happened');
@@ -475,8 +487,13 @@ function findByToken(token) {
     });
 }
 
-// authentication middleware
+// Messages middleware
+function messagesMiddleware(req, res, next) {
+  res.locals.messages = expressMessages(req, res);
+  next();
+}
 
+// authentication middleware
 function isAuthenticated(req, res, next) {
   authenticate(req)
   .then(auth => {
