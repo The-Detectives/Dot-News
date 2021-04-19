@@ -9,7 +9,7 @@
 
 .admin_header, .admin_footer {
     width: 100%;
-    background-color: #00B5E5;
+    background-color: #00B5E5 !important;
     color: white;
     height: 10vh;
     line-height: 10vh;
@@ -31,4 +31,13 @@
 .admin_navbar ul li {
     display: flex;
     padding: 0 10px;
+}
+
+.admin_logo a , .admin_navbar ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+.admin_logo a:hover, .admin_navbar ul li a:hover{
+color: black;
 }
