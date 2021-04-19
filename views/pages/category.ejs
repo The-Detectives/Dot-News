@@ -1,26 +1,21 @@
 <%- include('../partials/header') %>
 
     <div class="pageName">
-        <h1><%= categoryDB[0].name %></h1>
+        <h1><span class="opacity">section:</span> <%= categoryDB[0].name %></h1>
     </div>
     <section class="categoryContainer">
 
         <% for(var i=0; i<4; i++) {%>
             <div class="categoryItem <% if(i===0){ %>bigItem <% } %>">
 
-                <a href="<%= categoryDB[i].url %>"><img src="<%= categoryDB[i].image %>" /></a>
+                <a href="/article/<%= categoryDB[i].id %>"><img src="<%= categoryDB[i].image %>" /></a>
                 
                 <h2>
                     <%= categoryDB[i].title %>
                 </h2>
+                
                 <p>
-                    <%= categoryDB[i].category %>
-                </p>
-                <p>
-                    <%= categoryDB[i].abstract %>
-                </p>
-                <p>
-                    <%= categoryDB[i].published_date %>
+                    <%= new Date(categoryDB[i].published_date).toDateString() %>
                 </p>
             </div>
             <% } %>
@@ -33,14 +28,9 @@
                         <h2>
                             <%= categoryApi[i].title %>
                         </h2>
+                       
                         <p>
-                            <%= categoryApi[i].category %>
-                        </p>
-                        <p>
-                            <%= categoryApi[i].abstract %>
-                        </p>
-                        <p>
-                            <%= categoryApi[i].published_date %>
+                            <%= new Date(categoryApi[i].published_date).toDateString() %>
                         </p>
                     </div>
 
