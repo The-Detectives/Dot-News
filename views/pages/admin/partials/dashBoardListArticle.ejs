@@ -1,7 +1,7 @@
 <div class="dashboard_header">
   <a href="/admin/article/new">New Article</a>
 </div>
-<% articles.forEach(article => { %>
+<% articles.forEach(article=> { %>
 <div class="dashboard_card">
   <div class="dashboard_card_left">
     <img src="<%= article.image %>" alt="<%= article.title %>" />
@@ -13,12 +13,14 @@
     </div>
   </div>
   <div class="dashboard_card_info_actions">
-    <a href="/admin/article/<%= article.id %>">Edit</a>
+    <a href="/admin/article/<%= article.id %>">
+      <button class="one" type="submit">Edit</button>
+    </a>
     <form
       action="/admin/article/<%= article.id %>?_method=delete"
       method="post"
     >
-      <button type="submit">Delete</button>
+      <button class="two" type="submit">Delete</button>
     </form>
   </div>
 </div>
