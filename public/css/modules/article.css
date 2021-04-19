@@ -1,22 +1,28 @@
 
-
 .articleContainer {
     margin: 2%;
+    margin-top: 50px;
     display: grid;
     grid-template-columns: 4fr 1fr;
-    gap: 60px
+    gap: 100px;
+    margin-left: 5%;
 }
 
 .p_article{
-    font-size: 30px;
+    font-size: 17px;
     padding-top: 30px;
-    text-transform: uppercase;
+    padding-right: 27%;
+    text-transform: capitalize;
+    color: #2D3E50;
+    float: right;
+    /* padding-bottom: 30px; */
 
 
 }
 
 .h2_article{
-    font-size: 40px;
+    font-size: 30px;
+    color: #2D3E50;
 }
 
 .img_article{
@@ -32,17 +38,22 @@
 .p1_article{
     font-size: 30px;
 
+
 }
 
 .p2_article{
     text-indent: 30px;
-    font-size: 20px;
+    font-size: 16px;
     padding: 10px 0;
     /* text-indent: 50px; */
     text-align: justify;
     /* letter-spacing: 3px; */
     line-height: 30px;
+    color: #1a2027;
+    overflow:hidden;
+    height: 1300px;
 }
+
 .p2_article img{
   max-width: 700px;
   max-height: 500px;
@@ -51,21 +62,25 @@
 
 .p2_article i {
   font-style: italic;
+  /* color: #38A169; */
+
 }
 
 .p2_article strong{
   font-weight: bolder;
+  /* color: #38A169; */
 } 
 
 .p2_article a {
   text-decoration: none;
-  color: rgb(9, 83, 83);
+  color: #38A169;
 }
 
-.p3_article{
+.p3_article, .published{
    font-size: 15px;
    float: right;
    color: #777;
+   display: block;
 }
 
 .img_articleCat{
@@ -74,17 +89,18 @@
     height: 170px;
     margin: auto;
     padding: 5%;
+    object-fit: cover;
     /* margin-left: 0;
     margin-right: 0; */
 }
 
 .p_articleCat{
     text-align: center;
-    color: white;
+    color: #2D3E50;
 }
 
 .p_articleCat:hover{
-color: #576E86;
+color: #38A169;
 }
 
 .img_articleCat {
@@ -115,12 +131,12 @@ color: #576E86;
         padding: 10px 10px;
   }
   div.gallery {
-    border: 1px solid #ccc;
-    background-color: rgb(36, 36, 36);
+    /* border: 1px solid #ccc; */
+    /* background-color: rgb(36, 36, 36); */
   }
   
   div.gallery:hover {
-    border: 1px solid #777;
+    border: 1px solid  #DADADA;
   }
 
   .gallery a {
@@ -129,7 +145,16 @@ color: #576E86;
   }
 
   .sideDiv{
-    background-color: #576E86;
+    /* background-color: #576E86; */
     margin-top: -5px;
   }
 
+.articleHr{
+  color: #ffffff2f;
+  background-color: #ffffff98;
+  width: 200px;
+}
+
+hr:last-child{
+  visibility: hidden;
+}
