@@ -54,7 +54,7 @@ app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
 app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
 app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
-app.get ('/admin/messages', massagesHandler)
+app.get ('/admin/messages', adminMassagesHandler)
 
 // error handler
 app.use(errorHandler);
@@ -386,12 +386,17 @@ function adminUpdateArticleHandler(req, res, next) {
 }
 
 // handling contact message
-function massagesHandler(req,res, next){
+function adminMassagesHandler(req,res, next){
   let contactSql = 'SELECT * FROM contact';
 
   dbExcecute(contactSql)
     .then((messages) => {
-      res.render('pages/admin/dashboardmessages',{messages:messages});
+      let categorySqlQuery = 'SELECT * FROM category;';
+      dbExcecute(categorySqlQuery)
+        .then((categories) => {
+          res.render('pages/admin/dashboardmessages',{messages:messages, categories: categories});
+        })
+        .catch(e => next(e));
     })
     .catch((e) => next(e));
   
