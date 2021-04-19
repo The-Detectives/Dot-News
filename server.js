@@ -131,10 +131,9 @@ function aboutUsHandler(req, res, next) {
 
 // Handling contact form
 function  contactHandler(req, res, next){
-  console.log(req.body)
   let contactData = req.body;
-  let sqlContact ='INSERT INTO contact (name, phone, email, message) VALUES ($1, $2, $3, $4);';
-  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message];
+  let sqlContact ='INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
+  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
   .then( res.redirect('/aboutUs'))
   .catch((e) => next(e));
@@ -180,7 +179,7 @@ function categoryHandler(req, res, next) {
       });
 
       let sqlQuery =
-        'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1';
+        'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
       let safeValues = [categoryName];
       dbExcecute(sqlQuery, safeValues)
         .then((data) => {

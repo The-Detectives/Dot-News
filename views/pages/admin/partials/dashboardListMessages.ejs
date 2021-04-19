@@ -1,0 +1,21 @@
+<div class="dashboard_header">
+  <p>Messages</p>
+</div>
+<table class="dashboard_table">
+    <tr>
+        <th>From</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Message</th>
+        <th>Date</th>
+    </tr>
+    <% messages.forEach(message => { %>
+        <tr>
+            <td><%= message.name %> </td>
+            <td><%= message.email %></td>
+            <td><%= message.phone %></td>
+            <td><%= message.message %></td>
+            <td><%= new Date(message.date).toDateString() %></td>
+        </tr>
+        <% }) %>
+</table>
