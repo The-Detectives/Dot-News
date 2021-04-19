@@ -22,7 +22,7 @@ const createUser = (user) => {
   return client
     .query(sqlQuery, [user.username, user.password, user.token])
     .then((data) => data.rows[0])
-    .catch((e) => console.log(e));
+    .catch((e) => {throw new Error(e);});
 };
 
 // function to generate random token
@@ -51,7 +51,10 @@ function createAdminUser(user) {
       console.info('You can login now.');
       client.end();
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      client.end();
+      throw new Error(e);
+    });
 }
 
 client
@@ -65,7 +68,9 @@ client
 
     /* Display the messages to the user */
     rl.question('Enter the username: ', function (username) {
-      rl.question('Enter the password :', function (password) {
+      rl.stdoutMuted = true;
+      rl.passwordQuery = 'Enter the password :';
+      rl.question(rl.passwordQuery, function (password) {
         let user = {
           username: username,
           password: password,
@@ -75,6 +80,12 @@ client
 
         rl.close();
       });
+      rl._writeToOutput = function _writeToOutput(stringToWrite) {
+        if (rl.stdoutMuted)
+          rl.output.write('\x1B[2K\x1B[200D'+rl.passwordQuery+'['+((rl.line.length%2==1)?'=-':'-=')+']');
+        else
+          rl.output.write(stringToWrite);
+      };
     });
 
     rl.on('close', function () {
