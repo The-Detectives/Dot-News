@@ -1,11 +1,11 @@
 <%- include('../partials/header') %>
 
     <div class="container-aboutUs">
-  
+
         <div class="sub-container">
-            
+
             <div class="cards-container">
-               
+
                 <div class="image-area">
 
                     <div class="img-section">
@@ -119,37 +119,46 @@
             <div class="contact">
                 <h2 class="title"> Contact our perfect team</h2>
                 <form class="contact-form" action="/aboutUs" method="POST">
-                    <h1>Contact Us</h1>
-                    <div class="form-input-material">
-                        <label for="username">Name</label>
-                      <input type="text" name="username" id="username"  autocomplete="off" class="form-control-material" required />
-                      
-                    </div>
-                    <div class="form-input-material">
-                        <label for="phone">Phone</label>
-                      <input type="text" name="phone" id="phone"  required />
-                      
-                    </div>
-                  
-                    <div class="form-input-material">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email"  required />
-                      
-                      </div>
-                      
-                      <div class="form-input-material">
+                    
+       
+<!-- 
+                    <div class="">
                         <label for="Message">Message</label>
-                        
-                       <textarea name="message" id="message" cols="30" rows="10" required></textarea>
-                      </div>
-  
+
+                        <textarea name="message" id="message" cols="30" rows="10" required></textarea>
+                    </div> -->
+
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Name" name="username" id='username' required />
+                        <label for="username" class="form__label">Name</label>
+                    </div>
+
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Phone" name="phone" id='phone' required />
+                        <label for="phone" class="form__label">Phone</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="email" class="form__field" placeholder="Email" name="email" id='email' required />
+                        <label for="email" class="form__label">Email</label>
+                    </div>
+                    <!-- <div class="form__group field">
+                        <textarea name="message" class="form__field" id="message" cols="10" rows="3" required></textarea>
+                       
+                        <label for="massage" class="form__label">Message</label>
+                    </div> -->
+                    <div class="form__group field">
+                        <input type="message" class="form__field" placeholder="message" name="message" id='message' required />
+                        <label for="message" class="form__label">Message</label>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-ghost">Send</button>
-                  </form>
+                </form>
             </div>
         </div>
 
 
     </div>
+
+
 
 
     <%- include('../partials/footer') %>
