@@ -3,8 +3,10 @@
 
  <%- include('./partials/sideNav') %> 
   <div class="dashboard_main">
+    <div class="dashboard_messages">
+      <%- messages() %>
+    </div>
     <%- include('./partials/dashBoardListArticle') %> 
-
   </div>
 </div>
 <%- include('./partials/footer') %>

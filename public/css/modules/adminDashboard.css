@@ -185,3 +185,27 @@
       width: 150px;
   }
 
+  .dashboard_messages {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+  }
+
+  .dashboard_messages ul {
+      text-align: center;
+  }
+
+  .dashboard_messages li {
+    background-color: rgb(89, 155, 35);
+    padding: 0 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .dashboard_messages ul.error li {
+      background-color: rgb(209, 65, 65);
+  }

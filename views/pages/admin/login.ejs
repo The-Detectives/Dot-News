@@ -1,7 +1,9 @@
 <%- include('./partials/header') %>
 
     <div class="login_container">
-        
+        <div class="dashboard_messages">
+            <%- messages() %>
+        </div>
         <form action="" method="post" class="loginForm">
             <h1 class="login_title">Member login</h1>
             <input class="inputField" type="text" name="username" placeholder="Enter Username" id="username">

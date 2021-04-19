@@ -1,3 +1,8 @@
+.login_container {
+    display: flex;
+    flex-direction: column;
+}
+
 .loginMain {
     display: flex;
 }
@@ -11,6 +16,7 @@
     border: 1px solid;
     border-radius: 60px;
     padding: 20px;
+    margin-top: 10px;
 }
 .login_title {
     text-align: center;
