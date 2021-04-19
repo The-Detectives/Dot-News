@@ -1,31 +1,41 @@
-
+.admin_article_container {
+    width: 100%;
+}
 
 .adminForm{
+    box-sizing: border-box;
+    width: 100%;
     border: 1px dotted #509292;
-    margin: 1%;
     padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     /* background-color: lightslategrey; */
-    height: 700px;
 }
 
 .adminForm input, .adminForm select {
-    width: 400px;
     margin: 10px 0;
     height: 50px;
+    width: 100%;
     /* display: inline-block; */
 
 }
 
 .admin_article_title{
     font-size: 30px;
+    margin-bottom: 20px;
 }
 #categoryAdminF {
     cursor: pointer;
 }
+
+.input_first_row_container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
 .input_container1{
-    display: inline;
-    margin: 0 0;
-    margin-right: 2%;
+    width: calc(100% / 3);
 }
 
 .input_container:hover{
@@ -56,14 +66,22 @@
 
 .title-img{
     display: inline-block;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_container {
+    margin: 0 auto;
 }
 
 .input_container input{
+    width: 400px;
     cursor: pointer;
     float: right;
     color: white;
     background-color: #5dc0c0;
     border:  none;
+    margin: 30px 0;
     
 }
 
@@ -72,7 +90,10 @@
 
 }
 
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
 
-.ck-editor__main.ck-blurred{
-    min-width: 600px;
+.input_container2 {
+    border: 1px solid grey;
 }
