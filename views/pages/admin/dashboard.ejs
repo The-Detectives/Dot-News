@@ -15,7 +15,6 @@
   <div class="dashboard_main">
     <div class="dashboard_header">
       <a href="/admin/article/new">New Article</a>
-      <!-- <p> <%= article.length%> Article</p> -->
     </div>
     <% articles.forEach(article => { %>
     <div class="dashboard_card">
@@ -27,8 +26,9 @@
         </div>
       </div>
       <div class="dashboard_card_info_actions">
-        
-        <button class="one" type="submit"><a href="/admin/article/<%= article.id %>">Edit</a></button>
+        <a href="/admin/article/<%= article.id %>">
+        <button class="one" type="submit">Edit</button>
+        </a>
         <form
           action="/admin/article/<%= article.id %>?_method=delete"
           method="post"
