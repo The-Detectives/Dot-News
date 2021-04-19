@@ -1,14 +1,14 @@
 <%- include('../partials/header') %>
 
     <!-- <link rel="stylesheet" href="../../../css/modules/article.css"> -->
-
+    <p class="p_article">
+        <%= articleData.name %> Section
+    </p>
     <section class="articleContainer">
         <div>
             <br>
 
-            <p class="p_article">
-                Section: <%= articleData.name %> 
-            </p>
+
 
             <br>
             <h2 class="h2_article">
@@ -17,17 +17,20 @@
             <br>
             <br>
             <br>
-            <div class="p2_article">
+            <div class="p2_article custom-scrollbar">
                 <%- articleData.content %>
             </div>
             <br>
             <p class="p3_article">
-                Published date: <%= articleData.published_date %>
+                Published at ( <%= new Date(articleData.published_date).toDateString() %> )
             </p>
 
 
+
+
+
         </div>
-        <div class="sideDiv">
+        <div class="sideDiv ">
             <br>
             <% articleCategory.forEach((articleCategory)=> { %>
                 <div class="gallery">
@@ -37,6 +40,7 @@
                         </p>
                     </a>
                 </div>
+                <hr class="articleHr">
                 <% }); %>
         </div>
     </section>
