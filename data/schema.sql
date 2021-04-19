@@ -31,5 +31,6 @@ CREATE TABLE contact (
     name VARCHAR(200),
     phone VARCHAR(200),
     email VARCHAR(200),
-    message TEXT
+    message TEXT,
+    date VARCHAR(200)
 );
