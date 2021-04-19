@@ -2,21 +2,40 @@
     display: flex;
 }
 
-.loginForm{
+.loginForm {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid;
+    /* border: 1px solid; */
     border-radius: 60px;
     padding: 20px;
+    color: #2D3E50;
+    box-shadow: 30px 30px 40px #2D3E50;
 }
+
 .login_title {
     text-align: center;
     margin-bottom: 30px;
     font-size: x-large;
     text-transform: capitalize;
+    position: relative;
+}
+
+.login_title::after {
+    display: block;
+    content: '';
+    background-color: transparent;
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: 36px;
+    background-image: url(../../img/users-icon.png);
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -11px;
+    left: -40px;
 }
 
 .login_container {
@@ -24,26 +43,45 @@
     align-items: center;
     height: 100vh;
     justify-content: center;
-    width: 500px;
+    width: 400px;
     margin: auto;
     padding: 20px;
+    
 }
 
-.inputField {
+.login_container .inputField {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid;
     border-radius: 5px;
-    padding: 15px;
-    cursor:pointer ;
+    cursor: pointer;
+    padding: 20px 20px 20px 60px;
+    color: #2D3E50;
 }
 
-.submitField {
+.login_container .userIcon {
+    background-color: transparent;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    background-size: 36px;
+    background-image: url(../../img/user-icon.png);
+}
+
+.login_container .passIcon {
+    background-color: transparent;
+    background-position: 3px 0px;
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-image: url(../../img/passwordicon.png);
+}
+
+.login_container .submitField {
     border: 1px solid;
     border-radius: 10px;
     padding: 10px 25px;
     font-size: xx-large;
     font-family: none;
     margin-top: 10px;
-    cursor:pointer ;
+    cursor: pointer;
+    color: #2D3E50;
 }
