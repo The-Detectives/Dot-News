@@ -8,6 +8,10 @@
       <%- messages() %>
     </div>
     <%- include('./partials/dashBoardListArticle') %> 
-
+    <div class="admin_pagination">
+      <a href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber - 1 %>">&laquo;</a>
+      <a class="active" href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber %>"><%= pageNumber %> </a>
+      <a href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber + 1 %>">&raquo;</a>
+    </div>
   </div>
   <%- include('./partials/footer') %>

@@ -1,9 +1,9 @@
 const superagent = require('superagent');
 
 // function to get data from API
-function getDataFromAPI(ulr, params, headers) {
+function getDataFromAPI(url, params, headers) {
   return superagent
-    .get(ulr)
+    .get(url)
     .set(headers || {})
     .query(params || {})
     .then((response) => response.body)

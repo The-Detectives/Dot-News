@@ -193,6 +193,7 @@ function categoryHandler(req, res, next) {
   if(categoryName === 'admin'){
     res.redirect('/admin/login');
   }
+  
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
@@ -296,15 +297,20 @@ function logutHandler(req, res, next) {
 
 // handling the admin dashboard page
 function adminDashboardHandler(req, res, next) {
-  let category_name = req.query.category ? [req.query.category] : [];
+  let category_name = req.query.category ? req.query.category : '';
+  let pageNumber = req.query.page ? req.query.page : 1;
+  let limit = 5;
+  let startWith = ((pageNumber - 1) * limit );
 
-  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC;';
+  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC LIMIT $1 OFFSET $2;';
+  let safeValues = [limit, startWith];
   if (req.query.category) {
     sqlQuery =
-      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
-  }
+      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
+      safeValues = [category_name, limit, startWith];
+    }
 
-  dbExcecute(sqlQuery, category_name)
+  dbExcecute(sqlQuery, safeValues)
     .then((articles) => {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
@@ -312,6 +318,8 @@ function adminDashboardHandler(req, res, next) {
           res.render('pages/admin/dashboard', {
             articles: articles,
             categories: categories,
+            pageNumber: pageNumber,
+            category_name: category_name
           });
         })
         .catch((e) => next(e));
