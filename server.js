@@ -190,6 +190,10 @@ function articleHandler(req, res, next) {
 // handling the category Page
 function categoryHandler(req, res, next) {
   let categoryName = req.params.category;
+  if(categoryName === 'admin'){
+    res.redirect('/admin/login');
+  }
+  
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
@@ -199,27 +203,37 @@ function categoryHandler(req, res, next) {
         return new Article({ ...val, section: categoryData.section });
       });
 
-      let sqlQuery =
+      let categorySql = 'SELECT * FROM category;';
+
+      dbExcecute(categorySql)
+      .then(categories=>{
+
+        let categoriesNames = categories.reduce((catNames, catObj) => {
+          catNames.push(catObj.name);
+          return catNames;
+        }, []);
+
+        if(!categoriesNames.includes(categoryName)){
+          throw new Error('Page Not Found');
+        }
+
+        let sqlQuery =
         'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
       let safeValues = [categoryName];
       dbExcecute(sqlQuery, safeValues)
         .then((data) => {
           let resultDb = data;
-          let categorySql = 'SELECT * FROM category;';
-          dbExcecute(categorySql)
-          .then(categories=>{
+
           res.render('pages/category', {
             categoryApi: arr,
             categoryDB: resultDb,
-            categories:categories,
-          })
+            categories:categoriesNames,
           });
         })
         .catch((e) => next(e));
+      });
     })
-    .catch((error) => {
-      res.send(error);
-    });
+    .catch((e) => next(e));
 }
 
 /* --------- Admin Handling routes --------- */
@@ -283,23 +297,38 @@ function logutHandler(req, res, next) {
 
 // handling the admin dashboard page
 function adminDashboardHandler(req, res, next) {
-  let category_name = req.query.category ? [req.query.category] : [];
+  let category_name = req.query.category ? req.query.category : '';
+  let pageNumber = req.query.page ? parseInt(req.query.page) : 1;
+  let limit = 5;
+  let startWith = ((pageNumber - 1) * limit );
 
-  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC;';
+  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC LIMIT $1 OFFSET $2;';
+  let safeValues = [limit, startWith];
   if (req.query.category) {
     sqlQuery =
-      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
-  }
+      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
+      safeValues = [category_name, limit, startWith];
+    }
 
-  dbExcecute(sqlQuery, category_name)
+  dbExcecute(sqlQuery, safeValues)
     .then((articles) => {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboard', {
-            articles: articles,
-            categories: categories,
-          });
+          let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
+          dbExcecute(sqlCountAllQuery)
+          .then(countData => {
+            let hasNext = parseInt(countData[0].count) > startWith + limit;
+
+            res.render('pages/admin/dashboard', {
+              articles: articles,
+              categories: categories,
+              pageNumber: pageNumber,
+              category_name: category_name,
+              hasNext:hasNext
+            });
+          })
+          
         })
         .catch((e) => next(e));
     })
@@ -335,7 +364,10 @@ function adminCreateNewArticleHandler(req, res, next) {
   ];
 
   dbExcecute(sqlQuery, safeValues)
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article Added successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -428,7 +460,7 @@ function errorHandler(error, req, res, next) {
       req.flash("error", "Username or password not correct");
       res.redirect('/admin/login');
     }
-    res.send('Something Bad Happened');
+    notFoundPageHandler(req, res, next);
   } else {
     next();
   }

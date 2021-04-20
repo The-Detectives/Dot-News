@@ -1,6 +1,8 @@
+body.admin_body {
+    background-color: #f3f3f3;
+}
 .admin_login_header a, .dashboard_sidebar a {
     text-decoration: none;
-    color: white;
 }
 
 .admin_login_header a:hover {
@@ -9,7 +11,7 @@
 
 .admin_header, .admin_footer {
     width: 100%;
-    background-color: #00B5E5 !important;
+    background-color: #2b314b !important;
     color: white;
     height: 10vh;
     line-height: 10vh;
@@ -39,5 +41,5 @@
 }
 
 .admin_logo a:hover, .admin_navbar ul li a:hover{
-color: black;
+color: #8191c2;
 }
