@@ -6,53 +6,54 @@
 .dashboard_sidebar {
     position: fixed;
     min-height: 100vh;
-    background-color: #049dc7;
-    color: white;
-    width: 12%;
+    background-color: #e8eaef;
+    color: black;
+    width: 15%;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     padding: 80px 0;
-    /* padding: calc(10vh + 30px) 20px; */
     z-index: 100;
     margin-top: -10vh;
+    border-right: 1px solid lightgray;
 }
 
 .dashboard_main {
     width: 78%;
-    margin-left: 15%;
+    margin-left: 18%;
     margin-right: 1%;
     margin-bottom: 1%;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar_title {
+    width: 100%;
     margin-bottom: 10px;
-    color: #DDD;
+    color: black;
     font-size: 15px;
-    float: left;
-    padding-left: 20px;
+    text-align: center;
 }
 
 .sidebar_links {
+    width: 100%;
     list-style: none;
 }
 
 .sidebar_links li {
-    /* padding: 15px 0; */
-    text-align: left;
-    padding: 15px 0 ;
-
+    width: 100%;
+    padding: 15px 0;
 }
 
 .sidebar_links li a {
+    width: 100%;
     padding: 15px;
-    padding-right: 150px;
+    color: black;
 }
 
 
 
 .sidebar_links li a:hover {
-    color: rgb(0, 0, 0);
+    color: #9ca9d9;
     /* background-color: rgb(214, 210, 205); */
     border-radius: 2%;
     
@@ -64,7 +65,7 @@
 }
 
 .dashboard_header a {
-    background-color: #00B5E5;
+    background-color: #8191c2;
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
@@ -72,7 +73,7 @@
 }
 
 .dashboard_header a:hover{
-    background-color: #5d8f9e;
+    background-color: #5f72a7;
     
 }
 .dashboard_card {
@@ -121,48 +122,43 @@
 }
 
 .dashboard_card_info_actions a {
-    /* margin-right: 30px; */
     text-decoration: none;
     color: white;
 }
 
 .dashboard_card_info_actions button[type=submit]{
-    /* background-color: red; */
-    /* padding: 5px 10px; */
     border-radius: 5px;
     color: white;
 
     width: 80px;
-    height: 70px;
+    height: 50px;
     margin: 0 10px;
     border: none;
     cursor: pointer;
 }
 
 .dashboard_card_info_actions .one {
-    background-color: #00B5E5;
+    background-color: #8191c2;
 }
 
 .dashboard_card_info_actions .one:hover{
-    background-color: #1b748d;
+    background-color: #5f72a7;
 }
 .dashboard_card_info_actions .two{
-    background-color: rgb(182, 20, 20);
+    background-color: #af4970;
 }
 
 .dashboard_card_info_actions .two:hover{
-    background-color: rgb(95, 24, 24);
+    background-color: #9b355c;
 
 }
 .dashboard_sidebar hr {
-    /* width: 100px; */
     height: 0px;
     color: rgba(255, 255, 255, 0);
     margin-top: 0;
 
 }
 
-}
 
 .dashboard_table {
     width: 100%;
@@ -186,3 +182,61 @@
       width: 150px;
   }
 
+  .dashboard_messages {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+  }
+
+  .dashboard_messages ul {
+      text-align: center;
+  }
+
+  .dashboard_messages li {
+    background-color: rgb(89, 155, 35);
+    padding: 0 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .dashboard_messages ul.error li {
+      background-color: rgb(209, 65, 65);
+  }
+
+  .admin_pagination {
+      align-self: center;
+      margin: 20px 0;
+  }
+
+  .admin_pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+  }
+  
+  .admin_pagination {
+    display: inline-block;
+  }
+
+  .admin_pagination a.active {
+    background-color: #7a9fb2;
+    color: white;
+    border: 1px solid #7a9fb2;
+  }
+  
+  .admin_pagination a:hover:not(.active) {background-color: #ddd;}
+
+  a.is_disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }

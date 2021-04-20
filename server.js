@@ -11,6 +11,8 @@ const { dbExcecute } = require('./helpers/pgClient');
 const { Article } = require('./store');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const connectFlash = require('connect-flash')();
+const expressMessages = require('express-messages');
 
 /* ---------- Application Setups ---------- */
 
@@ -19,6 +21,8 @@ const app = express();
 
 app.use(cors());
 app.use(methodOverride('_method'));
+app.use(connectFlash);
+app.use(messagesMiddleware);
 app.use(
   cookieSession({
     name: 'session',
@@ -204,13 +208,13 @@ function categoryHandler(req, res, next) {
           let resultDb = data;
           let categorySql = 'SELECT * FROM category;';
           dbExcecute(categorySql)
-            .then(categories => {
-              res.render('pages/category', {
-                categoryApi: arr,
-                categoryDB: resultDb,
-                categories: categories,
-              })
-            });
+          .then(categories=>{
+          res.render('pages/category', {
+            categoryApi: arr,
+            categoryDB: resultDb,
+            categories:categories,
+          })
+          });
         })
         .catch((e) => next(e));
     })
@@ -244,6 +248,7 @@ function loginHandler(req, res, next) {
     .then((data) => {
       user = data[0];
       if (!user) {
+        req.flash("error", "Username or password not correct");
         res.redirect('/admin/login');
       }
       return checkPassword(userReq.password, user);
@@ -279,23 +284,38 @@ function logutHandler(req, res, next) {
 
 // handling the admin dashboard page
 function adminDashboardHandler(req, res, next) {
-  let category_name = req.query.category ? [req.query.category] : [];
+  let category_name = req.query.category ? req.query.category : '';
+  let pageNumber = req.query.page ? parseInt(req.query.page) : 1;
+  let limit = 5;
+  let startWith = ((pageNumber - 1) * limit );
 
-  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC;';
+  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC LIMIT $1 OFFSET $2;';
+  let safeValues = [limit, startWith];
   if (req.query.category) {
     sqlQuery =
-      'SELECT * FROM article JOIN category ON article.category_id = category.id WHERE name = $1;';
-  }
+      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
+      safeValues = [category_name, limit, startWith];
+    }
 
-  dbExcecute(sqlQuery, category_name)
+  dbExcecute(sqlQuery, safeValues)
     .then((articles) => {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboard', {
-            articles: articles,
-            categories: categories,
-          });
+          let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
+          dbExcecute(sqlCountAllQuery)
+          .then(countData => {
+            let hasNext = parseInt(countData[0].count) > startWith + limit;
+
+            res.render('pages/admin/dashboard', {
+              articles: articles,
+              categories: categories,
+              pageNumber: pageNumber,
+              category_name: category_name,
+              hasNext:hasNext
+            });
+          })
+          
         })
         .catch((e) => next(e));
     })
@@ -331,7 +351,10 @@ function adminCreateNewArticleHandler(req, res, next) {
   ];
 
   dbExcecute(sqlQuery, safeValues)
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article Added successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -341,7 +364,10 @@ function adminDeleteArticleHandler(req, res, next) {
   let sqlQuery = 'DELETE FROM article WHERE id = $1;';
 
   dbExcecute(sqlQuery, [articleId])
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article Deleted successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -382,7 +408,10 @@ function adminUpdateArticleHandler(req, res, next) {
   ];
 
   dbExcecute(sqlQuery, safeValues)
-    .then(res.redirect('/admin/dashboard'))
+    .then(() => {
+      req.flash("info", "Article updated successfully");
+      res.redirect('/admin/dashboard');
+    })
     .catch((e) => next(e));
 }
 
@@ -418,10 +447,11 @@ function notFoundPageHandler(req, res, next) {
 function errorHandler(error, req, res, next) {
   if (error) {
     console.log(error);
-    if (error.message === 'Password do not match') {
+    if(error.message === 'Password do not match'){
+      req.flash("error", "Username or password not correct");
       res.redirect('/admin/login');
     }
-    res.send('Something Bad Happened');
+    notFoundPageHandler(req, res, next);
   } else {
     next();
   }
@@ -480,8 +510,13 @@ function findByToken(token) {
     });
 }
 
-// authentication middleware
+// Messages middleware
+function messagesMiddleware(req, res, next) {
+  res.locals.messages = expressMessages(req, res);
+  next();
+}
 
+// authentication middleware
 function isAuthenticated(req, res, next) {
   authenticate(req)
     .then(auth => {

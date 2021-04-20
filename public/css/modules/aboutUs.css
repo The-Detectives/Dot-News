@@ -124,7 +124,7 @@
 
 .form__group {
     position: relative;
-    padding: 15px 0 0;
+    padding: 25px 0 0;
     margin-top: 10px;
     width: 80%;
 }
@@ -172,14 +172,23 @@
     color: #11998e;
     font-weight: 700;
 }
+
+textarea#message.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+
 /* reset input */
 .form__field:required, .form__field:invalid {
     box-shadow: none;
 }
 /* demo */
 
-input#message.form__field{
-    padding: 50px 0;
+textarea#message.form__field{
+
     color: white;
     font-size: 15px;
     font-weight: normal;
@@ -354,10 +363,10 @@ input#email.form__field{
   }
   
   /* This changes all the animations globally */
-  :root {
+  /* :root {
     --animate-duration: 2000ms;
     --animate-delay: 1.2s;
-  }
+  } */
   
   .title {
     font-family: 'Balsamiq Sans', cursive;
