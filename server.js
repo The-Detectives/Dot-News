@@ -45,9 +45,11 @@ app.get('/test', (req, res, next) => {
 //Routes
 app.get('/', homeHandler);
 app.get('/aboutUs', aboutUsHandler);
-app.get('/:category', categoryHandler);
+app.get('/contactUs', contactPageRender);
+app.post('/contactUs', contactHandler);
 app.get('/article/:id', articleHandler);
-app.post('/aboutUs', contactHandler);
+app.get('/:category', categoryHandler);
+
 //Admin routes
 app.get('/admin/login', loginPageHandler);
 app.post('/admin/login', loginHandler);
@@ -146,13 +148,22 @@ function aboutUsHandler(req, res, next) {
     })
 };
 
+function contactPageRender(req, res, next) {
+  let categorySql = 'SELECT * FROM category;';
+  dbExcecute(categorySql)
+    .then(categories => {
+      res.render('pages/contactUs', { categories: categories });
+
+    })
+};
+
 // Handling contact form
 function contactHandler(req, res, next) {
   let contactData = req.body;
   let sqlContact = 'INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
   let safeValues1 = [contactData.username, contactData.phone, contactData.email, contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
-    .then(res.redirect('/aboutUs'))
+    .then(res.redirect('/contactUs'))
     .catch((e) => next(e));
 }
 // handling the article page
