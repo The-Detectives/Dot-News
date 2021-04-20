@@ -9,9 +9,9 @@
     </div>
     <%- include('./partials/dashBoardListArticle') %> 
     <div class="admin_pagination">
-      <a href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber - 1 %>">&laquo;</a>
+      <a <% if(pageNumber > 1){ %>href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber - 1 %>"<% }else{ %>class="is_disabled" <% } %> >&laquo;</a>
       <a class="active" href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber %>"><%= pageNumber %> </a>
-      <a href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber + 1 %>">&raquo;</a>
+      <a <% if(hasNext){ %>href="/admin/dashboard?category=<%= category_name %>&page=<%= pageNumber + 1 %>"<% }else{ %>class="is_disabled" <% } %>>&raquo;</a>
     </div>
   </div>
   <%- include('./partials/footer') %>

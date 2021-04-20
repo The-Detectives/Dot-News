@@ -298,7 +298,7 @@ function logutHandler(req, res, next) {
 // handling the admin dashboard page
 function adminDashboardHandler(req, res, next) {
   let category_name = req.query.category ? req.query.category : '';
-  let pageNumber = req.query.page ? req.query.page : 1;
+  let pageNumber = req.query.page ? parseInt(req.query.page) : 1;
   let limit = 5;
   let startWith = ((pageNumber - 1) * limit );
 
@@ -315,12 +315,20 @@ function adminDashboardHandler(req, res, next) {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboard', {
-            articles: articles,
-            categories: categories,
-            pageNumber: pageNumber,
-            category_name: category_name
-          });
+          let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
+          dbExcecute(sqlCountAllQuery)
+          .then(countData => {
+            let hasNext = parseInt(countData[0].count) > startWith + limit;
+
+            res.render('pages/admin/dashboard', {
+              articles: articles,
+              categories: categories,
+              pageNumber: pageNumber,
+              category_name: category_name,
+              hasNext:hasNext
+            });
+          })
+          
         })
         .catch((e) => next(e));
     })
@@ -452,7 +460,7 @@ function errorHandler(error, req, res, next) {
       req.flash("error", "Username or password not correct");
       res.redirect('/admin/login');
     }
-    res.send('Something Bad Happened');
+    notFoundPageHandler(req, res, next);
   } else {
     next();
   }

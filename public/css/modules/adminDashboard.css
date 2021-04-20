@@ -233,3 +233,10 @@
   }
   
   .admin_pagination a:hover:not(.active) {background-color: #ddd;}
+
+  a.is_disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }
