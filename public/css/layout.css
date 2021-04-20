@@ -237,6 +237,7 @@ footer.admin_footer {
   background-color: white;
   border-bottom: 1px solid #DADADA;
   opacity: 0.9;
+  z-index: 10000;
 
 
 }
