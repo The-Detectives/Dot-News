@@ -22,7 +22,8 @@
 
 .h2_article{
     font-size: 30px;
-    color: #2D3E50;
+    color: #3c7c5a;
+    /* font-weight: bold; */
 }
 
 .img_article{
@@ -37,7 +38,7 @@
 
 .p1_article{
     font-size: 30px;
-
+    
 
 }
 
@@ -50,10 +51,16 @@
     /* letter-spacing: 3px; */
     line-height: 30px;
     color: #1a2027;
-    overflow:hidden;
-    height: 1300px;
+    /* overflow:hidden; */
+    /* height: 1300px; */
+    border-left: 4px solid #3c7c5acc;
+    margin-left: 20px;
+    
 }
 
+.articleParag{
+  margin-left: 20px;
+}
 .p2_article img{
   max-width: 700px;
   max-height: 500px;
@@ -78,9 +85,10 @@
 
 .p3_article, .published{
    font-size: 15px;
-   float: right;
+   float: left;
    color: #777;
    display: block;
+   margin-left: 35px;
 }
 
 .img_articleCat{
