@@ -60,7 +60,7 @@ app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
 app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
 app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
-app.get('/admin/messages', adminMassagesHandler)
+app.get('/admin/messages', isAuthenticated, adminMassagesHandler)
 
 // error handler
 app.use(errorHandler);
@@ -449,7 +449,7 @@ function adminMassagesHandler(req, res, next) {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories });
+          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories, category_name: '' });
         })
         .catch(e => next(e));
     })
