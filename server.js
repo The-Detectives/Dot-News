@@ -58,7 +58,7 @@ app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
 app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
 app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
-app.get ('/admin/messages', adminMassagesHandler)
+app.get('/admin/messages', adminMassagesHandler)
 
 // error handler
 app.use(errorHandler);
@@ -112,18 +112,18 @@ function homeHandler(req, res, next) {
                       let ourNews = data.slice(0, 10);
                       let categorySql = 'SELECT * FROM category;';
                       dbExcecute(categorySql)
-                      .then(categories=>{
-                        res.render('index', {
-                          worldNews: worldArray,
-                          artsNews: artsArray,
-                          scienceNews: scienceArray,
-                          healthNews: healthArray,
-                          ourNews: ourNews,
-                          categories:categories,
-                        });
+                        .then(categories => {
+                          res.render('index', {
+                            worldNews: worldArray,
+                            artsNews: artsArray,
+                            scienceNews: scienceArray,
+                            healthNews: healthArray,
+                            ourNews: ourNews,
+                            categories: categories,
+                          });
 
-                      })
-                    
+                        })
+
                     })
                     .catch((e) => next(e));
                 })
@@ -140,19 +140,20 @@ function homeHandler(req, res, next) {
 function aboutUsHandler(req, res, next) {
   let categorySql = 'SELECT * FROM category;';
   dbExcecute(categorySql)
-  .then(categories=>{
-  res.render('pages/aboutUs', {categories:categories});
+    .then(categories => {
+      res.render('pages/aboutUs', { categories: categories });
 
-})};
+    })
+};
 
 // Handling contact form
-function  contactHandler(req, res, next){
+function contactHandler(req, res, next) {
   let contactData = req.body;
-  let sqlContact ='INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
-  let safeValues1 = [contactData.username,contactData.phone,contactData.email,contactData.message, new Date()];
+  let sqlContact = 'INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
+  let safeValues1 = [contactData.username, contactData.phone, contactData.email, contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
-  .then( res.redirect('/aboutUs'))
-  .catch((e) => next(e));
+    .then(res.redirect('/aboutUs'))
+    .catch((e) => next(e));
 }
 // handling the article page
 function articleHandler(req, res, next) {
@@ -173,14 +174,14 @@ function articleHandler(req, res, next) {
           });
           let categorySql = 'SELECT * FROM category;';
           dbExcecute(categorySql)
-          .then(categories=>{
-          res.render('pages/article', {
-            articleData: article,
-            articleCategory: arr,
-            categories:categories,
-          })
-      
-          });
+            .then(categories => {
+              res.render('pages/article', {
+                articleData: article,
+                articleCategory: arr,
+                categories: categories,
+              })
+
+            });
         })
         .catch((e) => next(e));
     })
@@ -190,10 +191,6 @@ function articleHandler(req, res, next) {
 // handling the category Page
 function categoryHandler(req, res, next) {
   let categoryName = req.params.category;
-  if(categoryName === 'admin'){
-    res.redirect('/admin/login');
-  }
-  
   let category_API_KEY = process.env.CATEGORY_KEY;
   let categoryUrl = `https://api.nytimes.com/svc/topstories/v2/${categoryName}.json?api-key=${category_API_KEY}`;
 
@@ -203,37 +200,27 @@ function categoryHandler(req, res, next) {
         return new Article({ ...val, section: categoryData.section });
       });
 
-      let categorySql = 'SELECT * FROM category;';
-
-      dbExcecute(categorySql)
-      .then(categories=>{
-
-        let categoriesNames = categories.reduce((catNames, catObj) => {
-          catNames.push(catObj.name);
-          return catNames;
-        }, []);
-
-        if(!categoriesNames.includes(categoryName)){
-          throw new Error('Page Not Found');
-        }
-
-        let sqlQuery =
+      let sqlQuery =
         'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
       let safeValues = [categoryName];
       dbExcecute(sqlQuery, safeValues)
         .then((data) => {
           let resultDb = data;
-
+          let categorySql = 'SELECT * FROM category;';
+          dbExcecute(categorySql)
+          .then(categories=>{
           res.render('pages/category', {
             categoryApi: arr,
             categoryDB: resultDb,
-            categories:categoriesNames,
+            categories:categories,
+          })
           });
         })
         .catch((e) => next(e));
-      });
     })
-    .catch((e) => next(e));
+    .catch((error) => {
+      res.send(error);
+    });
 }
 
 /* --------- Admin Handling routes --------- */
@@ -242,13 +229,13 @@ function categoryHandler(req, res, next) {
 function loginPageHandler(req, res, next) {
   authenticate(req)
     .then(auth => {
-      if(auth){
+      if (auth) {
         res.redirect('/admin/dashboard');
       } else {
         res.render('pages/admin/login');
       }
     })
-    
+
 }
 
 // handling login
@@ -429,7 +416,7 @@ function adminUpdateArticleHandler(req, res, next) {
 }
 
 // handling contact message
-function adminMassagesHandler(req,res, next){
+function adminMassagesHandler(req, res, next) {
   let contactSql = 'SELECT * FROM contact';
 
   dbExcecute(contactSql)
@@ -437,20 +424,24 @@ function adminMassagesHandler(req,res, next){
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboardmessages',{messages:messages, categories: categories});
+          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories });
         })
         .catch(e => next(e));
     })
     .catch((e) => next(e));
-  
+
 }
 /* --------- Application errors handler --------- */
 
 function notFoundPageHandler(req, res, next) {
-  res.status(401).send('Page Not Found');
+  let categorySql = 'SELECT * FROM category;';
+  dbExcecute(categorySql)
+    .then(categories => {
+      res.status(401).render('pages/error', { categories: categories });
+    })
+    .catch((e) => next(e));
+
 }
-
-
 
 // error handler
 function errorHandler(error, req, res, next) {
@@ -502,9 +493,9 @@ function authenticate(userReq) {
       return false;
     }
   })
-  .catch((e) => {
-    throw new Error(e);
-  });
+    .catch((e) => {
+      throw new Error(e);
+    });
 }
 
 // function to get user by token
@@ -528,13 +519,13 @@ function messagesMiddleware(req, res, next) {
 // authentication middleware
 function isAuthenticated(req, res, next) {
   authenticate(req)
-  .then(auth => {
-    if(!auth){
-      res.redirect('/admin/login');
-    } else {
-      next();
-    }
-  })
+    .then(auth => {
+      if (!auth) {
+        res.redirect('/admin/login');
+      } else {
+        next();
+      }
+    })
 }
 
 /* --------- Application start the server --------- */
