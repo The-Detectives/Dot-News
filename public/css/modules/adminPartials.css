@@ -1,6 +1,7 @@
 body.admin_body {
     background-color: #f3f3f3;
 }
+
 .admin_login_header a, .dashboard_sidebar a {
     text-decoration: none;
 }
@@ -11,7 +12,7 @@ body.admin_body {
 
 .admin_header, .admin_footer {
     width: 100%;
-    background-color: #2b314b !important;
+    background-color: #354759 !important;
     color: white;
     height: 10vh;
     line-height: 10vh;
@@ -20,6 +21,7 @@ body.admin_body {
 }
 
 .admin_header_container {
+    height: 100%;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -42,4 +44,12 @@ body.admin_body {
 
 .admin_logo a:hover, .admin_navbar ul li a:hover{
 color: #8191c2;
+}
+
+.admin_logo, .admin_logo a {
+    height: 100%;
+}
+
+.admin_logo_image {
+    height: 100%;
 }

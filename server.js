@@ -45,9 +45,11 @@ app.get('/test', (req, res, next) => {
 //Routes
 app.get('/', homeHandler);
 app.get('/aboutUs', aboutUsHandler);
-app.get('/:category', categoryHandler);
+app.get('/contactUs', contactPageRender);
+app.post('/contactUs', contactHandler);
 app.get('/article/:id', articleHandler);
-app.post('/aboutUs', contactHandler);
+app.get('/:category', categoryHandler);
+
 //Admin routes
 app.get('/admin/login', loginPageHandler);
 app.post('/admin/login', loginHandler);
@@ -58,7 +60,7 @@ app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
 app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
 app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
 app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
-app.get('/admin/messages', adminMassagesHandler)
+app.get('/admin/messages', isAuthenticated, adminMassagesHandler)
 
 // error handler
 app.use(errorHandler);
@@ -146,13 +148,22 @@ function aboutUsHandler(req, res, next) {
     })
 };
 
+function contactPageRender(req, res, next) {
+  let categorySql = 'SELECT * FROM category;';
+  dbExcecute(categorySql)
+    .then(categories => {
+      res.render('pages/contactUs', { categories: categories });
+
+    })
+};
+
 // Handling contact form
 function contactHandler(req, res, next) {
   let contactData = req.body;
   let sqlContact = 'INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
   let safeValues1 = [contactData.username, contactData.phone, contactData.email, contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
-    .then(res.redirect('/aboutUs'))
+    .then(res.redirect('/contactUs'))
     .catch((e) => next(e));
 }
 // handling the article page
@@ -438,7 +449,7 @@ function adminMassagesHandler(req, res, next) {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories });
+          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories, category_name: '' });
         })
         .catch(e => next(e));
     })

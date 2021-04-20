@@ -41,20 +41,24 @@
 
 .sidebar_links li {
     width: 100%;
-    padding: 15px 0;
 }
 
 .sidebar_links li a {
     width: 100%;
     padding: 15px;
     color: black;
+    font-weight: 700;
+    display: flex;
 }
 
-
+.sidebar_links li a.active {
+    color: white;
+    background-color: #354759;
+}
 
 .sidebar_links li a:hover {
-    color: #9ca9d9;
-    /* background-color: rgb(214, 210, 205); */
+    color: white;
+    background-color: #b4b9d1;
     border-radius: 2%;
     
 }
@@ -65,7 +69,7 @@
 }
 
 .dashboard_header a {
-    background-color: #8191c2;
+    background-color: #1d59b4;
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
@@ -73,7 +77,7 @@
 }
 
 .dashboard_header a:hover{
-    background-color: #5f72a7;
+    background-color: #194e9e;
     
 }
 .dashboard_card {
@@ -138,18 +142,18 @@
 }
 
 .dashboard_card_info_actions .one {
-    background-color: #8191c2;
+    background-color: #1c7399;
 }
 
 .dashboard_card_info_actions .one:hover{
-    background-color: #5f72a7;
+    background-color: #156080;
 }
 .dashboard_card_info_actions .two{
-    background-color: #af4970;
+    background-color: #c02d3c;
 }
 
 .dashboard_card_info_actions .two:hover{
-    background-color: #9b355c;
+    background-color: #a01f2c;
 
 }
 .dashboard_sidebar hr {
@@ -188,6 +192,8 @@
       justify-content: center;
       align-items: center;
       color: white;
+      position: absolute;
+      /* margin-top: 20px; */
   }
 
   .dashboard_messages ul {
@@ -199,8 +205,8 @@
     padding: 0 10px;
     border-radius: 5px;
     margin: 5px 0;
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
   }
 
   .dashboard_messages ul.error li {
@@ -227,9 +233,9 @@
   }
 
   .admin_pagination a.active {
-    background-color: #7a9fb2;
+    background-color: #2b314b;
     color: white;
-    border: 1px solid #7a9fb2;
+    border: 1px solid #2b314b;
   }
   
   .admin_pagination a:hover:not(.active) {background-color: #ddd;}
