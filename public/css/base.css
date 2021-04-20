@@ -1,15 +1,39 @@
 
+
 *{
   box-sizing: border-box;
 }
 
 body {
   background-color: white;
+  font-family: 'Roboto Slab', serif;
+
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Marmelad&family=Zilla+Slab:ital,wght@0,300;1,400&display=swap');
 
 body{
   font-family: 'Marmelad', sans-serif;
 }
+
+a{
+  text-decoration: none;
+}
+
+.endContainerHome{
+  margin: 0 13% 100px 13%;
+  display: grid;
+  width: 900px;
+  
+  grid-template-columns: 300px 300px 300px;
+  grid-template-rows: 300px 300px;
+  grid-template-areas: 
+  "fisrtImage secondImage thirdImage"
+  "forthImage fifthImage sixthImage";
+}
+
+.fisrtImage{grid-area: fisrtImage;}
+.secondImage{grid-area: secondImage;}
+.thirdImage{grid-area: thirdImage;}
+.forthImage{grid-area: forthImage;}
+.fifthImage{grid-area: fifthImage;}
+.sixthImage{grid-area: sixthImage;}
