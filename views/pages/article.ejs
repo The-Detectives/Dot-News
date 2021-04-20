@@ -1,9 +1,7 @@
 <%- include('../partials/header') %>
 
     <!-- <link rel="stylesheet" href="../../../css/modules/article.css"> -->
-    <p class="p_article">
-        <%= articleData.name %> Section
-    </p>
+
     <section class="articleContainer">
         <div>
             <br>
@@ -15,15 +13,17 @@
                 <%= articleData.title %>
             </h2>
             <br>
+            <p class="p3_article">
+                Published at - <%= new Date(articleData.published_date).toDateString() %> -
+            </p>
+            <br>
             <br>
             <br>
             <div class="p2_article custom-scrollbar">
-                <%- articleData.content %>
+               <div class="articleParag">  <%- articleData.content %> </div>
             </div>
             <br>
-            <p class="p3_article">
-                Published at ( <%= new Date(articleData.published_date).toDateString() %> )
-            </p>
+
 
 
 

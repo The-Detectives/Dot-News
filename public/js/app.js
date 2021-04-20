@@ -57,3 +57,7 @@ dots.forEach((dot, i) => {
     currentSlide = i;
   });
 });
+
+
+
+
