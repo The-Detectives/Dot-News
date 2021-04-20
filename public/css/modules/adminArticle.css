@@ -79,14 +79,14 @@
     cursor: pointer;
     float: right;
     color: white;
-    background-color: #5dc0c0;
+    background-color: #8191c2;
     border:  none;
     margin: 30px 0;
     
 }
 
 .input_container input:hover{
-    background-color: #509292;
+    background-color: #5f72a7;
 
 }
 
