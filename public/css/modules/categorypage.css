@@ -16,7 +16,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-  grid-gap: 10px;
+  /* grid-gap: 10px; */
   margin: auto;
   padding: 25px 83px;
   color: #2D3E50;
@@ -30,10 +30,12 @@
   font-size: large;
   overflow: hidden;
   background: #fff;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .categoryItem img {
-  height: 200px;
+  height: 400px;
   width: 85%;
   margin-top: 20px;
 }
@@ -59,10 +61,12 @@
   grid-column: span 2;
   text-align: center;
   font-size: xx-large;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .bigItem img {
-  height: 400px;
+  height: 500px;
 }
 
 .bigItem h2 {
