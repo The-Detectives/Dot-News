@@ -228,7 +228,7 @@ function categoryHandler(req, res, next) {
           res.render('pages/category', {
             categoryApi: arr,
             categoryDB: resultDb,
-            categories:categoriesNames,
+            categories: categories,
           });
         })
         .catch((e) => next(e));
