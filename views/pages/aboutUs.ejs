@@ -115,9 +115,6 @@
             <h2 class="title"> Please get in touch and our team will answer all your questions</h2>
             <form class="contact-form" action="/aboutUs" method="POST">
 
-
-
-
                 <div class="form__group field">
                     <input type="text" class="form__field" placeholder="Name" name="username" id='username' required autocomplete="off" />
                     <label for="username" class="form__label">Name</label>
@@ -133,8 +130,10 @@
                 </div>
 
                 <div class="form__group field">
-                    <input type="message" class="form__field" placeholder="message" name="message" id='message' autocomplete="off"
-                        required />
+                    <textarea name="message"class="form__field" placeholder="message"  id="message" cols="30" rows="3" autocomplete="off"
+                    required></textarea>
+                    <!-- <input type="message" class="form__field" placeholder="message" name="message" id='message' autocomplete="off"
+                        required /> -->
                     <label for="message" class="form__label">Message</label>
                 </div>
                 <button type="submit" class="btn btn-primary btn-ghost">Send</button>
