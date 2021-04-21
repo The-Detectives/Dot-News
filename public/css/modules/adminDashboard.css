@@ -1,5 +1,6 @@
 .admin_dashboard_container {
     width: 100%;
+    min-height: 100%;
     display: flex;
 }
 
@@ -24,6 +25,10 @@
     margin-bottom: 1%;
     display: flex;
     flex-direction: column;
+}
+
+.dashboard_list_article_container {
+    min-height: 65vh;
 }
 
 .sidebar_title {
@@ -238,6 +243,7 @@
       align-items: center;
       color: white;
       position: absolute;
+      align-self: center;
       /* margin-top: 20px; */
   }
 
