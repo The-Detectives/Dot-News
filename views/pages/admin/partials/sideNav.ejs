@@ -1,6 +1,6 @@
 <div class="dashboard_sidebar">
   <ul class="sidebar_links">
-    <li><a <% if(!category_name){ %>class="active"<% } %> href="/admin/dashboard">
+    <li><a <% if(!category_name && category_name !== 'messages'){ %>class="active"<% } %> href="/admin/dashboard">
       All
     </a></li>
     <% categories.forEach(category=> { %>
