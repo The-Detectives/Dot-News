@@ -108,10 +108,10 @@ function homeHandler(req, res, next) {
                       });
                     });
 
-                  let SQL = 'SELECT * FROM article;';
+                  let SQL = 'SELECT * FROM article ORDER BY id DESC LIMIT 10 OFFSET 0;';
                   dbExcecute(SQL)
                     .then((data) => {
-                      let ourNews = data.slice(0, 10);
+                      let ourNews = data;
                       let categorySql = 'SELECT * FROM category;';
                       dbExcecute(categorySql)
                         .then(categories => {
@@ -163,7 +163,7 @@ function contactHandler(req, res, next) {
   let sqlContact = 'INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';
   let safeValues1 = [contactData.username, contactData.phone, contactData.email, contactData.message, new Date()];
   dbExcecute(sqlContact, safeValues1)
-    .then(res.redirect('/contactUs'))
+    .then(res.send({'Message': 'Your message has been sent successfully'}))
     .catch((e) => next(e));
 }
 // handling the article page
@@ -230,7 +230,7 @@ function categoryHandler(req, res, next) {
         }
 
         let sqlQuery =
-        'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
+        'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT 5 OFFSET 0;';
       let safeValues = [categoryName];
       dbExcecute(sqlQuery, safeValues)
         .then((data) => {
@@ -442,7 +442,7 @@ function adminUpdateArticleHandler(req, res, next) {
 
 // handling contact message
 function adminMassagesHandler(req, res, next) {
-  let contactSql = 'SELECT * FROM contact';
+  let contactSql = 'SELECT * FROM contact ORDER BY id DESC;';
 
   dbExcecute(contactSql)
     .then((messages) => {
