@@ -48,7 +48,7 @@ const prev = () => {
 
 setInterval(() => {
   next();
-}, 5000);
+}, 4000);
 
 dots.forEach((dot, i) => {
   dot.addEventListener('click', () => {
