@@ -1,9 +1,10 @@
 DELETE FROM users;
-DELETE FROM category;
 DELETE FROM article;
+DELETE FROM category;
+DELETE FROM contact;
 
 
-INSERT INTO category (name) VALUES ('arts'), ('home'), ('science'), ('world');
+INSERT INTO category (name) VALUES ('arts'), ('health'), ('science'), ('world'), ('sports'), ('fashion'), ('technology'), ('movies');
 
 INSERT INTO article 
 (title, image, abstract, content, published_date, category_id)

@@ -1,10 +1,19 @@
 <%- include('../partials/header') %>
 <div class="contactForm1">
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>Thank You</h2>
+            <a id="poup_close_btn" class="close" href="#">&times;</a>
+            <div class="content">
+                Your message has been sent successfully. <br />Thank you for contacting us, we appreciate your time and we will reply soon.
+            </div>
+        </div>
+    </div>
     <div class="contact">
       
-        <h2 class="title"> Please get in touch and our team will answer all your questions</h2>
+        <h2 class="title">- Please get in touch and our team will answer all your questions -</h2>
         <!-- <div class="grad"></div> -->
-        <form class="contact-form" action="/contactUs" method="POST">
+        <form id="contactus_form" class="contact-form" action="/contactUs" method="POST">
 
             <div class="form__group field">
                 <input type="text" class="form__field" placeholder="Name" name="username" id='username' required autocomplete="off" />
