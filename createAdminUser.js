@@ -46,7 +46,6 @@ function createAdminUser(user) {
     .then((token) => (user.token = token))
     .then(() => createUser(user))
     .then((user) => {
-      console.log(user);
       console.info('User admin created successfully');
       console.info('You can login now.');
       client.end();

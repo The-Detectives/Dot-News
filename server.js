@@ -449,7 +449,7 @@ function adminMassagesHandler(req, res, next) {
       let categorySqlQuery = 'SELECT * FROM category;';
       dbExcecute(categorySqlQuery)
         .then((categories) => {
-          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories, category_name: '' });
+          res.render('pages/admin/dashboardmessages', { messages: messages, categories: categories, category_name: 'messages' });
         })
         .catch(e => next(e));
     })

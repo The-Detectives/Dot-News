@@ -1,4 +1,20 @@
 
+/* Sectoin header changing background on change section */
+$('.topnav_right>a').each(function () {
+  if(window.location.pathname === $(this).attr('href')){
+    $(this).css({
+      'color': '#38A169'
+    });
+  }});
+
+$('.secHeader>a').each(function () {
+  if(window.location.pathname === $(this).attr('href')){
+    $(this).css({
+      'background-color': '#38A169',
+      'color': 'white'
+    });
+  }
+});
 
 /* second header */
 

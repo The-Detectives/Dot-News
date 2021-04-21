@@ -14,6 +14,7 @@ body.admin_body {
     width: 100%;
     background-color: #354759 !important;
     color: white;
+    font-weight: 600;
     height: 10vh;
     line-height: 10vh;
     text-align: center;
