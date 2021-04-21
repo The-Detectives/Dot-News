@@ -13,6 +13,8 @@ body.admin_body {
 .admin_header, .admin_footer {
     width: 100%;
     background-color: #354759 !important;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
     color: white;
     font-weight: 600;
     height: 10vh;
@@ -45,7 +47,7 @@ body.admin_body {
 
 .admin_logo a:hover, .admin_navbar ul li a:hover{
 /* color: #8191c2; */
-font-weight: bold;
+/* font-weight: bolder; */
 }
 
 .admin_logo, .admin_logo a {

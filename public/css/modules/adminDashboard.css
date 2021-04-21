@@ -59,6 +59,8 @@
 .sidebar_links li a.active {
     color: white;
     background-color: #354759;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
 }
 
 .sidebar_links li a:hover {
@@ -75,6 +77,8 @@
 
 .dashboard_header a {
     background-color: #354759;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
     padding: 10px 20px;
     border-radius: 2px;
     text-decoration: none;
@@ -85,6 +89,8 @@
 .dashboard_header a:hover{
     background-color: #2b314b;
     font-weight: bold;
+    /* background: linear-gradient(to bottom, #223447 0%, #22364bb7 100%); */
+
 
     
 }
@@ -153,16 +159,22 @@
 
 .dashboard_card_info_actions .one {
     background-color: #354759;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
     
 }
 
 .dashboard_card_info_actions .one:hover{
     background-color: #2b314b;
+    /* background: linear-gradient(to bottom, #223447 0%, #22364bb7 100%); */
+
     font-weight: bold;
 
 }
 .dashboard_card_info_actions .two{
     background-color: rgb(148, 0, 0);
+    /* background: linear-gradient(to bottom, rgb(151, 43, 43) 0%, rgb(204, 0, 0) 100%); */
+
 }
 
 .dashboard_card_info_actions .two:hover{
@@ -221,6 +233,8 @@
 .dashboard_table th {
     font-weight: 600;
     background-color: #354759;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
     color: white;
 }
 /* .dashboard_table td {
@@ -270,7 +284,7 @@
   }
 
   .admin_pagination a {
-    color: black;
+    color: #223447;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
@@ -285,8 +299,10 @@
 
   .admin_pagination a.active {
     background-color: #2b314b;
+    /* background: linear-gradient(to bottom, #223447 0%, #22364bb7 100%); */
+
     color: white;
-    border: 1px solid #2b314b;
+    /* border: 1px solid #2b314b; */
   }
   
   .admin_pagination a:hover:not(.active) {background-color: #ddd;}
