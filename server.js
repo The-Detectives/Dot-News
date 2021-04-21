@@ -328,10 +328,16 @@ function adminDashboardHandler(req, res, next) {
       dbExcecute(categorySqlQuery)
         .then((categories) => {
           let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
-          dbExcecute(sqlCountAllQuery)
+          safeValues = [];
+          if(category_name){
+            sqlCountAllQuery = 'SELECT COUNT(*) FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
+            safeValues = [category_name];
+          }
+
+          dbExcecute(sqlCountAllQuery, safeValues)
           .then(countData => {
             let hasNext = parseInt(countData[0].count) > startWith + limit;
-
+            console.log(hasNext, parseInt(countData[0].count), startWith + limit)
             res.render('pages/admin/dashboard', {
               articles: articles,
               categories: categories,
@@ -340,7 +346,7 @@ function adminDashboardHandler(req, res, next) {
               hasNext:hasNext
             });
           })
-          
+          .catch((e) => next(e));
         })
         .catch((e) => next(e));
     })
