@@ -43,7 +43,8 @@ body.admin_body {
 }
 
 .admin_logo a:hover, .admin_navbar ul li a:hover{
-color: #8191c2;
+/* color: #8191c2; */
+font-weight: bold;
 }
 
 .admin_logo, .admin_logo a {

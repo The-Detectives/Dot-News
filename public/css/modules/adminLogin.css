@@ -1,27 +1,39 @@
-.login_container {
+/* .login_container {
     display: flex;
     flex-direction: column;
-}
+} */
 
+.loginMainCont{
+    /* background-color: #2b314b; */
+    padding: 48px 0;
+    background-image: url("https://images.pexels.com/photos/158385/lake-mcdonald-landscape-panorama-sunset-158385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    background-size: cover;
+
+    padding: 75px 0;
+}
 .loginMain {
     display: flex;
 }
 
 .loginForm {
-    width: 100%;
+    margin-left: 58px;
+    width: 471px;
+    height: 375px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #979da0;
-    border-radius: 60px;
+    /* border: 1px solid #979da0; */
+    border-radius: 2px;
     padding: 20px;
-    margin-top: 10px;
+    margin-top: 54px;
     color: #2D3E50;
+    opacity: 0.8;
     background-color: white;
-    /* box-shadow: 30px 30px 40px #2D3E50; */
-    -webkit-box-shadow: 5px 5px 15px -3px #2b314b; 
+    /* box-shadow: 30px 30px 40px #2d3e50; */
+    -webkit-box-shadow: 5px 5px 15px -3px #2b314b;
     box-shadow: 5px 5px 15px -3px #2b314b;
+    margin-top: 0;
 }
 
 .login_title {
@@ -47,7 +59,7 @@
     left: -40px;
 }
 
-.login_container {
+/* .login_container {
     display: flex;
     align-items: center;
     height: 100vh;
@@ -56,14 +68,14 @@
     margin: auto;
     padding: 20px;
     
-}
+} */
 
 .login_container .inputField {
     width: 100%;
     margin-bottom: 20px;
     border: 1px solid;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 2px;
+    cursor: text;
     padding: 20px 20px 20px 60px;
     color: #2D3E50;
 }
@@ -71,8 +83,10 @@
 .login_container .userIcon {
     background-color: transparent;
     background-position: 10px 10px;
+    background-color: #35475924;
     background-repeat: no-repeat;
     background-size: 36px;
+    background-position-y: center;
     background-image: url(../../img/user-icon.png);
 }
 
@@ -80,17 +94,25 @@
     background-color: transparent;
     background-position: 3px 0px;
     background-repeat: no-repeat;
-    background-size: 50px;
-    background-image: url(../../img/passwordicon.png);
+    background-color: #35475924;
+    background-size: 40px;
+    background-position-y: center;
+    background-image: url(https://image.flaticon.com/icons/png/128/3107/3107363.png);
 }
 
 .login_container .submitField {
     border: 1px solid;
-    border-radius: 10px;
+    border-radius: 2px;
     padding: 10px 25px;
     font-size: 30px;
     font-family: none;
     margin-top: 10px;
     cursor: pointer;
-    color: #2D3E50;
+    color: white;
+    background-color: #2D3E50;
 }
+
+.login_container .submitField:hover{
+    background-color: #152435;
+}
+
