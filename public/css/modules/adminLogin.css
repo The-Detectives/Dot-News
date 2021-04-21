@@ -1,22 +1,19 @@
-/* .login_container {
-    display: flex;
-    flex-direction: column;
-} */
 
-.loginMainCont{
+.loginMainPagee{
     /* background-color: #2b314b; */
-    padding: 48px 0;
+    /* padding: 48px 0; */
+    padding: 10% 30%;
     background-image: url("https://images.pexels.com/photos/158385/lake-mcdonald-landscape-panorama-sunset-158385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
     background-size: cover;
 
-    padding: 75px 0;
+    /* padding: 75px 0; */
 }
 .loginMain {
     display: flex;
 }
 
 .loginForm {
-    margin-left: 58px;
+    /* margin-left: 58px; */
     width: 471px;
     height: 375px;
     display: flex;
@@ -26,14 +23,14 @@
     /* border: 1px solid #979da0; */
     border-radius: 2px;
     padding: 20px;
-    margin-top: 54px;
+    /* margin-top: 54px; */
     color: #2D3E50;
     opacity: 0.8;
     background-color: white;
     /* box-shadow: 30px 30px 40px #2d3e50; */
     -webkit-box-shadow: 5px 5px 15px -3px #2b314b;
     box-shadow: 5px 5px 15px -3px #2b314b;
-    margin-top: 0;
+    /* margin-top: 0; */
 }
 
 .login_title {
