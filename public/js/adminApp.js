@@ -6,7 +6,7 @@ if (window.location.pathname === '/admin/login') {
 /* Admin navbar hightlighting */
 $('.admin_navbar a').each(function (prams) {
   if (window.location.pathname === $(this).attr('href')) {
-    $(this).css({ color: '#aabfff' });
+    $(this).css({ color: '#DDD' });
   }
 });
 

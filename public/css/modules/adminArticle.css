@@ -22,8 +22,12 @@
 
 
 .admin_article_title{
-    font-size: 30px;
+    font-size: 20px;
     margin-bottom: 20px;
+    text-align: center;
+    color: #2D3E50;
+    margin-top: 10px;
+
 }
 #categoryAdminF {
     cursor: pointer;
@@ -83,18 +87,24 @@
 }
 
 .input_container input{
-    width: 400px;
+    width: 154px;
     cursor: pointer;
-    float: right;
+    /* float: right; */
     color: white;
-    background-color: #8191c2;
-    border:  none;
-    margin: 30px 0;
+    background-color: #364759;
+    /* background: linear-gradient(to bottom, #364759 0%, #364759b7 100%); */
+
+    border: none;
+    right: 30px 0;
+    font-size: 18px;
+    margin-left: 971px;
     
 }
 
 .input_container input:hover{
-    background-color: #5f72a7;
+    background-color: #202d3b;
+    /* background: linear-gradient(to bottom, #213244 0%, #2b435cb7 100%); */
+
 
 }
 
