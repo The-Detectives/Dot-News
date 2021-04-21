@@ -2,8 +2,22 @@
 
   
     <section class="categoryContainer">
+        <div class="bigItem">
 
-        <% for(var i=0; i<4; i++) {%>
+            <a href="<%= categoryApi[9].url%>"><img src="<%= categoryApi[9].image %>" /></a>
+            
+            <h2>
+                <%= categoryApi[9].title %>
+            </h2>
+            <p class="abstract">
+                <%= categoryApi[9].abstract %> 
+            </p>
+            <sp class="date" style="opacity: 0.5" >
+                <%= new Date(categoryApi[9].published_date).toDateString() %>
+            </sp>
+        </div>
+
+        <% for(var i=1; i<4; i++) {%>
             <div class="categoryItem <% if(i===0){ %>bigItem <% } %>">
 
                 <a href="/article/<%= categoryDB[i].id %>"><img src="<%= categoryDB[i].image %>" /></a>
@@ -12,14 +26,14 @@
                     <%= categoryDB[i].title %>
                 </h2>
                 
-                <p>
+                <p class="date">
                     <%= new Date(categoryDB[i].published_date).toDateString() %>
                 </p>
             </div>
             <% } %>
 
-                <% for(var i=0; i<8; i++) {%>
-                    <div class="categoryItem <% if(i===3){ %>bigItem <% } %>">
+                <% for(var i=0; i<3; i++) {%>
+                    <div class="categoryItem">
 
                         <a href="<%= categoryApi[i].url %>"><img src="<%= categoryApi[i].image %>" /></a>
 
@@ -27,12 +41,50 @@
                             <%= categoryApi[i].title %>
                         </h2>
                        
-                        <p>
+                        <p class="date">
                             <%= new Date(categoryApi[i].published_date).toDateString() %>
                         </p>
                     </div>
 
+                    
                     <% } %>
+
+
+                    <div class="bigItem">
+
+                        <a href="<%= categoryApi[4].url%>"><img src="<%= categoryApi[4].image %>" /></a>
+                        
+                        <h2>
+                            <%= categoryApi[4].title %>
+                        </h2>
+                        <p class="abstract">
+                            <%= categoryApi[4].abstract %> 
+                        </p>
+                        <sp class="date" style="opacity: 0.5" >
+                            <%= new Date(categoryApi[4].published_date).toDateString() %>
+                        </sp>
+                    </div>
+
+
+
+
+                    <% for(var i=5; i<9; i++) {%>
+                        <div class="categoryItem">
+    
+                            <a href="<%= categoryApi[i].url %>"><img src="<%= categoryApi[i].image %>" /></a>
+    
+                            <h2>
+                                <%= categoryApi[i].title %>
+                            </h2>
+                           
+                            <p class="date">
+                                <%= new Date(categoryApi[i].published_date).toDateString() %>
+                            </p>
+                        </div>
+    
+                        
+                        <% } %>
+
     </section>
 
     <%- include('../partials/footer') %>
