@@ -1,9 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Antic+Slab&display=swap');
+
+
 body {
   width: 100%;
   min-width: 410px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Antic Slab', serif;
+
 }
 
 header {
@@ -22,8 +28,8 @@ footer {
 /* START HEADER */
 header{
   background-color: #ffffff;
-  border-bottom:1px solid #4b5878b6;
-  /* margin: 0 10%; */
+  font-family: 'Bitter', serif;
+
 }
 .topnav {
   overflow: hidden;
@@ -78,6 +84,7 @@ line-height: 10vh;
 footer{
   background-image: url("https://scontent.famm2-3.fna.fbcdn.net/v/t1.15752-9/175833805_1713290712207041_4297416206986705231_n.png?_nc_cat=104&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeEIixDlZQLLA303_uurND7h2nIeTG9ux1Hach5Mb27HUT9izG9YHWKiYevIAuIKYcfV2p-wh4df3R13nnfQ3A0o&_nc_ohc=uJd6hJbiqyEAX9TtKWm&_nc_ht=scontent.famm2-3.fna&oh=84a48d9af87eeb9bce3e668cec68b675&oe=60A438BF");
   background-size: cover;
+  font-family: 'Bitter', serif;
 }
 
 footer.admin_footer {

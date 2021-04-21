@@ -37,9 +37,10 @@
 }
 
 .login_title {
+    font-weight: bold;
     text-align: center;
     margin-bottom: 30px;
-    font-size: x-large;
+    font-size: 30px;
     text-transform: capitalize;
     position: relative;
 }
@@ -104,8 +105,8 @@
     border: 1px solid;
     border-radius: 2px;
     padding: 10px 25px;
-    font-size: 30px;
-    font-family: none;
+    font-size: 25px;
+    font-family: 'Antic Slab', serif;
     margin-top: 10px;
     cursor: pointer;
     color: white;
