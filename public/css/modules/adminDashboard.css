@@ -7,7 +7,7 @@
     position: fixed;
     min-height: 100vh;
     background-color: #e8eaef;
-    color: black;
+    /* color: black; */
     width: 15%;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@
 .sidebar_links li a {
     width: 100%;
     padding: 15px;
-    color: black;
+    color: #354759;
     font-weight: 700;
     display: flex;
 }
@@ -59,25 +59,28 @@
 .sidebar_links li a:hover {
     color: white;
     background-color: #b4b9d1;
-    border-radius: 2%;
+    border-radius: 2px;
     
 }
 
 .dashboard_header {
     padding: 30px 0;
-    border-bottom: 1px solid grey;
+    /* border-bottom: 1px solid grey; */
 }
 
 .dashboard_header a {
-    background-color: #1d59b4;
+    background-color: #354759;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 2px;
     text-decoration: none;
     color: white;
+    margin-left: 15px;
 }
 
 .dashboard_header a:hover{
-    background-color: #194e9e;
+    background-color: #2b314b;
+    font-weight: bold;
+
     
 }
 .dashboard_card {
@@ -100,7 +103,7 @@
     width: 150px;
     height: 100px;
     object-fit: contain;
-    border-radius: 20%;
+    border-radius: 2px;
 }
 
 
@@ -114,10 +117,12 @@
     margin-bottom: 20px;
     margin-top: 15px;
     font-weight:bolder;
+    color: #354759;
 }
 
 .published_at{
     color: rgb(136, 133, 133);
+    font-size: 13px;
 }
 
 .dashboard_card_info_actions {
@@ -131,29 +136,33 @@
 }
 
 .dashboard_card_info_actions button[type=submit]{
-    border-radius: 5px;
+    border-radius: 2px;
     color: white;
 
     width: 80px;
-    height: 50px;
+    height: 37px;
     margin: 0 10px;
     border: none;
     cursor: pointer;
 }
 
 .dashboard_card_info_actions .one {
-    background-color: #1c7399;
+    background-color: #354759;
+    
 }
 
 .dashboard_card_info_actions .one:hover{
-    background-color: #156080;
+    background-color: #2b314b;
+    font-weight: bold;
+
 }
 .dashboard_card_info_actions .two{
-    background-color: #c02d3c;
+    background-color: rgb(148, 0, 0);
 }
 
 .dashboard_card_info_actions .two:hover{
-    background-color: #a01f2c;
+    background-color: rgb(105, 0, 0);
+    font-weight: bold;
 
 }
 .dashboard_sidebar hr {
@@ -162,6 +171,12 @@
     margin-top: 0;
 
 }
+.massegesTitle{
+    color: #354759;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 30px;
+}
 
 
 .dashboard_table {
@@ -169,19 +184,49 @@
     border-collapse: collapse;
     font-size: 13px;
     line-height: 1.5;
-}
+    border: none;
+    box-shadow: 5px 10px 8px 10px #6c798634;}
 
+    .dashboard_table td:first-child{
+        text-transform: capitalize;
+    }
 .dashboard_table, .dashboard_table td, .dashboard_table th {
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     padding: 10px;
     vertical-align: middle;
     text-align: center;
   }
 
+  .dashboard_table td{
+      color: #354759ab;
+      cursor: auto;
+      /* font-size: 15px; */
+  }
+  .dashboard_table tr td:hover{
+    color: #2b314b;
+    /* font-size: 20px; */
+    /* font-weight: bold; */
+
+  }
+
+  .dashboard_table th td{
+      /* margin: 5px; */
+  }
+
 .dashboard_table th {
     font-weight: 600;
+    background-color: #354759;
+    color: white;
 }
+/* .dashboard_table td {
+    margin: 2px;
+} */
 
+.dashboard_table tr:hover{
+    background-color: #b4b9d1;
+    /* color: #2b314b; */
+    /* font-weight: bolder; */
+}
   .dashboard_table th:first-child, .dashboard_table th:last-child{
       width: 150px;
   }
@@ -203,7 +248,7 @@
   .dashboard_messages li {
     background-color: rgb(89, 155, 35);
     padding: 0 10px;
-    border-radius: 5px;
+    border-radius: 2px;
     margin: 5px 0;
     height: 30px;
     line-height: 30px;
@@ -246,3 +291,5 @@
     opacity: 0.5;
     text-decoration: none;
   }
+
+
