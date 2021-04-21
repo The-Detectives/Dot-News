@@ -29,7 +29,7 @@
 }
 
 .text:hover{
-  transform: scale(1.5);
+  transform: scale(1.2);
   position: absolute;
   text-align: center;
   text-decoration: none;

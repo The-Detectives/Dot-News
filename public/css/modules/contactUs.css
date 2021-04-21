@@ -10,6 +10,7 @@
           background-color: #dadada3b;;
       }
       .btn {
+        font-family: 'Antic Slab', serif;
           padding: 8px 20px;
           border-radius: 0;
           overflow: hidden;
@@ -30,18 +31,15 @@
           color: black;
       }
       .title{
-          /* font-family: 'Balsamiq Sans', cursive; */
-          /* font-family: 'Roboto', sans-serif; */
+
           font-size: 20px;
           margin:0px 0 20px 0px;
-          /* text-transform: uppercase; */
+ 
           color: #2D3E50;
           font-weight: bold;
       }
   
    h2.title{
-      font-family: 'Balsamiq Sans', cursive;
-          /* font-family: 'Roboto', sans-serif; */
           font-size: 20px;
           padding-top: 30px;
           /* padding-bottom: 20px; */
@@ -51,7 +49,6 @@
      
         margin: 37px 0;
         width: 469px;
-        font-family: 'Balsamiq Sans', cursive;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -68,7 +65,7 @@
           margin: 12px 0;
       }
       .contact-form .btn {
-          font-family: 'Balsamiq Sans', cursive;
+     
           width: 80%;
           margin: 18px 0 9px 0;
           font-size: 20.8px;
@@ -83,7 +80,7 @@
       width: 80%;
   }
   .form__field {
-      font-family: inherit;
+     
       width: 100%;
       border: 0;
       border-bottom: 2px solid #9b9b9b;
