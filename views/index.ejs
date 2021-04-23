@@ -1,7 +1,7 @@
 <%- include('./partials/header'); -%>
 
 <section class="homePageMainContainer">
-  <div class="homePageContainer">
+  <div class="topPageContainer">
     <div class="homeLogo">
       <img src="/img/logo2.png" alt="" />
     </div>
@@ -16,50 +16,48 @@
         <div class="line"></div>
       </div>
     </div>
-    <div class="firstPartOfPage">
-      <div class="sliderImgs">
-        <div class="leftNews">
-          <div class="slideshow-container">
-            <div class="slide fade">
-              <img id="1" src="<%= worldNews[3].image %>" />
-              <div>
-                <a class="text" href="<%= worldNews[3].url%>">
-                  <%= worldNews[3].title%>
-                </a>
-              </div>
-            </div>
-            <div class="slide fade">
-              <img id="1" src="<%= worldNews[1].image %>" />
-              <div>
-                <a class="text" href="<%= worldNews[1].url%>">
-                  <%= worldNews[1].title%>
-                </a>
-              </div>
-            </div>
-            <div class="slide fade">
-              <img id="1" src="<%= worldNews[2].image %>" />
-              <div>
-                <a class="text" href="<%= worldNews[2].url%>">
-                  <%= worldNews[2].title%>
-                </a>
-              </div>
-            </div>
+  </div>
+
+  <div class="firstPartOfPage">
+    <div class="sliderImgs">
+      <div class="slideshow-container">
+        <div class="slide fade">
+          <img id="1" src="<%= worldNews[3].image %>" />
+          <div>
+            <a class="text" href="<%= worldNews[3].url%>">
+              <%= worldNews[3].title%>
+            </a>
           </div>
-          <div id="dotesContainer" class="dots-container">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+        </div>
+        <div class="slide fade">
+          <img id="1" src="<%= worldNews[1].image %>" />
+          <div>
+            <a class="text" href="<%= worldNews[1].url%>">
+              <%= worldNews[1].title%>
+            </a>
           </div>
-          <br />
+        </div>
+        <div class="slide fade">
+          <img id="1" src="<%= worldNews[2].image %>" />
+          <div>
+            <a class="text" href="<%= worldNews[2].url%>">
+              <%= worldNews[2].title%>
+            </a>
+          </div>
         </div>
       </div>
+      <div id="dotesContainer" class="dots-container">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <br />
     </div>
   </div>
 
   <h3 class="category">Our News</h3>
- 
   <div class="secondPartOfPage">
-    <div class="gridUpper">
+    <div class="Upper">
       <div class="firstOurNews upperSecond">
   
         <a href="/article/<%= ourNews[0].id %>">
@@ -113,7 +111,6 @@
           <img src="<%= ourNews[2].image %> " alt="" />
         </div>
       </a>
-
       <a href="/article/<%= ourNews[3].id %>">
         <div class="smallImgs smallImgs2">
           <h4
@@ -161,8 +158,8 @@
       </a>
     </div>
   </div>
-  <h3 class="category">Arts</h3>
 
+  <h3 class="category">Arts</h3>
   <div class="secondPartOfPage">
     <div class="gridUpper">
       <div class="firstOurNews upperSecond">
@@ -263,6 +260,7 @@
       </a>
     </div>
   </div>
+
   <h3 class="category">Our News In Pictures</h3>
   <div class="endContainerHome">
     <a href="<%= artsNews[7].url %>">

@@ -1,17 +1,10 @@
 /* Slide Show Begin*/    
 
-.leftNews img{
+.sliderImgs img{
     width: 100%;
     height: 500px;
-    padding-right: 30px;
-    padding-left: 30px;
+    object-fit: cover;
 }
-
-.leftNews{
-    grid-row: span 2;
-    grid-column: span 2;
-}
-
 
 /* position: absolute; bottom: 6px; right: 10px; */
 
