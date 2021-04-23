@@ -159,16 +159,17 @@ hr.upperLine{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-   
+  margin-bottom: 20px;
 }
 
 .endContainerHome a {
-  width: 300px;
+  width: calc(100%/3 - 10px);
 }
 
 .endContainerHome a img {
   width: 100%;
   height: 300px;
+  object-fit: cover;
   padding: 5px;
 }
 
@@ -224,5 +225,10 @@ box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 
   .smallImgsContainer>a {
     width: 100%;
+  }
+
+  .endContainerHome a {
+    width: calc(100%/2 - 10px);
+    min-width: 220px;
   }
 }
