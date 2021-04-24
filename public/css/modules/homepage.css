@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap');
 
 .homePageMainContainer{
+  width: 100%;
   padding: 0 5% 0 5%;
 }
 
@@ -29,7 +30,6 @@
 .new{
     align-items: center;
     justify-content: center;
-   grid-row: span 1; 
 }
 
 .firstPartOfPage .new img{
@@ -50,18 +50,17 @@
 }
 
 .firstOurNews{
-  grid-area: img1;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin: 0 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .secondOurNews{
-  grid-area: img2;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin: 0 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .secondPartOfPage {
@@ -75,26 +74,36 @@
 .Upper {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 30px;
 }
 
-.upperSecond a:first-child {
+.upperSecond {
   width: 100%;
-  min-width: 300px;
+  padding: 0 20px;
+}
+
+.upperSecond a {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  color: #2d3e50;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+  margin: 5px;
+  line-height: 1.5;
 }
 
 .secondPartOfPage .upperSecond  img{
-  width: 90%;
+  width: 100%;
   height: 400px;
   object-fit: cover;
   margin-bottom: 10px;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  color: #2d3e50;
 }
 
 .smallImgsContainer {
@@ -226,6 +235,10 @@ box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
     flex-direction: column;
   }
 
+  .upperSecond a {
+    font-size: 19px;
+  }
+
   .upperSecond {
     margin-bottom: 15px;
   }
@@ -239,7 +252,15 @@ box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
 
   .endContainerHome a {
-    width: calc(100%/2 - 10px);
+    width: calc(100%/2 - 15px);
     min-width: 220px;
+  }
+
+  .smallImgsContainer h4 {
+    font-size: 16px;
+  }
+
+  .category {
+    font-size: 35px;
   }
 }
