@@ -6,7 +6,7 @@
 <footer class="site-footer">
     <div class="footerContainer">
 
-        <div class="col-sm-12 col-md-6">
+        <div class="footer_about">
             <h6>About</h6>
             <p class="text-justify">We believe that the internet is the most powerful communications medium to arise
                 since the dawn of television. As digital delivery systems become the primary source of news for a
@@ -14,45 +14,48 @@
                 journalists as well as the news audience. </p>
         </div>
 
-        <div class="col-xs-6 col-md-3">
-            <h6>Categories</h6>
-            <ul class="footer-links">
-                <% categories.forEach(cat=>{%>
-                    <li>
-                        <a href="/<%= cat.name  %>">
-                            <%= cat.name %>
-                        </a>
-                    </li>
-                    <% }) %>
-            </ul>
+        <div class="footer_categories">
+            <div>
+                <h6>Categories</h6>
+                <ul class="footer-links">
+                    <% categories.forEach(cat=>{%>
+                        <li>
+                            <a href="/<%= cat.name  %>">
+                                <%= cat.name %>
+                            </a>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
         </div>
 
-        <div class="col-xs-6 col-md-3">
-            <h6>Quick Links</h6>
-            <ul class="footer-links">
-                <li><a href="">About Us</a></li>
-                <li><a href="">Contact Us</a></li>
-                <li><a href="">Contribute</a></li>
-            </ul>
+        <div class="footer_quicklinks">
+            <div>
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="">About Us</a></li>
+                    <li><a href="">Contact Us</a></li>
+                    <li><a href="">Contribute</a></li>
+                </ul>
+            </div>
         </div>
-
 
     </div>
     <hr>
     <div class="footerContainer2">
 
-        <div>
+        <div class="footer_logo">
             <img class="footerLogo"
                 src="https://scontent.famm2-3.fna.fbcdn.net/v/t1.15752-9/176449043_151403180245994_4617941381824602767_n.png?_nc_cat=104&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeFz_DLN_YZD4nXoxGc_GXCffyj3cj0Momt_KPdyPQyia2Qw4LKUqdCOMpOabFvf8EoWpeq9_1sVzWDc0E7HE17I&_nc_ohc=f0lqkdHjaHUAX8NyT09&_nc_ht=scontent.famm2-3.fna&oh=3b347acbf0065ae4e8f31eef5b3ac542&oe=60A51C9D"
                 alt="">
         </div>
-        <div class="col-md-8 col-sm-6 col-xs-12">
+        <div class="footer_copyright">
             <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
                 <a href="https://github.com/The-Detectives">The-Detectives</a>.
             </p>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="footer_social">
             <ul class="social-icons">
                 <!-- <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li> -->
                 <li><a class="twitter" href="https://twitter.com/WAFA00296153"><i class="fa fa-twitter"></i></a></li>
