@@ -1,10 +1,8 @@
-const { dbExcecute } = require('../../helpers/pgClient');
+const { setUserTokenNull } = require('../../models/usersModel');
 
 // handling logout
 module.exports = function logoutController(req, res, next) {
-  let sqlQuery = 'UPDATE users SET token=NULL WHERE username=$1';
-
-  dbExcecute(sqlQuery, [req.session.user.username])
+  setUserTokenNull(req.session.user.username)
     .then(() => {
       req.session = null;
       res.redirect('/admin/login');

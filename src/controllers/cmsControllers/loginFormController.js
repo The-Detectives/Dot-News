@@ -1,4 +1,4 @@
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getUser, updateUserToken } = require('../../models/usersModel');
 const { checkPassword, createToken } = require('../../helpers/authentication');
 
 // handling login
@@ -6,8 +6,7 @@ module.exports = function loginFormController(req, res, next) {
   const userReq = req.body;
   let user;
 
-  let getUserQuery = 'SELECT * FROM users WHERE username=$1;';
-  dbExcecute(getUserQuery, [userReq.username])
+  getUser(userReq.username)
     .then((data) => {
       user = data[0];
       if (!user) {
@@ -18,12 +17,7 @@ module.exports = function loginFormController(req, res, next) {
     })
     .then((response) => createToken())
     .then((token) => {
-      let getUserQuery =
-        'UPDATE users SET token=$1 WHERE id=$2 RETURNING id, username, token;';
-
-      return dbExcecute(getUserQuery, [token, user.id]).then(
-        (data) => (user = data[0])
-      );
+      return updateUserToken(token, user.id).then((data) => (user = data[0]));
     })
     .then(() => {
       delete user.password;
