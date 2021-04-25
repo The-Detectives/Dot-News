@@ -6,9 +6,9 @@ const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 const path = require('path');
 const { client } = require('./helpers/pgClient');
-const { dbExcecute } = require('./helpers/pgClient');
 const connectFlash = require('connect-flash')();
-const expressMessages = require('express-messages');
+
+const { messagesMiddleware } = require('./middleWares');
 
 /* ---------- Application Setups ---------- */
 
@@ -64,54 +64,6 @@ app.use(errorHandler);
 // Page not found handler
 app.get('*', notFoundPageHandler);
 
-
-/* --------- Application errors handler --------- */
-
-function notFoundPageHandler(req, res, next) {
-  let categorySql = 'SELECT * FROM category;';
-  dbExcecute(categorySql)
-    .then(categories => {
-      res.status(401).render('pages/error', { categories: categories });
-    })
-    .catch((e) => next(e));
-
-}
-
-// error handler
-function errorHandler(error, req, res, next) {
-  if (error) {
-    console.log(error);
-    if(error.message === 'Password do not match'){
-      req.flash("error", "Username or password not correct");
-      res.redirect('/admin/login');
-    }
-    notFoundPageHandler(req, res, next);
-  } else {
-    next();
-  }
-}
-
-/* helper functions for authentication */
-
-
-
-// Messages middleware
-function messagesMiddleware(req, res, next) {
-  res.locals.messages = expressMessages(req, res);
-  next();
-}
-
-// authentication middleware
-function isAuthenticated(req, res, next) {
-  authenticate(req)
-    .then(auth => {
-      if (!auth) {
-        res.redirect('/admin/login');
-      } else {
-        next();
-      }
-    })
-}
 
 /* --------- Application start the server --------- */
 
