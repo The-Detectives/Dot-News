@@ -20,13 +20,15 @@ module.exports = function articlePageController(req, res, next) {
           let arr = categoryData.results.slice(0, 6).map((val) => {
             return new Article({ ...val, section: categoryData.section });
           });
-          getCategories().then((categories) => {
-            res.render('pages/article', {
-              articleData: article,
-              articleCategory: arr,
-              categories: categories,
-            });
-          });
+          getCategories()
+            .then((categories) => {
+              res.render('pages/article', {
+                articleData: article,
+                articleCategory: arr,
+                categories: categories,
+              });
+            })
+            .catch((e) => next(e));
         })
         .catch((e) => next(e));
     })

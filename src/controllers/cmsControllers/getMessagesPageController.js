@@ -1,11 +1,9 @@
 const { getCategories } = require('../../models/categoryModel');
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getContactMessages } = require('../../models/contactModel');
 
 // handling contact message
 module.exports = function getMessagesPageController(req, res, next) {
-  let contactSql = 'SELECT * FROM contact ORDER BY id DESC;';
-
-  dbExcecute(contactSql)
+  getContactMessages()
     .then((messages) => {
       getCategories()
         .then((categories) => {
