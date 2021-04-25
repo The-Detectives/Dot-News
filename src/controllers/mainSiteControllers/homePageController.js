@@ -1,4 +1,5 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 const { Article } = require('../../store');
 
@@ -44,8 +45,7 @@ module.exports = function homePageController(req, res, next) {
                     dbExcecute(SQL)
                       .then((data) => {
                         let ourNews = data;
-                        let categorySql = 'SELECT * FROM category;';
-                        dbExcecute(categorySql)
+                        getCategories()
                           .then(categories => {
                             res.render('index', {
                               worldNews: worldArray,

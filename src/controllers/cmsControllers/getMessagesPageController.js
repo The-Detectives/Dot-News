@@ -1,3 +1,4 @@
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 
 // handling contact message
@@ -6,8 +7,7 @@ module.exports = function getMessagesPageController(req, res, next) {
 
   dbExcecute(contactSql)
     .then((messages) => {
-      let categorySqlQuery = 'SELECT * FROM category;';
-      dbExcecute(categorySqlQuery)
+      getCategories()
         .then((categories) => {
           res.render('pages/admin/dashboardmessages', {
             messages: messages,

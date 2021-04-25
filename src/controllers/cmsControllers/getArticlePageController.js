@@ -1,3 +1,4 @@
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 
 // handling showing article in edit page
@@ -7,10 +8,8 @@ module.exports = function getDashboardPageController(req, res, next) {
 
   dbExcecute(sqlQuery, [id])
     .then((data) => {
-      let = article = data[0];
-      let categorySqlQuery = 'SELECT * FROM category;';
-
-      dbExcecute(categorySqlQuery)
+      let article = data[0];
+      getCategories()
         .then((categories) => {
           res.render('pages/admin/article', {
             categories: categories,

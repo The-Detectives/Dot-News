@@ -1,8 +1,7 @@
-const { dbExcecute } = require('../helpers/pgClient');
+const { getCategories } = require('../models/categoryModel');
 
 module.exports = function notFoundPageHandler(req, res, next) {
-  let categorySql = 'SELECT * FROM category;';
-  dbExcecute(categorySql)
+  getCategories()
     .then((categories) => {
       res.status(401).render('pages/error', { categories: categories });
     })

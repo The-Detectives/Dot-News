@@ -2,7 +2,7 @@ const homePageController = require('./homePageController');
 const categoryPageController = require('./categoryPageController');
 const articlePageController = require('./articlePageController');
 const aboutusPageController = require('./aboutusPageController');
-const contactuspageController = require('./contactuspageController');
+const contactusPageController = require('./contactusPageController');
 const contactusFormController = require('./contactusFormController');
 
 module.exports = {
@@ -10,6 +10,6 @@ module.exports = {
   categoryPageController,
   articlePageController,
   aboutusPageController,
-  contactuspageController,
+  contactusPageController,
   contactusFormController,
 };

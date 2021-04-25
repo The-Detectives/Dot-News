@@ -1,9 +1,8 @@
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getCategories } = require('../../models/categoryModel');
 
 // handling the about us page
 module.exports = function aboutusPageController(req, res, next) {
-  let categorySql = 'SELECT * FROM category;';
-  dbExcecute(categorySql).then((categories) => {
+  getCategories().then((categories) => {
     res.render('pages/aboutUs', { categories: categories });
   });
 };

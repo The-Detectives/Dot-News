@@ -1,4 +1,5 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 const { Article } = require('../../store');
 
@@ -19,8 +20,7 @@ module.exports = function articlePageController(req, res, next) {
           let arr = categoryData.results.slice(0, 6).map((val) => {
             return new Article({ ...val, section: categoryData.section });
           });
-          let categorySql = 'SELECT * FROM category;';
-          dbExcecute(categorySql).then((categories) => {
+          getCategories().then((categories) => {
             res.render('pages/article', {
               articleData: article,
               articleCategory: arr,

@@ -1,4 +1,5 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 const { Article } = require('../../store');
 
@@ -18,9 +19,7 @@ module.exports = function categoryPageController(req, res, next) {
         return new Article({ ...val, section: categoryData.section });
       });
 
-      let categorySql = 'SELECT * FROM category;';
-
-      dbExcecute(categorySql).then((categories) => {
+      getCategories().then((categories) => {
         let categoriesNames = categories.reduce((catNames, catObj) => {
           catNames.push(catObj.name);
           return catNames;

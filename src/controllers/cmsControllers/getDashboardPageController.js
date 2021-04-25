@@ -1,3 +1,4 @@
+const { getCategories } = require('../../models/categoryModel');
 const { dbExcecute } = require('../../helpers/pgClient');
 
 // handling the admin dashboard page
@@ -17,8 +18,7 @@ module.exports = function getDashboardPageController(req, res, next) {
 
   dbExcecute(sqlQuery, safeValues)
     .then((articles) => {
-      let categorySqlQuery = 'SELECT * FROM category;';
-      dbExcecute(categorySqlQuery)
+      getCategories()
         .then((categories) => {
           let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
           safeValues = [];
