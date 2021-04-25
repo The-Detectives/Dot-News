@@ -1,0 +1,69 @@
+const { getDataFromAPI } = require('../../helpers/superAgentClient');
+const { getCategories } = require('../../models/categoryModel');
+const { getArticles } = require('../../models/articleModel');
+const { Article } = require('../../store');
+
+// handling the home page
+module.exports = function homePageController(req, res, next) {
+  let key = process.env.CATEGORY_KEY;
+
+  let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
+  let artsURL = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${key}`;
+  let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
+  let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
+
+  getDataFromAPI(worldURL)
+    .then((worldData) => {
+      let worldArray = worldData.results.slice(0, 5).map((item) => {
+        return new Article({ ...item, section: worldData.section });
+      });
+
+      getDataFromAPI(artsURL)
+        .then((artsData) => {
+          let artsArray = artsData.results.slice(0, 10).map((item) => {
+            return new Article({ ...item, section: artsData.section });
+          });
+
+          getDataFromAPI(scienceURL)
+            .then((scienceData) => {
+              let scienceArray = scienceData.results.slice(0, 5).map((item) => {
+                return new Article({ ...item, section: scienceData.section });
+              });
+
+              getDataFromAPI(healthURL)
+                .then((healthData) => {
+                  let healthArray = healthData.results
+                    .slice(0, 5)
+                    .map((item) => {
+                      return new Article({
+                        ...item,
+                        section: healthData.section,
+                      });
+                    });
+
+                    getArticles()
+                    .then((data) => {
+                      let ourNews = data;
+                      getCategories()
+                        .then((categories) => {
+                          res.render('index', {
+                            worldNews: worldArray,
+                            artsNews: artsArray,
+                            scienceNews: scienceArray,
+                            healthNews: healthArray,
+                            ourNews: ourNews,
+                            categories: categories,
+                          });
+                        })
+                        .catch((e) => next(e));
+                    })
+                    .catch((e) => next(e));
+                })
+                .catch((e) => next(e));
+            })
+            .catch((e) => next(e));
+        })
+        .catch((e) => next(e));
+    })
+    .catch((e) => next(e));
+};
