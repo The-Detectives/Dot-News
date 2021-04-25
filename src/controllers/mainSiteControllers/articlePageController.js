@@ -2,7 +2,7 @@ const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { dbExcecute } = require('../../helpers/pgClient');
 
 // handling the article page
-module.exports = function articleHandler(req, res, next) {
+module.exports = function articlePageController(req, res, next) {
   //article
   let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
   let safeValues1 = [req.params.id];

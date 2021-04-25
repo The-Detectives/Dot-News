@@ -1,7 +1,7 @@
 const { dbExcecute } = require('../../helpers/pgClient');
 
 // Handling contact form
-module.exports = function contactHandler(req, res, next) {
+module.exports = function contactusFormController(req, res, next) {
   let contactData = req.body;
   let sqlContact =
     'INSERT INTO contact (name, phone, email, message, date) VALUES ($1, $2, $3, $4, $5);';

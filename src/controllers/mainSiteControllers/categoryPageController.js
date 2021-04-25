@@ -1,8 +1,9 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { dbExcecute } = require('../../helpers/pgClient');
+const { Article } = require('../../store');
 
 // handling the category Page
-module.exports = function categoryHandler(req, res, next) {
+module.exports = function categoryPageController(req, res, next) {
   let categoryName = req.params.category;
   if (categoryName === 'admin') {
     res.redirect('/admin/login');
