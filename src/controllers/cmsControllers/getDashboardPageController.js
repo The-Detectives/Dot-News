@@ -31,11 +31,6 @@ module.exports = function getDashboardPageController(req, res, next) {
           dbExcecute(sqlCountAllQuery, safeValues)
             .then((countData) => {
               let hasNext = parseInt(countData[0].count) > startWith + limit;
-              console.log(
-                hasNext,
-                parseInt(countData[0].count),
-                startWith + limit
-              );
               res.render('pages/admin/dashboard', {
                 articles: articles,
                 categories: categories,

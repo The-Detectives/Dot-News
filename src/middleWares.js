@@ -1,4 +1,4 @@
-const notFoundPageController = require('./controllers');
+const { notFoundPageController } = require('./controllers');
 const expressMessages = require('express-messages');
 const { authenticate } = require('./helpers/authentication');
 

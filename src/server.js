@@ -10,7 +10,8 @@ const { client } = require('./helpers/pgClient');
 const connectFlash = require('connect-flash')();
 
 const { messagesMiddleware } = require('./middleWares');
-const bootStrap = require('./routes')
+const bootStrap = require('./routes');
+const{ errorHandler } = require('./middleWares');
 
 /* ---------- Application Setups ---------- */
 
@@ -38,29 +39,15 @@ app.use(express.urlencoded({ extended: true }));
 //Routes
 bootStrap(app, router);
 
+// error handler
+app.use(errorHandler);
+
+
+
 //Test Page (Home)
 router.get('/test', (req, res, next) => {
   return res.send('Hello There');
 });
-
-
-// //Admin routes
-// app.get('/admin/login', loginPageHandler);
-// app.post('/admin/login', loginHandler);
-// app.get('/admin/logout', logutHandler);
-// app.get('/admin/dashboard', isAuthenticated, adminDashboardHandler);
-// app.get('/admin/article/new', isAuthenticated, adminNewArticleHandler);
-// app.post('/admin/article/new', isAuthenticated, adminCreateNewArticleHandler);
-// app.delete('/admin/article/:id', isAuthenticated, adminDeleteArticleHandler);
-// app.get('/admin/article/:id', isAuthenticated, adminShowArticleHandler);
-// app.put('/admin/article/:id', isAuthenticated, adminUpdateArticleHandler);
-// app.get('/admin/messages', isAuthenticated, adminMassagesHandler)
-
-// // error handler
-// app.use(errorHandler);
-
-// // Page not found handler
-// app.get('*', notFoundPageHandler);
 
 
 /* --------- Application start the server --------- */
