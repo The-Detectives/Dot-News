@@ -1,6 +1,6 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { getCategories } = require('../../models/categoryModel');
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getArticles } = require('../../models/articleModel');
 const { Article } = require('../../store');
 
 // handling the home page
@@ -41,9 +41,7 @@ module.exports = function homePageController(req, res, next) {
                       });
                     });
 
-                  let SQL =
-                    'SELECT * FROM article ORDER BY id DESC LIMIT 10 OFFSET 0;';
-                  dbExcecute(SQL)
+                    getArticles()
                     .then((data) => {
                       let ourNews = data;
                       getCategories()

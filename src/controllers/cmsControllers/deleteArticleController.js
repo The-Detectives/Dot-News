@@ -1,11 +1,9 @@
-const { dbExcecute } = require('../../helpers/pgClient');
+const { deleteArticle } = require('../../models/articleModel');
 
 // handling delete article
 module.exports = function deleteArticleController(req, res, next) {
   let articleId = req.params.id;
-  let sqlQuery = 'DELETE FROM article WHERE id = $1;';
-
-  dbExcecute(sqlQuery, [articleId])
+  deleteArticle(articleId)
     .then(() => {
       req.flash('info', 'Article Deleted successfully');
       res.redirect('/admin/dashboard');

@@ -1,12 +1,10 @@
 const { getCategories } = require('../../models/categoryModel');
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getArticleDetails } = require('../../models/articleModel');
 
 // handling showing article in edit page
 module.exports = function getDashboardPageController(req, res, next) {
   let id = req.params.id;
-  let sqlQuery = 'SELECT * From article WHERE id = $1';
-
-  dbExcecute(sqlQuery, [id])
+  getArticleDetails(id)
     .then((data) => {
       let article = data[0];
       getCategories()

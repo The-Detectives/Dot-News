@@ -1,15 +1,11 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { getCategories } = require('../../models/categoryModel');
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getArticleDetails } = require('../../models/articleModel');
 const { Article } = require('../../store');
 
 // handling the article page
 module.exports = function articlePageController(req, res, next) {
-  //article
-  let SQL1 = `SELECT * From article JOIN category ON article.category_id = category.id WHERE article.id= $1;`;
-  let safeValues1 = [req.params.id];
-
-  dbExcecute(SQL1, safeValues1)
+  getArticleDetails(req.params.id)
     .then((result) => {
       let article = result[0];
       let category = article.name;

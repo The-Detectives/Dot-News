@@ -1,6 +1,6 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { getCategories } = require('../../models/categoryModel');
-const { dbExcecute } = require('../../helpers/pgClient');
+const { getArticles } = require('../../models/articleModel');
 const { Article } = require('../../store');
 
 // handling the category Page
@@ -30,10 +30,7 @@ module.exports = function categoryPageController(req, res, next) {
             throw new Error('Page Not Found');
           }
 
-          let sqlQuery =
-            'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT 5 OFFSET 0;';
-          let safeValues = [categoryName];
-          dbExcecute(sqlQuery, safeValues)
+          getArticles(categoryName)
             .then((data) => {
               let resultDb = data;
 
