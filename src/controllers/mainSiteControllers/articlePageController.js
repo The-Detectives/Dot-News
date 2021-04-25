@@ -1,5 +1,6 @@
 const { getDataFromAPI } = require('../../helpers/superAgentClient');
 const { dbExcecute } = require('../../helpers/pgClient');
+const { Article } = require('../../store');
 
 // handling the article page
 module.exports = function articlePageController(req, res, next) {

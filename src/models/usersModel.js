@@ -1,4 +1,4 @@
-const { dbExcecute } = require('../../helpers/pgClient');
+const { dbExcecute } = require('../helpers/pgClient');
 
 // function to get user by token
 function findByToken(token) {
