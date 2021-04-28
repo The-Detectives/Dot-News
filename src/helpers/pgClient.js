@@ -7,18 +7,15 @@ const client = new Client({
 });
 
 // function to exceute statement to database
-function dbExcecute(sqlQuery, values = []) {
-  let result = client
-    .query(sqlQuery, values)
-    .then((data) => {
-      let result = data.rows;
-      return result;
-    })
-    .catch((e) => {
-      throw new Error(e);
-    });
-
-  return result;
+const dbExcecute = async (sqlQuery, values = []) => {
+  try {
+    let data = await client.query(sqlQuery, values);
+    let result = data.rows;
+    return result;
+  }
+  catch(e) {
+    throw new Error(e);
+  }
 }
 
 module.exports = {
