@@ -48,7 +48,7 @@ app.use(errorHandler);
 
 //Test Page (Home)
 router.get('/test', (req, res, next) => {
-  return res.send('Hello There');
+  return res.send('Your server is working');
 });
 
 

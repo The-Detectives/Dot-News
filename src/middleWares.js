@@ -23,14 +23,18 @@ function messagesMiddleware(req, res, next) {
 }
 
 // authentication middleware
-function isAuthenticated(req, res, next) {
-  authenticate(req).then((auth) => {
+const isAuthenticated = async (req, res, next) => {
+  try {
+    let auth = await authenticate(req);
     if (!auth) {
       res.redirect('/admin/login');
     } else {
       next();
     }
-  });
+  }
+  catch(e) {
+    next(e);
+  }
 }
 
 module.exports = {
