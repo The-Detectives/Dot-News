@@ -16,13 +16,20 @@ const hashPassword = (password) => {
 };
 
 // function to create the user
-const createUser = (user) => {
-  let sqlQuery =
-    'INSERT INTO users (username, password, token) VALUES ($1, $2, $3) RETURNING id, username, token;';
-  return client
-    .query(sqlQuery, [user.username, user.password, user.token])
-    .then((data) => data.rows[0])
-    .catch((e) => {throw new Error(e);});
+const createUser = async (user) => {
+  try {
+    let sqlQuery =
+      'INSERT INTO users (username, password, token) VALUES ($1, $2, $3) RETURNING id, username, token;';
+
+    let data = await client.query(sqlQuery, [
+      user.username,
+      user.password,
+      user.token,
+    ]);
+    return data.rows[0];
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 // function to generate random token
@@ -36,25 +43,25 @@ function createToken() {
 }
 
 // function to create admin user
-function createAdminUser(user) {
-  hashPassword(user.password)
-    .then((hashedPassword) => {
-      delete user.password;
-      user.password = hashedPassword;
-    })
-    .then(() => createToken())
-    .then((token) => (user.token = token))
-    .then(() => createUser(user))
-    .then((user) => {
-      console.info('User admin created successfully');
-      console.info('You can login now.');
-      client.end();
-    })
-    .catch((e) => {
-      client.end();
-      throw new Error(e);
-    });
-}
+const createAdminUser = async (user) => {
+  try {
+    let hashedPassword = await hashPassword(user.password);
+    delete user.password;
+    user.password = hashedPassword;
+
+    let token = await createToken();
+    user.token = token;
+
+    await createUser(user);
+
+    console.info('User admin created successfully');
+    console.info('You can login now.');
+    client.end();
+  } catch (e) {
+    client.end();
+    throw new Error(e);
+  }
+};
 
 client
   .connect()
@@ -75,15 +82,20 @@ client
           password: password,
         };
 
-        createAdminUser(user);
-
-        rl.close();
+        createAdminUser(user)
+        .then(rl.close())
+        .catch(e => {throw new Error(e);});
       });
       rl._writeToOutput = function _writeToOutput(stringToWrite) {
         if (rl.stdoutMuted)
-          rl.output.write('\x1B[2K\x1B[200D'+rl.passwordQuery+'['+((rl.line.length%2==1)?'=-':'-=')+']');
-        else
-          rl.output.write(stringToWrite);
+          rl.output.write(
+            '\x1B[2K\x1B[200D' +
+              rl.passwordQuery +
+              '[' +
+              (rl.line.length % 2 == 1 ? '=-' : '-=') +
+              ']'
+          );
+        else rl.output.write(stringToWrite);
       };
     });
 

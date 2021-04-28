@@ -36,6 +36,8 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true }));
 
+// registering routers
+app.use(router);
 //Routes
 bootStrap(app, router);
 
@@ -46,7 +48,7 @@ app.use(errorHandler);
 
 //Test Page (Home)
 router.get('/test', (req, res, next) => {
-  return res.send('Hello There');
+  return res.send('Your server is working');
 });
 
 

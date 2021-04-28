@@ -1,13 +1,14 @@
 const { updateArticleDetails } = require('../../models/articleModel');
 
 // handling update article
-module.exports = function updateArticleController(req, res, next) {
+module.exports = async (req, res, next) => {
   let articleData = req.body;
+  try {
+    await updateArticleDetails(articleData);
 
-  updateArticleDetails(articleData)
-    .then(() => {
-      req.flash('info', 'Article updated successfully');
-      res.redirect('/admin/dashboard');
-    })
-    .catch((e) => next(e));
+    req.flash('info', 'Article updated successfully');
+    res.redirect('/admin/dashboard');
+  } catch (e) {
+    next(e);
+  }
 };

@@ -1,12 +1,13 @@
 const { deleteArticle } = require('../../models/articleModel');
 
 // handling delete article
-module.exports = function deleteArticleController(req, res, next) {
+module.exports = async (req, res, next) => {
   let articleId = req.params.id;
-  deleteArticle(articleId)
-    .then(() => {
-      req.flash('info', 'Article Deleted successfully');
-      res.redirect('/admin/dashboard');
-    })
-    .catch((e) => next(e));
+  try {
+    await deleteArticle(articleId);
+    req.flash('info', 'Article Deleted successfully');
+    res.redirect('/admin/dashboard');
+  } catch (e) {
+    next(e);
+  }
 };

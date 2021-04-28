@@ -3,20 +3,19 @@ const crypto = require('crypto');
 const { findByToken } = require('../models/usersModel');
 
 // function to check if the user is authenticated
-function authenticate(userReq) {
-  let token = userReq.session.user ? userReq.session.user.token : null;
-  return findByToken(token)
-    .then((user) => {
-      if (user && user.username == userReq.session.user.username) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch((e) => {
-      throw new Error(e);
-    });
-}
+const authenticate = async (userReq) => {
+  try {
+    let token = userReq.session.user ? userReq.session.user.token : null;
+    let user = await findByToken(token);
+    if (user && user.username == userReq.session.user.username) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 
 // function to check password
 function checkPassword(reqPassword, foundUser) {
