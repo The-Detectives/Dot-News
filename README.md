@@ -2,11 +2,11 @@
 
 ## Team Members
 
-1. Wafa'a Ankoush
-2. Mohammad Nofal
-3. Nour Abu Elenein
-4. Tamara Manaseer
-5. Wesam Al-Masri
+1. Wesam Al-Masri (TL)
+2. Wafa'a Ankoush
+3. Mohammad Nofal
+4. Nour Abu Elenein
+5. Tamara Manaseer
 
 ## Wireframes
 

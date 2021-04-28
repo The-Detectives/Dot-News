@@ -5,7 +5,6 @@ const { notFoundPageController } = require('../controllers')
 
 module.exports = (app, router) => {
   //Initialize Routes
-  app.use(router);
   mainSiteRoutes(router);
   authRoutes(router);
   adminRoutes(router);

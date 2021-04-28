@@ -4,7 +4,7 @@ const { getArticles } = require('../../models/articleModel');
 const { Article } = require('../../store');
 
 // handling the home page
-module.exports = function homePageController(req, res, next) {
+module.exports = async (req, res, next) => {
   let key = process.env.CATEGORY_KEY;
 
   let worldURL = `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${key}`;
@@ -12,58 +12,43 @@ module.exports = function homePageController(req, res, next) {
   let scienceURL = `https://api.nytimes.com/svc/topstories/v2/science.json?api-key=${key}`;
   let healthURL = `https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${key}`;
 
-  getDataFromAPI(worldURL)
-    .then((worldData) => {
-      let worldArray = worldData.results.slice(0, 5).map((item) => {
-        return new Article({ ...item, section: worldData.section });
+  try {
+    let worldData = await getDataFromAPI(worldURL);
+    let worldArray = worldData.results.slice(0, 5).map((item) => {
+      return new Article({ ...item, section: worldData.section });
+    });
+
+    let artsData = await getDataFromAPI(artsURL);
+    let artsArray = artsData.results.slice(0, 10).map((item) => {
+      return new Article({ ...item, section: artsData.section });
+    });
+
+    let scienceData = await getDataFromAPI(scienceURL);
+    let scienceArray = scienceData.results.slice(0, 5).map((item) => {
+      return new Article({ ...item, section: scienceData.section });
+    });
+
+    let healthData = await getDataFromAPI(healthURL);
+    let healthArray = healthData.results.slice(0, 5).map((item) => {
+      return new Article({
+        ...item,
+        section: healthData.section,
       });
+    });
 
-      getDataFromAPI(artsURL)
-        .then((artsData) => {
-          let artsArray = artsData.results.slice(0, 10).map((item) => {
-            return new Article({ ...item, section: artsData.section });
-          });
+    let ourNews = await getArticles();
 
-          getDataFromAPI(scienceURL)
-            .then((scienceData) => {
-              let scienceArray = scienceData.results.slice(0, 5).map((item) => {
-                return new Article({ ...item, section: scienceData.section });
-              });
+    let categories = await getCategories();
 
-              getDataFromAPI(healthURL)
-                .then((healthData) => {
-                  let healthArray = healthData.results
-                    .slice(0, 5)
-                    .map((item) => {
-                      return new Article({
-                        ...item,
-                        section: healthData.section,
-                      });
-                    });
-
-                    getArticles()
-                    .then((data) => {
-                      let ourNews = data;
-                      getCategories()
-                        .then((categories) => {
-                          res.render('index', {
-                            worldNews: worldArray,
-                            artsNews: artsArray,
-                            scienceNews: scienceArray,
-                            healthNews: healthArray,
-                            ourNews: ourNews,
-                            categories: categories,
-                          });
-                        })
-                        .catch((e) => next(e));
-                    })
-                    .catch((e) => next(e));
-                })
-                .catch((e) => next(e));
-            })
-            .catch((e) => next(e));
-        })
-        .catch((e) => next(e));
-    })
-    .catch((e) => next(e));
+    res.render('index', {
+      worldNews: worldArray,
+      artsNews: artsArray,
+      scienceNews: scienceArray,
+      healthNews: healthArray,
+      ourNews: ourNews,
+      categories: categories,
+    });
+  } catch (e) {
+    next(e);
+  }
 };
