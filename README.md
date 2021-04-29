@@ -8,12 +8,22 @@
 4. Nour Abu Elenein
 5. Tamara Manaseer
 
+## Vision
+
+The journalism community boldly innovates to better engage and inform the public.
+
+We believe that the internet is the most powerful communications medium to arise since the dawn of television. As digital delivery systems become the primary source of news for a growing segment of the world’s population, it presents complex challenges and opportunities for journalists as well as the news audience.
+
+## UML
+
+![dot-news uml](assets/dot-news-uml.jpg)
+
 ## Wireframes
 
-![wireframes](images/Wireframes.png)
+![wireframes](assets/Wireframes.png)
 
 ## Domain Modeling
 
-![db](images/DB.png)
+![db](assets/DB.png)
 
-![domain modeling](images/domain-modeling.png)
+![domain modeling](assets/domain-modeling.png)
