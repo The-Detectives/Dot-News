@@ -1,6 +1,11 @@
 <div class="dashboard_list_article_container">
   <div class="dashboard_header">
     <a href="/admin/article/new"> + New Article</a>
+    <form class="dashboard_search_form" action="" method="get">
+      <input type="hidden" name="category" value="<%= category_name %>">
+      <input type="search" placeholder="Search for title" name="keyword" id="keyword">
+      <input type="submit" value="Search">
+    </form>
   </div>
   <% articles.forEach(article=> { %>
   <div class="dashboard_card">
