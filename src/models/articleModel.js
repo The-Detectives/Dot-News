@@ -68,10 +68,19 @@ function deleteArticle(articleId) {
 function countArticles(category = '', keyword = '') {
   let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
   let safeValues = [];
-  if (category && category !== '') {
+  if (category && category !== '' && keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlCountAllQuery =
+      'SELECT COUNT(*) FROM category JOIN article ON article.category_id = category.id WHERE name = $1 AND UPPER(title) LIKE UPPER($2);';
+    safeValues = [category, keyword];
+  } else if (category && category !== '') {
     sqlCountAllQuery =
       'SELECT COUNT(*) FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
     safeValues = [category];
+  } else if (keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlCountAllQuery = 'SELECT COUNT(*) FROM article WHERE UPPER(title) LIKE UPPER($1);';
+    safeValues = [keyword];
   }
 
   return dbExcecute(sqlCountAllQuery, safeValues)
