@@ -1,12 +1,21 @@
 const { dbExcecute } = require('../helpers/pgClient');
 
-function getArticles(category = '', limit = 10, offset = 0) {
+function getArticles(category = '', keyword = '', limit = 10, offset = 0) {
   let sqlQuery = 'SELECT * FROM article ORDER BY id DESC LIMIT $1 OFFSET $2;';
   let safeValues = [limit, offset];
-  if (category && category !== '') {
+  if (category && category !== '' && keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlQuery =
+      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 AND UPPER(title) LIKE UPPER($2) ORDER BY article.id DESC LIMIT $3 OFFSET $4;';
+    safeValues = [category, keyword, limit, offset];
+  } else if (category && category !== '') {
     sqlQuery =
       'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
     safeValues = [category, limit, offset];
+  } else if (keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlQuery = 'SELECT * FROM article WHERE UPPER(title) LIKE UPPER($1) ORDER BY id DESC LIMIT $2 OFFSET $3;';
+    safeValues = [keyword, limit, offset];
   }
 
   return dbExcecute(sqlQuery, safeValues)
@@ -56,13 +65,22 @@ function deleteArticle(articleId) {
     });
 }
 
-function countArticles(category = '') {
+function countArticles(category = '', keyword = '') {
   let sqlCountAllQuery = 'SELECT COUNT(*) FROM article;';
   let safeValues = [];
-  if (category && category !== '') {
+  if (category && category !== '' && keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlCountAllQuery =
+      'SELECT COUNT(*) FROM category JOIN article ON article.category_id = category.id WHERE name = $1 AND UPPER(title) LIKE UPPER($2);';
+    safeValues = [category, keyword];
+  } else if (category && category !== '') {
     sqlCountAllQuery =
       'SELECT COUNT(*) FROM category JOIN article ON article.category_id = category.id WHERE name = $1;';
     safeValues = [category];
+  } else if (keyword && keyword !== '') {
+    keyword = `%${keyword}%`;
+    sqlCountAllQuery = 'SELECT COUNT(*) FROM article WHERE UPPER(title) LIKE UPPER($1);';
+    safeValues = [keyword];
   }
 
   return dbExcecute(sqlCountAllQuery, safeValues)

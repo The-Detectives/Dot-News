@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
 
     await checkPassword(userReq.password, user);
 
-    let token = createToken();
+    let token = await createToken();
 
     userData = await updateUserToken(token, user.id);
     user = userData[0];
