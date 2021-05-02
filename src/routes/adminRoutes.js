@@ -10,5 +10,6 @@ module.exports = (router) => {
   router.delete('/admin/article/:id', isAuthenticated, cmsControllers.deleteArticleController);
   router.get('/admin/article/:id', isAuthenticated, cmsControllers.getArticlePageController);
   router.put('/admin/article/:id', isAuthenticated, cmsControllers.updateArticleController);
-  router.get('/admin/messages', isAuthenticated, cmsControllers.getMessagesPageController)
+  router.get('/admin/messages', isAuthenticated, cmsControllers.getMessagesPageController);
+  router.post('/upload-image', isAuthenticated, upload.single('image'), cmsControllers.uploadImageController);
 };

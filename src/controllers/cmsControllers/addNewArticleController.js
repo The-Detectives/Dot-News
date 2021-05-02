@@ -8,7 +8,6 @@ module.exports = async (req, res, next) => {
     const error = new Error('Please upload a the image')
     return next(error)
   }
-  console.log(file)
   res.send(file)
   // try {
   //   await addNewArticle(articleData);
