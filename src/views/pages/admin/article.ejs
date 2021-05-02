@@ -1,7 +1,7 @@
 <%- include('./partials/header') %>
 
     <div class="admin_article_container">
-        <form class="adminForm" action="<% if(article && article.id){ %>/admin/article/<%= article.id %>?_method=put<% } %>" method="post">
+        <form class="adminForm" action="<% if(article && article.id){ %>/admin/article/<%= article.id %>?_method=put<% } %>" method="post" enctype="multipart/form-data">
             <div class="adminForm_container">
                 <h1 class="admin_article_title">
                     <% if(article && article.id) { %>- Edit<% } else { %>- Add<% } %>   Article -
@@ -21,7 +21,8 @@
                     <input class="title-img" type="text" name="title" id="title" placeholder="Title of the article" required <% if(article && article.title){ %> value="<%= article.title %>" <% } %> >
                 </div>
                 <div class="input_container1">
-                    <input class="title-img" type="text" name="image" id="image" placeholder="Cover image URL" required <% if(article && article.image){ %> value="<%= article.image %>" <% } %> >
+                    <!-- <input class="title-img" type="text" name="image" id="image" placeholder="Cover image URL" required <% if(article && article.image){ %> value="<%= article.image %>" <% } %> > -->
+                    <input class="title-img" type="file" name="image" id="image" placeholder="Cover image URL" required >
                 </div>
             </div>
             <div class="input_container2">
