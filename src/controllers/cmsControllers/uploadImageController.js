@@ -1,12 +1,18 @@
-
 // handling upload image
 module.exports = async (req, res, next) => {
   const file = req.file;
   if (!file) {
-    const error = new Error('Please upload a the image')
-    return next(error)
+    res.json({
+      error: {
+        uploaded: false,
+        message:
+          'The image upload failed.',
+      },
+    });
   }
-  file.path = file.path.slice(11);
-  file.destination = file.destination.slice(11);
-  res.json(file)
+
+  res.json({
+    uploaded: true,
+    url: file.path.slice(11),
+  });
 };

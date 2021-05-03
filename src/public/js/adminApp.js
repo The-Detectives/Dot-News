@@ -1,3 +1,5 @@
+// import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+
 /* Hide the logout link in navbar  */
 if (window.location.pathname === '/admin/login') {
   $('#logout_link').css({ display: 'none' });
@@ -14,6 +16,19 @@ $('.admin_navbar a').each(function (prams) {
 $('.dashboard_messages').delay(3000).fadeOut(1000);
 
 /* Admin ckeditor config */
-ClassicEditor.create(document.querySelector('#editor')).catch((error) => {
+ClassicEditor
+  .create(document.querySelector('#editor'), {
+    // plugins: [ SimpleUploadAdapter,],
+    // simpleUpload: {
+    //     // Feature configuration.
+    //     uploadUntials: true,
+      //   headers: {
+      //     'X-CSRF-TOKEN': 'CSRF-Token',
+      //     Authorization: 'Bearer <JSON Web Token>'
+      // }rl: '/upload-image',
+    //     withCrede
+    //}
+} )
+  .catch((error) => {
   console.error(error);
 });

@@ -8,9 +8,11 @@ module.exports = async (req, res, next) => {
     const error = new Error('Please upload a the image')
     return next(error)
   }
-  file.path = file.path.slice(11);
-  file.destination = file.destination.slice(11);
-  res.send(file)
+  // file.path = file.path.slice(11);
+  // file.destination = file.destination.slice(11);
+  res.json({
+    url: file.path.slice(11),
+  })
   // try {
   //   await addNewArticle(articleData);
   //   req.flash('info', 'Article Added successfully');
