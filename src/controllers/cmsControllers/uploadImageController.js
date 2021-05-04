@@ -1,6 +1,6 @@
 // handling upload image
 module.exports = async (req, res, next) => {
-  const file = req.file;
+  const file = req.files[0];
   if (!file) {
     res.json({
       error: {
@@ -10,9 +10,8 @@ module.exports = async (req, res, next) => {
       },
     });
   }
-
   res.json({
     uploaded: true,
-    url: file.path.slice(11),
+    url: file.path.slice(10),
   });
 };

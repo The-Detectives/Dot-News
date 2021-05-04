@@ -16,19 +16,14 @@ $('.admin_navbar a').each(function (prams) {
 $('.dashboard_messages').delay(3000).fadeOut(1000);
 
 /* Admin ckeditor config */
-ClassicEditor
-  .create(document.querySelector('#editor'), {
-    // plugins: [ SimpleUploadAdapter,],
-    // simpleUpload: {
-    //     // Feature configuration.
-    //     uploadUntials: true,
-      //   headers: {
-      //     'X-CSRF-TOKEN': 'CSRF-Token',
-      //     Authorization: 'Bearer <JSON Web Token>'
-      // }rl: '/upload-image',
-    //     withCrede
-    //}
-} )
-  .catch((error) => {
+ClassicEditor.create(document.querySelector('#editor'), {
+  simpleUpload: {
+    // The URL that the images are uploaded to.
+    uploadUrl: '/upload-image',
+
+    // Enable the XMLHttpRequest.withCredentials property.
+    withCredentials: true,
+  },
+}).catch((error) => {
   console.error(error);
 });
