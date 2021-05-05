@@ -22,7 +22,7 @@
                 </div>
                 <div class="input_container1">
                     <!-- <input class="title-img" type="text" name="image" id="image" placeholder="Cover image URL" required <% if(article && article.image){ %> value="<%= article.image %>" <% } %> > -->
-                    <input class="title-img" type="file" name="image" id="image" placeholder="Cover image URL" required >
+                    <input class="title-img" type="file" name="image" id="image" <% if(article && article.id) { %><% } else { %>required <% } %> >
                 </div>
             </div>
             <div class="input_container2">

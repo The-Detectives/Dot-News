@@ -21,8 +21,8 @@ ClassicEditor.create(document.querySelector('#editor'), {
     // The URL that the images are uploaded to.
     uploadUrl: '/upload-image',
 
-    // Enable the XMLHttpRequest.withCredentials property.
-    withCredentials: true,
+    // // Enable the XMLHttpRequest.withCredentials property.
+    // withCredentials: true,
   },
 }).catch((error) => {
   console.error(error);
