@@ -10,7 +10,7 @@
   <% articles.forEach(article=> { %>
   <div class="dashboard_card">
     <div class="dashboard_card_left">
-      <img src="<%= article.image %>" alt="<%= article.title %>" />
+      <img src="<% if(article.link){ %> <%= article.link %> <% } else { %> <%= article.image %> <% } %>" alt="<%= article.title %>" />
       <div class="dashboard_card_info">
         <div class="card_title"><%= article.title %></div>
         <div class="published_at">
