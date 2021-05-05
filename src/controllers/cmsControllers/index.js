@@ -8,6 +8,7 @@ const getArticlePageController = require('./getArticlePageController');
 const updateArticleController = require('./updateArticleController');
 const deleteArticleController = require('./deleteArticleController');
 const getMessagesPageController = require('./getMessagesPageController');
+const uploadImageController = require('./uploadImageController');
 
 module.exports = {
   getLoginPageController,
@@ -20,4 +21,5 @@ module.exports = {
   updateArticleController,
   deleteArticleController,
   getMessagesPageController,
+  uploadImageController,
 };

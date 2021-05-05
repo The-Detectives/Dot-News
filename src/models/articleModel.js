@@ -1,20 +1,20 @@
 const { dbExcecute } = require('../helpers/pgClient');
 
 function getArticles(category = '', keyword = '', limit = 10, offset = 0) {
-  let sqlQuery = 'SELECT * FROM article ORDER BY id DESC LIMIT $1 OFFSET $2;';
+  let sqlQuery = 'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id ORDER BY article.id DESC LIMIT $1 OFFSET $2;';
   let safeValues = [limit, offset];
   if (category && category !== '' && keyword && keyword !== '') {
     keyword = `%${keyword}%`;
     sqlQuery =
-      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 AND UPPER(title) LIKE UPPER($2) ORDER BY article.id DESC LIMIT $3 OFFSET $4;';
+      'SELECT article.id, title, image, link, abstract, content, published_date, name FROM article JOIN category ON article.category_id = category.id LEFT JOIN file ON article.cover_image_id = file.id WHERE name = $1 AND UPPER(title) LIKE UPPER($2) ORDER BY article.id DESC LIMIT $3 OFFSET $4;';
     safeValues = [category, keyword, limit, offset];
   } else if (category && category !== '') {
     sqlQuery =
-      'SELECT * FROM category JOIN article ON article.category_id = category.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
+      'SELECT article.id, title, image, link, abstract, content, published_date, name FROM article JOIN category ON article.category_id = category.id LEFT JOIN file ON article.cover_image_id = file.id WHERE name = $1 ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
     safeValues = [category, limit, offset];
   } else if (keyword && keyword !== '') {
     keyword = `%${keyword}%`;
-    sqlQuery = 'SELECT * FROM article WHERE UPPER(title) LIKE UPPER($1) ORDER BY id DESC LIMIT $2 OFFSET $3;';
+    sqlQuery = 'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id WHERE UPPER(title) LIKE UPPER($1) ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
     safeValues = [keyword, limit, offset];
   }
 
@@ -39,10 +39,10 @@ function getArticleDetails(articleId) {
 
 function addNewArticle(articleData) {
   let sqlQuery =
-    'INSERT INTO article (title, image, content, published_date, category_id) VALUES ($1, $2, $3, $4, $5);';
+    'INSERT INTO article (title, cover_image_id, content, published_date, category_id) VALUES ($1, $2, $3, $4, $5);';
   let safeValues = [
     articleData.title,
-    articleData.image,
+    articleData.cover_image_id,
     articleData.content,
     new Date(),
     articleData.category,
@@ -92,10 +92,10 @@ function countArticles(category = '', keyword = '') {
 
 function updateArticleDetails(articleData) {
   let sqlQuery =
-    'UPDATE article SET title=$1, image=$2, content=$3, category_id=$4 WHERE id =$5';
+    'UPDATE article SET title=$1, cover_image_id=$2, content=$3, category_id=$4 WHERE id =$5';
   let safeValues = [
     articleData.title,
-    articleData.image,
+    articleData.cover_image_id,
     articleData.content,
     articleData.category,
     articleData.id,

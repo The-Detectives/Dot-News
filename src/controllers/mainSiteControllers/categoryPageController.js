@@ -8,6 +8,7 @@ module.exports = async (req, res, next) => {
   let categoryName = req.params.category;
   if (categoryName === 'admin') {
     res.redirect('/admin/login');
+    return;
   }
 
   let category_API_KEY = process.env.CATEGORY_KEY;
