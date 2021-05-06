@@ -99,4 +99,11 @@
       flex-direction: column;
     }
     
+    .bigItem {
+      width: 100%;
+    }
+
+    .categoryItem{
+      width: 100%;
+    }
   }
