@@ -18,7 +18,7 @@
         </div>
 
         <% categoryDB.slice(0, 3).forEach((article, i) => { %>
-            <div class="categoryItem <% if(i===0){ %>bigItem <% } %>">
+            <div class="categoryItem <% if(i===1){ %>bigItem <% } %>">
 
                 <a href="/article/<%= article.id %>"><img src="<% if(article.link){ %> <%= article.link %> <% } else { %> <%= article.image %> <% } %>" /></a>
                 

@@ -1,7 +1,8 @@
 const { dbExcecute } = require('../helpers/pgClient');
 
 function getArticles(category = '', keyword = '', limit = 10, offset = 0) {
-  let sqlQuery = 'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id ORDER BY article.id DESC LIMIT $1 OFFSET $2;';
+  let sqlQuery =
+    'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id ORDER BY article.id DESC LIMIT $1 OFFSET $2;';
   let safeValues = [limit, offset];
   if (category && category !== '' && keyword && keyword !== '') {
     keyword = `%${keyword}%`;
@@ -14,7 +15,8 @@ function getArticles(category = '', keyword = '', limit = 10, offset = 0) {
     safeValues = [category, limit, offset];
   } else if (keyword && keyword !== '') {
     keyword = `%${keyword}%`;
-    sqlQuery = 'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id WHERE UPPER(title) LIKE UPPER($1) ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
+    sqlQuery =
+      'SELECT article.id, title, image, link, abstract, content, published_date FROM article LEFT JOIN file ON article.cover_image_id = file.id WHERE UPPER(title) LIKE UPPER($1) ORDER BY article.id DESC LIMIT $2 OFFSET $3;';
     safeValues = [keyword, limit, offset];
   }
 
@@ -79,7 +81,8 @@ function countArticles(category = '', keyword = '') {
     safeValues = [category];
   } else if (keyword && keyword !== '') {
     keyword = `%${keyword}%`;
-    sqlCountAllQuery = 'SELECT COUNT(*) FROM article WHERE UPPER(title) LIKE UPPER($1);';
+    sqlCountAllQuery =
+      'SELECT COUNT(*) FROM article WHERE UPPER(title) LIKE UPPER($1);';
     safeValues = [keyword];
   }
 
@@ -92,14 +95,25 @@ function countArticles(category = '', keyword = '') {
 
 function updateArticleDetails(articleData) {
   let sqlQuery =
-    'UPDATE article SET title=$1, cover_image_id=$2, content=$3, category_id=$4 WHERE id =$5';
+    'UPDATE article SET title=$1, content=$2, category_id=$3 WHERE id =$4';
   let safeValues = [
     articleData.title,
-    articleData.cover_image_id,
     articleData.content,
     articleData.category,
     articleData.id,
   ];
+
+  if (articleData.cover_image_id) {
+    sqlQuery =
+      'UPDATE article SET title=$1, cover_image_id=$2, content=$3, category_id=$4 WHERE id =$5';
+    safeValues = [
+      articleData.title,
+      articleData.cover_image_id,
+      articleData.content,
+      articleData.category,
+      articleData.id,
+    ];
+  }
 
   return dbExcecute(sqlQuery, safeValues)
     .then((data) => data)
