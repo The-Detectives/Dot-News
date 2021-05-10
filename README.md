@@ -48,4 +48,4 @@ Full Stack news web application with a content management system for the adminis
 
 ## Deployed app link
 
-[Dot-news Website](dot-news.herokuapp.com/)
+[Dot-news Website](https://dot-news.herokuapp.com/)
