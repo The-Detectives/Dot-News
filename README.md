@@ -4,7 +4,7 @@ Version: 1.0.0
 
 ## Team Members (Authors)
 
-1. Wesam Al-Masri (TL)
+1. Wesam Al-Masri
 2. Wafa'a Ankoush
 3. Mohammad Nofal
 4. Nour Abu Elenein
@@ -28,9 +28,13 @@ Full Stack news web application with a content management system for the adminis
 7. Run the server by entering the command npm start.
 8. Now go to the `/admin` routes and enter the username and password to get access to the admin dashboard where you can manage the content.
 
-## File structure
+## UML
 
 ![dot-news uml](assets/dot-news-uml.jpg)
+
+## Domain Model
+
+![domain model](assets/Dot-news-domain-model.png)
 
 ## Architecture
 
